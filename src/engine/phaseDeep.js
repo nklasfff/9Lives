@@ -577,6 +577,151 @@ const PHASE_DEEP = {
     },
   },
 
+  5: {
+    title: 'Responsibility',
+    subtitle: 'Everything presses at once',
+    ageRange: '28–35',
+    element: 'earth',
+    season: 'Late Summer',
+
+    transition: {
+      title: 'The Transition into Phase 5',
+      body: 'Around twenty-eight, the Earth element begins to mature into its second phase. The choices made in the twenties gain consequence and depth. Career demands more, partnership demands more, and perhaps there are children arriving who will demand the most of all.',
+      detail: 'Earth continues from Phase 4, but it changes character. Where Phase 4 was about planting and finding roots, Phase 5 is about consolidating and bearing weight. The Spleen and Stomach have more to digest now — in every sense. You can no longer burn for everything at once. Now it becomes about choosing what receives your nourishment — and what must manage without it. The earth carries on. And the fruit you planted is beginning to ripen.',
+    },
+
+    personal: {
+      title: 'A friend called me one Tuesday morning, crying:',
+      quote: 'I can\'t work out who needs me most. And nobody asks what I need.',
+      reflection: 'She was thirty-two, with two small children, a job demanding more than she could give, and a husband who was equally spent. I knew that feeling. Most women I speak with at this age know it — whether they have children or not. This is one of life\'s most demanding phases.',
+    },
+
+    bodyInBalance: {
+      title: 'When Earth Is in Balance',
+      body: 'A woman in balance during this phase manages to carry a great deal without breaking. There is energy for what matters, and a physical solidity that keeps her upright in the midst of busyness. Digestion works, appetite is stable, muscles are strong, and thoughts are clear. She knows what nourishes her, and she manages to prioritise it — most of the time. Balance shows itself as good sleep, steady energy through the day, and a cycle that is regular and manageable. There are moments of surplus that appear when you least expect them — and those moments are worth noticing.',
+    },
+
+    bodyImbalanced: {
+      title: 'When the Body Is Challenged',
+      physical: [
+        'Persistent fatigue that sleep cannot seem to clear — as though the battery never fully charges. This is Spleen Qi depletion',
+        'Digestive troubles — bloating, sluggishness, an unsettled stomach, especially when life presses hard',
+        'Weight gain around the middle, even without changing what you eat',
+        'Getting ill the moment you finally stop — the body waiting for permission to collapse',
+        'Menstrual irregularities, especially heavy bleeding — the Spleen governs the blood',
+        'Sugar cravings and afternoon energy crashes, as Spleen Qi ebbs',
+        'Weak muscles and a pervasive heaviness through the whole body',
+      ],
+      emotional: [
+        'Overthinking that runs in circles — worries about children, career, finances, health, partnership, all at once',
+        'Guilt, no matter what you do: never enough at work, never enough at home, never enough for yourself',
+        'Feeling scattered across too many fronts — too many demands, too little solid ground',
+        'Loss of pleasure in things that used to give energy — a greyness settling over everyday life',
+        'Or the opposite: a numbing busyness that fills every moment, so you never have to feel what you feel',
+      ],
+    },
+
+    emotion: {
+      title: 'Worry and Care',
+      body: 'Worry is Earth\'s shadow, and in this phase it can feel overwhelming. When the Spleen is overburdened, it loses its ability to digest — and begins circling instead. Thoughts loop without landing. It is the kind of overthinking that keeps you awake at night and makes it hard to be present in the moment.',
+      grief: 'A woman in my practice said: "I love my children so much it hurts. And I am so tired it also hurts. And I don\'t know when there is room for me in all of it." That sentence holds so much of what this phase is about. Giving everything and sensing there may not be enough left for yourself. That is the Spleen crying out for nourishment.',
+      gift: 'The counterweight to worry is healthy care — the Earth quality that makes it possible to hold everything together without losing yourself. That care requires turning it inward too. Nourishing yourself with the same patience you offer everyone else. That is Earth\'s paradox in this phase: you cannot pour from an empty vessel. Research shows this phase carries increased risk of depression and anxiety — whether related to motherhood, career pressure, fertility challenges, or other circumstances. That is important to know, because it reminds us that struggling is not a personal failing. It is a phase that is structurally, biologically, culturally hard.',
+    },
+
+    menopause: {
+      title: 'A Life Without Children in This Phase',
+      body: 'For women without children, this phase carries its own intensity. The questions from those around you can be relentless: "When are you having children?" "Aren\'t you leaving it late?" It is exhausting to constantly navigate other people\'s assumptions about your life.',
+      gift: 'Wherever you find yourself, your experience is valid. Earth energy can direct itself toward many forms of nourishment. Career, art, community, relationships — there are many ways to nurture, and motherhood is only one of them.',
+      wisdom: 'What makes Earth special is its capacity to transform — and you carry that capacity whether or not you have children.',
+    },
+
+    advice: [
+      { title: 'You cannot pour from an empty vessel', body: 'Your own care is the foundation for all the care you give others. It is never selfishness — it is necessity. Ask yourself: when did you last truly nourish yourself?' },
+      { title: 'Eat regularly and warm', body: 'The Spleen is working harder than ever, and it needs steady fuel. Three warm meals a day, roughly at the same time. A good breakfast during the Stomach\'s hours — 7 to 9 AM — sets the tone.' },
+      { title: 'Ask for help', body: 'Actively and specifically. "Can you pick up the children on Tuesday?" works better than hoping someone offers. Most people want to help — they just don\'t know when.' },
+      { title: 'Lower the bar', body: 'A day with good spirits and pizza is better than a day with homemade food and tears. Perfectionism is a trap, especially in this phase.' },
+      { title: 'Protect your sleep', body: 'This may be the single most important piece of advice. Sleep deprivation makes everything worse — mood, patience, immunity, digestion, partnership.' },
+      { title: 'Choose your battles', body: 'Not everything matters equally, not even now. Save your energy for what truly counts. The Spleen needs you to prioritise.' },
+      { title: 'Find the moments', body: 'Big breaks may be impossible right now. But five minutes with a cup of tea, a walk around the block alone — those small pockets feed the Spleen more than you might think.' },
+      { title: 'Remember: this is a phase', body: 'It passes. The intensity is temporary, even when it feels permanent. The earth carries you, even when it feels heavy.' },
+    ],
+
+    exercises: [
+      {
+        title: 'Earth\'s Breath',
+        body: 'Lie down — on the floor, the bed, the grass, it doesn\'t matter where. Place both hands on your belly. Breathe in for four counts and send the breath down into the belly. Hold for four counts — longer than you are used to, and that is the point. Exhale slowly for eight counts with a soft "huuu" sound — the Spleen\'s healing sound. Ten repetitions. This exercise takes two minutes and can shift the middle of a chaotic day.',
+      },
+      {
+        title: 'Spleen Meridian Stroking',
+        body: 'The Spleen meridian runs from the big toe up along the inner foot and leg. Sit and stroke with a flat hand upward. Slowly, with warmth and weight. Five to seven times on each side. This supports the Spleen\'s ability to lift energy upward and distribute nourishment through the body. Especially good in the morning.',
+      },
+      {
+        title: 'Yin Yoga: Sphinx',
+        body: 'Lie on your belly with elbows under shoulders. Let the hips rest heavily and feel a gentle compression in the belly — exactly where the Spleen and Stomach live. Three to five minutes. We used the Sphinx in Phase 4 too, but now it feels different: the body carries more, and the quiet massage of the belly reaches deeper. A pose that asks you to be present, exactly where you are.',
+      },
+      {
+        title: 'Mind: One No',
+        body: 'Say no to one thing tomorrow. Just one. An obligation you don\'t have the energy for, a favour you would normally agree to out of duty, a commitment you can move. Notice how it feels. The guilt may arrive. Let it be there. It passes. What you get back is a small piece of time that is entirely your own — and in this phase, nothing is worth more than that.',
+      },
+      {
+        title: 'Bare Feet on Earth',
+        body: 'Walk barefoot — on grass, on soil, on sand. Ten minutes. The Spleen meridian begins at the big toe, and direct contact with the ground awakens that energy. It is so simple it barely feels like an exercise. But notice the difference afterward.',
+      },
+    ],
+
+    diet: {
+      title: 'Diet and Body',
+      intro: 'Diet in this phase is about keeping the Spleen running and giving the body the steady fuel it demands. Earth\'s food is warm, nourishing, and easy to digest.',
+      foods: [
+        { category: 'Earth-supporting foods', items: 'Root vegetables, porridge, legumes, cooked warm food. Sweet potatoes, carrots, and squash nourish the Spleen directly. Bone broth and slow-cooked dishes give deep nourishment without burdening digestion. The naturally sweet taste — from fruit, whole grains, root vegetables — supports the Spleen without overwhelming it.' },
+        { category: 'Herbs and spices', items: 'Ginger warms and supports digestion. Cinnamon stabilises blood sugar. Cardamom and fennel prevent bloating. Liquorice root nourishes the Spleen. Ashwagandha helps the body manage stress and is especially relevant in this phase.' },
+        { category: 'Sustaining energy', items: 'Complex carbohydrates from whole grains, sweet potatoes, and oats give the slow-release energy this phase demands. Adequate protein from eggs, fish, and legumes supports the muscles the Spleen governs.' },
+        { category: 'Reduce', items: 'Raw, cold food and ice-cold drinks dampen the Spleen\'s digestive fire. Refined sugar gives quick energy but depletes Spleen Qi over time. Caffeine may feel necessary but burdens the Spleen in the long run. And irregular meals are the greatest burden of all.' },
+      ],
+    },
+
+    themes: [
+      {
+        title: 'Motherhood',
+        body: 'For many women, this phase is bound up with motherhood. The children are often small and demanding, and even the most wanted baby changes life in ways you could never have imagined beforehand. Motherhood is a love explosion and an identity earthquake at the same time. The physical demands are enormous: pregnancy, birth, breastfeeding, sleep deprivation, carrying and lifting and comforting around the clock. The Spleen gives and gives, and it needs time and nourishment to recover.',
+      },
+      {
+        title: 'Career Intensity',
+        body: 'Alongside motherhood — or instead of it — this phase is often marked by career intensity. The pressure to prove your worth comes from several directions at once. For women with children, the familiar dilemma arises: how do you balance ambitions at work with responsibility at home? Guilt strikes from both sides. For women without children, career can fill the space in a different way. Whatever the constellation, this is a phase where there simply are not enough hours in the day.',
+      },
+      {
+        title: 'The Sandwich Position Begins',
+        body: 'In this phase, many begin to feel pressure from multiple directions. Parents are growing older and may need help. The sandwich generation — squeezed between the needs of several generations — hits women hardest. It adds another layer of worry on top of everything else, and the Spleen must digest even more.',
+      },
+    ],
+
+    seasons: {
+      title: 'The Year\'s Rhythm in the Responsibility Years',
+      entries: [
+        { season: 'Late Summer', body: 'Speaks most directly to this phase, because the season and life phase share the same element. The warm, ripe days of August, when everything stands in its fullness, can bring a sense of meaning amid the busyness — a reminder that all you are carrying also bears fruit. Earth meets Earth, and the double effect can feel like a brief window of stability and contentment.' },
+        { season: 'Summer', body: 'Fire nourishes Earth in the Sheng cycle. Summer\'s warmth and joy give Earth its fuel — the gatherings, the time with friends and family, the warmth that holds. The summer holiday may be the only long pause in the year, and it deserves to be protected.' },
+        { season: 'Spring', body: 'Wood controls Earth in the Ke cycle, and spring can bring restlessness — an urge for change colliding with Earth\'s need for stability. The children gain new energy, the days grow longer, and demands increase. Pay extra attention to your Spleen energy in the spring months.' },
+        { season: 'Autumn', body: 'Earth nourishes Metal in the Sheng cycle. Autumn\'s sorting energy can help you see what is truly necessary — and what can be released. A fruitful time for clearing out and setting priorities.' },
+        { season: 'Winter', body: 'Earth controls Water in the Ke cycle, and your Earth energy holds you up through the dark months. But winter also asks you to rest — and that rest is necessary, even when it feels impossible.' },
+      ],
+    },
+
+    reflections: [
+      'What would happen if you said no to one thing tomorrow?',
+      'When did you last feel you truly had enough time?',
+      'Who takes care of you, when you are taking care of everyone else?',
+      'Is there something you do out of obligation that you actually want to stop?',
+      'What do you need right now that you are not asking for?',
+      'If your body could speak — what would it ask of you?',
+    ],
+
+    transitionNext: {
+      title: 'The Transition to Phase 6',
+      body: 'Around thirty-five, a new shift begins. The Earth element, which has carried you for fourteen years with its stability and care, slowly makes way for something different. A clarity sharper than before. An ability to discern that can feel almost uncomfortable in its honesty. That is Metal, knocking at the door.',
+      next: 'Earth nourishes Metal, just as metal is drawn from the earth. The stability, the care, the capacity to digest that you have built across two full phases now transforms into something more refined. The questions change: from "how do I keep it all going?" to "what actually matters?" Metal\'s clarity is waiting. And that clarity can only arrive because Earth did its work first.',
+    },
+  },
+
   7: {
     title: 'Harvest',
     subtitle: 'Seeing what truly matters',
