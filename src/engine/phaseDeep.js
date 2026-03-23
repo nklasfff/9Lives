@@ -433,6 +433,150 @@ const PHASE_DEEP = {
     },
   },
 
+  4: {
+    title: 'Blossoming',
+    subtitle: 'Landing in the world',
+    ageRange: '21–28',
+    element: 'earth',
+    season: 'Late Summer',
+
+    transition: {
+      title: 'The Transition into Phase 4',
+      body: 'Around twenty-one, a new shift begins. The Fire element, which burned at full intensity through puberty and the early adult years, starts to transform into something different. The heat that radiated outward in every direction now gathers and seeks a centre. A pull toward landing. Toward building something that holds.',
+      detail: 'Fire nourishes Earth, just as ash becomes soil. The passion and intensity that filled the youth years begin to reshape themselves into something more stable, more nourishing, more grounded. The Spleen and Stomach step forward — the organs that in Chinese medicine govern digestion, transformation, and stability. The young woman is ready to plant what she has learned about herself in the soil her life will grow from.',
+    },
+
+    personal: {
+      title: 'I met a woman of twenty-seven who said:',
+      quote: 'I feel like a glass running over. There is so much I want to do, and so little time for all of it.',
+      reflection: 'She laughed as she said it, and there was something in her eyes that was both tired and alive at once. Everything felt urgent. Everything was now. And she wanted so badly to land — she just wasn\'t quite sure where. That captures something essential about this phase.',
+    },
+
+    bodyInBalance: {
+      title: 'When Earth Is in Balance',
+      body: 'A woman in balance during this phase feels a natural stability and appetite for life. There is energy to pursue dreams, build relationships, and create something real. Digestion works well, appetite is healthy, and there is a solidity in the body — muscles are strong, energy is steady, and there is capacity for most things. Thoughts are clear and settled, without the circling that marks imbalance. According to classical Chinese medicine texts, a woman\'s energy reaches its absolute peak around twenty-eight. This is your blossoming time. And Earth gives that blossoming its roots.',
+    },
+
+    bodyImbalanced: {
+      title: 'When the Body Is Challenged',
+      physical: [
+        'Digestive troubles — bloating, sluggishness, an unsettled stomach. The Spleen and Stomach are under pressure, and it shows directly',
+        'Fatigue that sleep doesn\'t fix — a heaviness in the body, as though the energy can\'t reach the limbs',
+        'Weight gain, especially around the middle — Earth\'s territory in the body',
+        'Soft, weak muscles despite training — muscles are Earth\'s body tissue',
+        'Menstrual irregularities, especially heavy bleeding — the Spleen governs the blood and keeps it in the vessels',
+        'Easy bruising and swelling',
+        'Sugar cravings that feel uncontrollable — Earth seeking its sweet taste when depleted',
+      ],
+      emotional: [
+        'Overthinking — thoughts that circle and circle without finding a place to land. This is Spleen energy stagnating',
+        'Worry about the future: am I doing the right thing? Is this the right path? Will it last?',
+        'Feeling scattered across too many things — too many balls in the air, too little solid ground',
+        'Comparison with others leading to inadequacy — amplified by social media',
+        'Or the opposite: a leaden passivity, a feeling of being stuck in mud, without the energy to move',
+      ],
+    },
+
+    emotion: {
+      title: 'Groundedness and Worry',
+      body: 'Worry is Earth\'s shadow. When the Spleen is overburdened — with too many impressions, too many choices, too little rest — the thoughts begin to circle. Am I making the right choice? Is this partner the one? Should we have children now or later? Will my career hold? That circling is not weakness — it is a sign that the Spleen is asking for quiet, for time to digest.',
+      grief: 'A young woman once told me: "I thought that when I became an adult, everything would fall into place. But it just feels like there are more pieces, and none of them quite fit." Many people in this phase know that feeling. The pressure to have it all together — career, love, finances, health, friendships — can feel crushing, especially when everyone else seems to have solved the puzzle.',
+      gift: 'The counterweight to worry is groundedness — the Earth quality that grows when you find your centre. That steadiness rarely comes from having everything in order. It comes from sensing that you can carry it, even when things are messy. That the ground beneath your feet is firm enough, even when nothing is perfect. That is a maturity that can only come through experience — and it begins here.',
+    },
+
+    menopause: {
+      title: 'The Question of Children',
+      body: 'For women, this phase is inextricably linked to the question of children, and the Earth element makes it especially vivid — because Earth is about nurturing, cultivating, letting something grow. The body is at its most fertile, and the biological rhythm makes itself felt.',
+      gift: 'Some know with certainty that they want children. Others are unsure and struggle with pressure from both biology and the world around them. And some know they do not want children, and must find their way in a world that often assumes otherwise.',
+      wisdom: 'There are no right answers here. But being conscious of the biological reality — that fertility peaks now and will gradually decline — can help in making informed choices. Your path is your own, and there are many ways to blossom.',
+    },
+
+    advice: [
+      { title: 'Eat regularly and warm', body: 'The Spleen thrives on rhythm and warmth. Three meals a day, roughly at the same time. Warm food is easier to digest than raw and cold. A good breakfast during the Stomach\'s hours — 7 to 9 AM — sets the tone for the whole day.' },
+      { title: 'Interrupt the overthinking', body: 'When thoughts circle, bring your attention to the body. Feet on the floor, hands on the belly, breath down into the depths. Overthinking drains the Spleen — and the Spleen cannot digest your thoughts, only your food.' },
+      { title: 'Find your rhythm', body: 'Earth thrives on predictability. A morning routine, an evening routine, regular times to eat, work, and rest. It need not be rigid — just recognisable. Rhythm is Earth\'s anchor.' },
+      { title: 'Strengthen your muscles', body: 'Muscles are Earth\'s body tissue, and they keep you stable — physically and mentally. Strength training, yoga, pilates, weighted walks. Your body in this phase is at its strongest — use it.' },
+      { title: 'Make choices — even imperfect ones', body: 'Better to choose and adjust along the way than to wait for perfection. Earth is formed through action, and perfection rarely arrives, but good can become truly good.' },
+      { title: 'Listen to yourself about children', body: 'Regardless of what others think, it is your body and your life. Feel into what you want — and know that the answer is allowed to change.' },
+      { title: 'Give yourself permission to land', body: 'You don\'t need to have it all figured out yet. The twenties are for planting — the harvest comes later. Be patient with what hasn\'t taken root.' },
+      { title: 'Limit sugar and cold drinks', body: 'The Spleen dislikes cold and damp, and too much sugar gives quick energy but depletes Spleen Qi over time.' },
+    ],
+
+    exercises: [
+      {
+        title: 'Earth\'s Breath',
+        body: 'Sit somewhere comfortable and place both hands on your belly, just below the navel. Breathe in deeply for four counts and send the breath down into the belly — feel your hands pushed outward. Hold for two counts. Exhale slowly for six counts with a soft "huuu" sound — the Spleen\'s healing sound in Chinese medicine. Feel the belly draw inward again. Eight to ten times. This gathers you when you are scattered, and reminds the body that the centre is in the belly.',
+      },
+      {
+        title: 'Spleen Meridian Stroking',
+        body: 'The Spleen meridian runs from the big toe up along the inner foot and leg, into the body and up to the chest. Sit and stroke with a flat hand from the big toe upward along the inner leg, knee, thigh — as far up the body as feels natural. Slowly, with warmth and weight. Five to seven times on each side. This supports the Spleen\'s ability to lift and distribute nourishment through the body.',
+      },
+      {
+        title: 'Yin Yoga: Sphinx',
+        body: 'Lie on your belly with elbows under shoulders and forearms on the floor. Let the hips rest heavily into the ground and feel a gentle compression in the lower back and belly — exactly where the Spleen and Stomach live. Three to five minutes. The Sphinx gives a soft massage to the belly and lower back and supports digestion. It is a pose that asks you to be present exactly where you are — and that is Earth\'s deepest message.',
+      },
+      {
+        title: 'Mind: The Two Circles',
+        body: 'Take a piece of paper and draw two circles. In the inner circle, write what truly nourishes you — the people, activities, and values that form your centre. In the outer circle, write everything that fills your time but doesn\'t necessarily nourish. Look at the two circles. Is there balance? Do you spend most of your time in the inner or the outer? The Spleen is about digesting and distributing — and this exercise gives that function a concrete form: you are sorting your life by what truly feeds you.',
+      },
+      {
+        title: 'Bare Feet on Earth',
+        body: 'Walk barefoot — on grass, on sand, on soil. Feel the ground beneath your feet and let your body\'s weight sink down. Ten to fifteen minutes. The Spleen meridian begins at the big toe, and direct contact with the earth awakens that energy. This exercise connects you literally to the element your phase is about — finding solid ground.',
+      },
+    ],
+
+    diet: {
+      title: 'Diet and Body',
+      intro: 'Diet in this phase is about supporting the Spleen and Stomach and giving the body the steady nourishment it needs for everything being built. Earth\'s food is warm, naturally sweet, and easy to digest.',
+      foods: [
+        { category: 'Earth-supporting foods', items: 'Root vegetables nourish the Spleen — carrots, sweet potatoes, parsnips, beetroot. Porridge made with oats, rice, or millet provides slow, stable energy. Legumes like chickpeas, lentils, and beans give protein and grounding. Cooked, warm food is easier to digest than raw and cold. The naturally sweet taste — from fruit, root vegetables, whole grains — supports the Spleen without overwhelming it.' },
+        { category: 'Herbs and spices', items: 'Ginger warms the Spleen and supports digestion. Cinnamon stabilises blood sugar. Cardamom and fennel prevent bloating. Liquorice root nourishes the Spleen directly and is one of the most widely used herbs in Chinese medicine.' },
+        { category: 'Building strength', items: 'Good quality protein from eggs, fish, legumes, and moderate amounts of meat supports the muscle growth that Earth governs. Iron-rich foods help maintain the blood the Spleen manages.' },
+        { category: 'Reduce', items: 'Raw, cold food and ice-cold drinks dampen the Spleen\'s digestive fire. Refined sugar gives quick energy but depletes Spleen Qi over time. Too much dairy and soft cheese can create dampness in the system. And irregular meals may be the greatest burden of all — the Spleen thrives on rhythm.' },
+      ],
+    },
+
+    themes: [
+      {
+        title: 'Career and Direction',
+        body: 'In this phase, the question "what do I want to do with my life?" becomes genuinely concrete. Education is typically complete, and now a direction must be chosen. Earth gives the capacity that Fire lacked: patience. The ability to stay in one place long enough to see whether it bears fruit. The ability to digest disappointments without giving up. Finding a balance between ambition and acceptance is one of the great tasks here.',
+      },
+      {
+        title: 'Partnership and Intimacy',
+        body: 'Love gains new depth in this phase. Where the infatuations of youth were intense and fleeting, relationships now begin to be about something more — about building a life together, about genuine intimacy, about being truly seen and known. Earth is about nourishment, and that includes relationships: what nourishes this partnership? What gives it solid ground? Whether or not you are in a relationship, this phase is about learning to create real intimacy — with a partner, with friends, with yourself.',
+      },
+      {
+        title: 'Social Media and Comparison',
+        body: 'Other people\'s highlights stream past in a current, and it is hard to remember that what you see is a selection, not a whole life. Your path does not need to look like anyone else\'s to be valid. Earth is about finding your own centre — not someone else\'s. The comparison that social media amplifies can drain Spleen energy as surely as skipping meals. Be conscious of how much you consume — and notice how it makes you feel.',
+      },
+    ],
+
+    seasons: {
+      title: 'The Year\'s Rhythm in the Blossoming Years',
+      entries: [
+        { season: 'Late Summer', body: 'Speaks most directly to this phase, because the season and life phase share the same element. The heavy, ripe days of August, when fruit hangs thick on the branches and the air is warm and still — that is Earth meeting Earth. Many women in this phase feel a particular contentment in late summer, a sense that all is as it should be.' },
+        { season: 'Summer', body: 'Fire nourishes Earth in the Sheng cycle. Summer\'s joy and connection feed Earth directly — the gatherings, the outdoor life, the warmth that keeps evenings and friendships bright. This is the season that pours straight into your life phase\'s energy.' },
+        { season: 'Spring', body: 'Wood controls Earth in the Ke cycle, which can bring restlessness in spring — an urge for change that collides with Earth\'s need for stability. Use that energy consciously: spring is a good time to start new projects, but let Earth give them roots.' },
+        { season: 'Autumn', body: 'Earth nourishes Metal in the Sheng cycle. Autumn\'s sorting energy can help you see what truly feeds you — and what merely fills space. A fruitful time for clearing out and setting priorities.' },
+        { season: 'Winter', body: 'Earth controls Water in the Ke cycle, so your Earth energy can hold you up through the dark months — but winter also asks you to rest more deeply than you may want to in a phase where you are eager to build.' },
+      ],
+    },
+
+    reflections: [
+      'What gives you solid ground right now?',
+      'What nourishes you — truly nourishes you, not just fills the hours?',
+      'When do you notice your thoughts circling, and what helps you land?',
+      'Is there a dream you set aside because it wasn\'t realistic enough?',
+      'Who are the people at your centre — and do they know it?',
+    ],
+
+    transitionNext: {
+      title: 'The Transition to Phase 5',
+      body: 'Around twenty-eight, the Earth element begins to mature into its second phase. The choices made in the twenties gain consequence and depth. Career demands more, partnership demands more, and perhaps children are arriving who will demand the most of all.',
+      next: 'Earth continues into Phase 5, but it changes character. Where Phase 4 was about planting and finding roots, Phase 5 is about consolidating and bearing weight. The Spleen and Stomach have more to digest now — both literally and figuratively. You can no longer burn for everything at once. Now it is about choosing what receives your nourishment — and what must manage on its own. The earth carries on. And the fruit you planted is beginning to ripen.',
+    },
+  },
+
   7: {
     title: 'Harvest',
     subtitle: 'Seeing what truly matters',
