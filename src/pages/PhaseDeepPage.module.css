@@ -129,12 +129,18 @@
 }
 
 /* Illustrations */
-.illustration {
-  width: 200px;
+.heroIllustration {
+  width: 260px;
   height: auto;
-  margin: var(--space-sm) auto;
+  margin: var(--space-md) auto var(--space-lg);
   display: block;
-  opacity: 0.85;
+}
+
+.illustration {
+  width: 220px;
+  height: auto;
+  margin: var(--space-lg) auto;
+  display: block;
 }
 
 /* Section titles */

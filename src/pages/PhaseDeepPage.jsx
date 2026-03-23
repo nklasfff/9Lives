@@ -130,6 +130,8 @@ export default function PhaseDeepPage() {
 
       <LeavesIllustration color={el.hex} />
 
+      <ThemesIllustration color={el.hex} />
+
       {/* Themes — each collapsible */}
       <h2 className={styles.themesTitle}>Themes in the Harvest Years</h2>
       {deep.themes.map((theme, i) => (
@@ -232,13 +234,18 @@ function ElementDetail({ label, value, symbol, color }) {
 function PhaseElementIllustration({ element }) {
   const el = getElementInfo(element);
   return (
-    <svg viewBox="0 0 200 80" className={styles.illustration}>
-      <style>{`@keyframes phaseBreathe { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.35; } }`}</style>
-      <circle cx="100" cy="40" r="30" fill={el.hex} opacity="0.12"
-        style={{ animation: 'phaseBreathe 8s ease-in-out infinite' }} />
-      <circle cx="100" cy="40" r="22" fill="none" stroke={el.hex} strokeWidth="0.7" opacity="0.35" />
-      <text x="100" y="42" textAnchor="middle" dominantBaseline="central"
-        fill={el.hex} fontSize="16" fontWeight="300" opacity="0.7">
+    <svg viewBox="0 0 200 150" className={styles.heroIllustration}>
+      <style>{`
+        @keyframes phaseBreathe { 0%, 100% { opacity: 0.15; } 50% { opacity: 0.3; } }
+        @keyframes phaseRing { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.45; } }
+      `}</style>
+      <circle cx="100" cy="75" r="55" fill={el.hex} opacity="0.08"
+        style={{ animation: 'phaseBreathe 10s ease-in-out infinite' }} />
+      <circle cx="100" cy="75" r="42" fill="none" stroke={el.hex} strokeWidth="0.8" opacity="0.4"
+        style={{ animation: 'phaseRing 8s ease-in-out infinite' }} />
+      <circle cx="100" cy="75" r="55" fill="none" stroke={el.hex} strokeWidth="0.4" opacity="0.2" strokeDasharray="3 5" />
+      <text x="100" y="80" textAnchor="middle" dominantBaseline="central"
+        fill={el.hex} fontSize="32" fontWeight="300" opacity="0.75">
         {el.chinese}
       </text>
     </svg>
@@ -248,14 +255,13 @@ function PhaseElementIllustration({ element }) {
 function BreathIllustration({ color }) {
   return (
     <svg viewBox="0 0 220 50" className={styles.illustration}>
-      <style>{`@keyframes breathDot { 0%, 100% { opacity: 0.15; } 50% { opacity: 0.5; } }`}</style>
-      {/* Sine wave */}
+      <style>{`@keyframes breathDot { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.7; } }`}</style>
       <path d="M 10 25 Q 35 8 60 25 Q 85 42 110 25 Q 135 8 160 25 Q 185 42 210 25"
-        fill="none" stroke={color} strokeWidth="0.7" opacity="0.25" />
+        fill="none" stroke={color} strokeWidth="1" opacity="0.4" />
       <path d="M 10 25 Q 35 42 60 25 Q 85 8 110 25 Q 135 42 160 25 Q 185 8 210 25"
-        fill="none" stroke={color} strokeWidth="0.4" opacity="0.12" />
+        fill="none" stroke={color} strokeWidth="0.6" opacity="0.2" />
       {[35, 85, 135, 185].map((x, i) => (
-        <circle key={i} cx={x} cy="25" r="2" fill={color} opacity="0.2"
+        <circle key={i} cx={x} cy="25" r="2.5" fill={color} opacity="0.35"
           style={{ animation: `breathDot ${5 + i}s ease-in-out ${i * 1.2}s infinite` }} />
       ))}
     </svg>
@@ -266,15 +272,15 @@ function LeavesIllustration({ color }) {
   return (
     <svg viewBox="0 0 240 60" className={styles.illustration}>
       <style>{`
-        @keyframes leafDrift { 0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.25; } 50% { transform: translateY(5px) rotate(8deg); opacity: 0.45; } }
+        @keyframes leafDrift { 0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.35; } 50% { transform: translateY(5px) rotate(8deg); opacity: 0.6; } }
       `}</style>
       {[25, 65, 105, 145, 185, 215].map((x, i) => {
         const y = 20 + (i % 3) * 10;
-        const size = 6 + (i % 3) * 2;
+        const size = 7 + (i % 3) * 2;
         return (
           <g key={i} style={{ animation: `leafDrift ${5 + i * 0.8}s ease-in-out ${i * 0.6}s infinite`, transformOrigin: `${x}px ${y}px` }}>
-            <ellipse cx={x} cy={y} rx={size} ry={size * 0.4} fill={color} opacity="0.15" transform={`rotate(${-20 + i * 15} ${x} ${y})`} />
-            <line x1={x - size * 0.5} y1={y} x2={x + size * 0.5} y2={y} stroke={color} strokeWidth="0.3" opacity="0.2" transform={`rotate(${-20 + i * 15} ${x} ${y})`} />
+            <ellipse cx={x} cy={y} rx={size} ry={size * 0.4} fill={color} opacity="0.25" transform={`rotate(${-20 + i * 15} ${x} ${y})`} />
+            <line x1={x - size * 0.5} y1={y} x2={x + size * 0.5} y2={y} stroke={color} strokeWidth="0.5" opacity="0.35" transform={`rotate(${-20 + i * 15} ${x} ${y})`} />
           </g>
         );
       })}
@@ -282,18 +288,48 @@ function LeavesIllustration({ color }) {
   );
 }
 
+function ThemesIllustration({ color }) {
+  // A harvest basket / gathering motif — arcs converging into center
+  return (
+    <svg viewBox="0 0 220 80" className={styles.illustration}>
+      <style>{`
+        @keyframes themeGather { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.55; } }
+        @keyframes themePulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.6; } }
+      `}</style>
+      {/* Converging arcs */}
+      {[-40, -20, 0, 20, 40].map((offset, i) => (
+        <path key={i}
+          d={`M ${60 + offset * 0.5} 65 Q 110 ${15 + Math.abs(offset) * 0.3} ${160 - offset * 0.5} 65`}
+          fill="none" stroke={color} strokeWidth="0.7" opacity="0.3"
+          style={{ animation: `themeGather ${7 + i}s ease-in-out ${i * 0.6}s infinite` }}
+        />
+      ))}
+      {/* Center gathering point */}
+      <circle cx="110" cy="35" r="8" fill={color} opacity="0.1"
+        style={{ animation: 'themePulse 6s ease-in-out infinite' }} />
+      <circle cx="110" cy="35" r="4" fill={color} opacity="0.25" />
+      {/* Small harvest dots */}
+      {[75, 90, 110, 130, 145].map((x, i) => (
+        <circle key={`d${i}`} cx={x} cy={60 - (i % 2) * 5} r="2" fill={color} opacity="0.2"
+          style={{ animation: `themePulse ${5 + i * 0.8}s ease-in-out ${i * 0.4}s infinite` }} />
+      ))}
+    </svg>
+  );
+}
+
 function OrganFlowIllustration({ color }) {
   return (
     <svg viewBox="0 0 200 55" className={styles.illustration}>
-      <style>{`@keyframes organPulse { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.5; } }`}</style>
-      {/* Two organ circles connected */}
-      <circle cx="70" cy="28" r="16" fill="none" stroke={color} strokeWidth="0.6" opacity="0.3"
+      <style>{`@keyframes organPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.65; } }`}</style>
+      <circle cx="70" cy="28" r="16" fill={color} opacity="0.06" />
+      <circle cx="70" cy="28" r="16" fill="none" stroke={color} strokeWidth="0.8" opacity="0.45"
         style={{ animation: 'organPulse 6s ease-in-out infinite' }} />
-      <text x="70" y="29" textAnchor="middle" dominantBaseline="central" fill={color} fontSize="6" opacity="0.5" fontFamily="var(--font-display)" fontStyle="italic">Lungs</text>
-      <line x1="86" y1="28" x2="114" y2="28" stroke={color} strokeWidth="0.4" opacity="0.2" strokeDasharray="2 3" />
-      <circle cx="130" cy="28" r="16" fill="none" stroke={color} strokeWidth="0.6" opacity="0.3"
+      <text x="70" y="29" textAnchor="middle" dominantBaseline="central" fill={color} fontSize="6" opacity="0.65" fontFamily="var(--font-display)" fontStyle="italic">Lungs</text>
+      <line x1="86" y1="28" x2="114" y2="28" stroke={color} strokeWidth="0.6" opacity="0.3" strokeDasharray="2 3" />
+      <circle cx="130" cy="28" r="16" fill={color} opacity="0.06" />
+      <circle cx="130" cy="28" r="16" fill="none" stroke={color} strokeWidth="0.8" opacity="0.45"
         style={{ animation: 'organPulse 6s ease-in-out 1.5s infinite' }} />
-      <text x="130" y="29" textAnchor="middle" dominantBaseline="central" fill={color} fontSize="5" opacity="0.5" fontFamily="var(--font-display)" fontStyle="italic">L. Intestine</text>
+      <text x="130" y="29" textAnchor="middle" dominantBaseline="central" fill={color} fontSize="5" opacity="0.65" fontFamily="var(--font-display)" fontStyle="italic">L. Intestine</text>
     </svg>
   );
 }
@@ -308,17 +344,18 @@ function SeasonsIllustration({ color }) {
   ];
   return (
     <svg viewBox="0 0 260 55" className={styles.illustration}>
-      <style>{`@keyframes sDot { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.55; } }`}</style>
+      <style>{`@keyframes sDot { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }`}</style>
       {seasons.map((s, i) => {
         const x = 30 + i * 50;
         const isActive = s.c === color;
         return (
           <g key={i}>
-            {i < 4 && <line x1={x + 12} y1="22" x2={x + 38} y2="22" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" />}
+            {i < 4 && <line x1={x + 12} y1="22" x2={x + 38} y2="22" stroke="rgba(255,255,255,0.12)" strokeWidth="0.6" />}
+            {isActive && <circle cx={x} cy="22" r="13" fill={s.c} opacity="0.1" />}
             <circle cx={x} cy="22" r={isActive ? '10' : '7'} fill="none" stroke={s.c}
-              strokeWidth={isActive ? '1' : '0.5'} opacity={isActive ? '0.6' : '0.25'}
+              strokeWidth={isActive ? '1.2' : '0.7'} opacity={isActive ? '0.7' : '0.35'}
               style={{ animation: `sDot ${6 + i}s ease-in-out ${i * 0.5}s infinite` }} />
-            <text x={x} y="40" textAnchor="middle" fill={s.c} fontSize="5" opacity={isActive ? '0.7' : '0.35'}
+            <text x={x} y="40" textAnchor="middle" fill={s.c} fontSize="5.5" opacity={isActive ? '0.8' : '0.45'}
               fontFamily="var(--font-display)" fontStyle="italic">{s.label}</text>
           </g>
         );
@@ -330,12 +367,12 @@ function SeasonsIllustration({ color }) {
 function ReflectionIllustration({ color }) {
   return (
     <svg viewBox="0 0 200 60" className={styles.illustration}>
-      <style>{`@keyframes ripple { 0% { r: 5; opacity: 0.4; } 100% { r: 40; opacity: 0; } }`}</style>
+      <style>{`@keyframes ripple { 0% { r: 5; opacity: 0.5; } 100% { r: 45; opacity: 0; } }`}</style>
       {[0, 1, 2].map((i) => (
-        <circle key={i} cx="100" cy="30" r="5" fill="none" stroke={color} strokeWidth="0.5"
+        <circle key={i} cx="100" cy="30" r="5" fill="none" stroke={color} strokeWidth="0.7"
           style={{ animation: `ripple 5s ease-out ${i * 1.7}s infinite` }} />
       ))}
-      <circle cx="100" cy="30" r="3" fill={color} opacity="0.3" />
+      <circle cx="100" cy="30" r="4" fill={color} opacity="0.4" />
     </svg>
   );
 }
