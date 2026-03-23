@@ -384,3 +384,90 @@
   display: block;
   opacity: 0.7;
 }
+
+/* Deeper layer cards */
+.deeperCards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: 0 var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.deepCard {
+  /* inherits GlassCard */
+}
+
+.deepLabel {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.deepTitle {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  margin-bottom: var(--space-sm);
+}
+
+.deepBody {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  line-height: 1.75;
+  margin-bottom: var(--space-xs);
+}
+
+.deepHint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: var(--space-sm);
+}
+
+/* Vessel list */
+.vesselList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.vesselItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.vesselItem:last-child {
+  border-bottom: none;
+}
+
+.vesselChinese {
+  font-size: 1.3rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1;
+  min-width: 36px;
+}
+
+.vesselName {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--text-bright);
+  display: block;
+}
+
+.vesselRole {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  display: block;
+  margin-top: 2px;
+}

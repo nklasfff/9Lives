@@ -204,6 +204,62 @@ export default function RelationsPage() {
       </div>
 
       <CyclesIllustration />
+
+      {/* Deeper layer cards */}
+      <div className={styles.deeperCards}>
+        <GlassCard className={styles.deepCard}>
+          <span className={styles.deepLabel}>Wu Shen · Relational Layer</span>
+          <h3 className={styles.deepTitle}>Spirits Between You</h3>
+          <p className={styles.deepBody}>
+            When two elements meet, the spirit that governs their connection reveals the quality of the space between them. A Fire-Wood relationship is held by Hun — the dreaming, creative spirit. A Water-Earth meeting is held by Yi — the ground of shared thought and care.
+          </p>
+          <p className={styles.deepHint}>
+            Add someone to discover which spirit governs the space between you.
+          </p>
+        </GlassCard>
+
+        <GlassCard className={styles.deepCard}>
+          <span className={styles.deepLabel}>Qi Jing Ba Mai · Relational Layer</span>
+          <h3 className={styles.deepTitle}>The Relational Vessels</h3>
+          <p className={styles.deepBody}>
+            Three of the eight extraordinary meridians speak directly to how we bond, inherit, and hold what is unprocessed between us.
+          </p>
+          <div className={styles.vesselList}>
+            <div className={styles.vesselItem}>
+              <span className={styles.vesselChinese}>任脈</span>
+              <div>
+                <span className={styles.vesselName}>Ren Mai</span>
+                <span className={styles.vesselRole}>Bonding & nourishment — can you receive care?</span>
+              </div>
+            </div>
+            <div className={styles.vesselItem}>
+              <span className={styles.vesselChinese}>衝脈</span>
+              <div>
+                <span className={styles.vesselName}>Chong Mai</span>
+                <span className={styles.vesselRole}>Ancestral patterns — what is inherited between you?</span>
+              </div>
+            </div>
+            <div className={styles.vesselItem}>
+              <span className={styles.vesselChinese}>帶脈</span>
+              <div>
+                <span className={styles.vesselName}>Dai Mai</span>
+                <span className={styles.vesselRole}>Unprocessed residue — what is held but not yet spoken?</span>
+              </div>
+            </div>
+          </div>
+        </GlassCard>
+
+        <GlassCard className={styles.deepCard}>
+          <span className={styles.deepLabel}>Life Phases · Relational Layer</span>
+          <h3 className={styles.deepTitle}>Phase Rhythms</h3>
+          <p className={styles.deepBody}>
+            Women move through 7-year cycles, men through 8-year cycles. This biological offset means partners, parents and children are almost never in the same life phase at the same time — creating both friction and growth.
+          </p>
+          <p className={styles.deepBody}>
+            A woman at 42 enters the Harvest (Metal/Autumn). Her same-age partner is still in Responsibility (Earth/Late Summer). They are living different seasons simultaneously — and understanding this difference can transform how they meet each other.
+          </p>
+        </GlassCard>
+      </div>
     </div>
   );
 }
