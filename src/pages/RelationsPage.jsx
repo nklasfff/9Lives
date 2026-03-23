@@ -58,12 +58,51 @@ export default function RelationsPage() {
 
       <IkigaiIllustration userColor={userEl.hex} />
 
+      {/* Introduction card */}
       <div className={styles.content}>
+        <GlassCard>
+          <p className={styles.introText}>
+            Every relationship carries an elemental signature. When you add someone, their birth year reveals their element — and the dynamic between your elements tells a story of nourishment, challenge, or deep resonance.
+          </p>
+        </GlassCard>
+
+        {/* Feature cards */}
+        <div className={styles.featureCards}>
+          <GlassCard className={styles.featureCard}>
+            <span className={styles.featureIcon}>◯—◯</span>
+            <h4 className={styles.featureTitle}>Elemental Dynamics</h4>
+            <p className={styles.featureDesc}>See how your element interacts with theirs — nourishing, tempering, or mirroring</p>
+          </GlassCard>
+          <GlassCard className={styles.featureCard}>
+            <span className={styles.featureIcon}>◯—◯—◯</span>
+            <h4 className={styles.featureTitle}>Group Constellations</h4>
+            <p className={styles.featureDesc}>Add your partner, mother, child, friend — see how the whole field moves together</p>
+          </GlassCard>
+        </div>
+
+        {/* Your element summary */}
+        <GlassCard glowColor={`${userEl.hex}10`}>
+          <div className={styles.youCard}>
+            <span className={styles.youSymbol} style={{ color: userEl.hex }}>{userEl.chinese}</span>
+            <div>
+              <span className={styles.youLabel}>You</span>
+              <h3 className={styles.youElement} style={{ color: userEl.hex }}>{userEl.name}</h3>
+              <span className={styles.youMeta}>Phase {data.phase.phase} · {data.phase.title} · {data.phase.season}</span>
+            </div>
+          </div>
+        </GlassCard>
+
+        {/* Friends list */}
         {friends.length > 0 && (
           <div className={styles.friendsList}>
+            <h2 className={styles.sectionTitle}>Your People</h2>
             {friends.map((friend) => {
               const friendEl = getElementInfo(friend.element);
               const rel = getRelationship(data.element, friend.element);
+              const friendPhaseInfo = getLifePhase(
+                calculateAge(friend.birthYear, 6, 15),
+                friend.gender
+              );
               return (
                 <GlassCard key={friend.id} glowColor={`${friendEl.hex}15`}>
                   <div className={styles.friendHeader}>
@@ -80,6 +119,7 @@ export default function RelationsPage() {
                     </div>
                     <button className={styles.removeBtn} onClick={() => removeFriend(friend.id)}>×</button>
                   </div>
+
                   <div className={styles.relationType}>
                     <div className={styles.relDots}>
                       <span className={styles.relDot} style={{ background: userEl.hex }} />
@@ -89,12 +129,24 @@ export default function RelationsPage() {
                     <span className={styles.relName}>{rel.name}</span>
                   </div>
                   <p className={styles.relDesc}>{rel.description}</p>
+
+                  <div className={styles.phaseComparison}>
+                    <div className={styles.phaseItem}>
+                      <span className={styles.phaseLabel}>You</span>
+                      <span className={styles.phaseValue}>Phase {data.phase.phase} · {data.phase.title}</span>
+                    </div>
+                    <div className={styles.phaseItem}>
+                      <span className={styles.phaseLabel}>{friend.name}</span>
+                      <span className={styles.phaseValue}>Phase {friendPhaseInfo.phase} · {friendPhaseInfo.title}</span>
+                    </div>
+                  </div>
                 </GlassCard>
               );
             })}
           </div>
         )}
 
+        {/* Add person */}
         {showForm ? (
           <GlassCard className={styles.formCard}>
             <h3 className={styles.formTitle}>Add someone</h3>

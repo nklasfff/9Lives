@@ -31,6 +31,121 @@
   display: block;
 }
 
+/* Intro */
+.introText {
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  line-height: 1.75;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Feature cards */
+.featureCards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.featureCard {
+  text-align: center;
+  padding: var(--space-md) var(--space-sm) !important;
+}
+
+.featureIcon {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.featureTitle {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  margin-bottom: 4px;
+}
+
+.featureDesc {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* You card */
+.youCard {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.youSymbol {
+  font-size: 2.2rem;
+  font-weight: 300;
+  text-shadow: 0 0 25px currentColor;
+  line-height: 1;
+}
+
+.youLabel {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  display: block;
+}
+
+.youElement {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin: 2px 0;
+}
+
+.youMeta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Section title */
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  text-align: center;
+  margin-bottom: var(--space-xs);
+}
+
+/* Phase comparison */
+.phaseComparison {
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.phaseItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.phaseLabel {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.phaseValue {
+  font-size: 0.8rem;
+  color: var(--text-primary);
+}
+
 /* Content area */
 .content {
   display: flex;
