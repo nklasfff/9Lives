@@ -180,118 +180,125 @@ function SpiritsIllustration() {
 }
 
 function OrganClockVisualization({ currentOrgan }) {
-  const cx = 130, cy = 130, r = 110;
-  const innerR = 75;
+  const cx = 140, cy = 140, outerR = 125, innerR = 60;
+
+  function arcPath(startDeg, endDeg, radius) {
+    const s = (startDeg - 90) * (Math.PI / 180);
+    const e = (endDeg - 90) * (Math.PI / 180);
+    const x1 = cx + radius * Math.cos(s);
+    const y1 = cy + radius * Math.sin(s);
+    const x2 = cx + radius * Math.cos(e);
+    const y2 = cy + radius * Math.sin(e);
+    return `M ${x1} ${y1} A ${radius} ${radius} 0 0 1 ${x2} ${y2}`;
+  }
+
+  function segmentPath(startDeg, endDeg) {
+    const s = (startDeg - 90) * (Math.PI / 180);
+    const e = (endDeg - 90) * (Math.PI / 180);
+    const ox1 = cx + outerR * Math.cos(s), oy1 = cy + outerR * Math.sin(s);
+    const ox2 = cx + outerR * Math.cos(e), oy2 = cy + outerR * Math.sin(e);
+    const ix1 = cx + innerR * Math.cos(e), iy1 = cy + innerR * Math.sin(e);
+    const ix2 = cx + innerR * Math.cos(s), iy2 = cy + innerR * Math.sin(s);
+    return `M ${ox1} ${oy1} A ${outerR} ${outerR} 0 0 1 ${ox2} ${oy2} L ${ix1} ${iy1} A ${innerR} ${innerR} 0 0 0 ${ix2} ${iy2} Z`;
+  }
+
+  const activeElInfo = getElementInfo(currentOrgan.element);
 
   return (
-    <svg viewBox="0 0 260 260" className={styles.organClock}>
+    <svg viewBox="0 0 280 280" className={styles.organClock}>
       <style>{`
-        @keyframes clockPulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+        @keyframes segPulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.55; } }
       `}</style>
 
-      {/* Outer circle */}
-      <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
-      <circle cx={cx} cy={cy} r={innerR} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
-
-      {/* 12 segments */}
+      {/* Segments */}
       {ORGAN_CLOCK.map((organ, i) => {
-        const startAngle = (-90 + i * 30) * (Math.PI / 180);
-        const endAngle = (-90 + (i + 1) * 30) * (Math.PI / 180);
-        const midAngle = (-90 + (i + 0.5) * 30) * (Math.PI / 180);
+        const startDeg = i * 30;
+        const endDeg = (i + 1) * 30;
+        const midDeg = (startDeg + endDeg) / 2;
+        const midAngle = (midDeg - 90) * (Math.PI / 180);
         const isActive = organ.organ === currentOrgan.organ;
         const elInfo = getElementInfo(organ.element);
 
-        // Segment line from center outward
-        const lineX = cx + r * Math.cos(startAngle);
-        const lineY = cy + r * Math.sin(startAngle);
-
-        // Label position
-        const labelR = (r + innerR) / 2;
+        const labelR = (outerR + innerR) / 2;
         const labelX = cx + labelR * Math.cos(midAngle);
         const labelY = cy + labelR * Math.sin(midAngle);
 
-        // Time label position (outer)
-        const timeR = r + 12;
+        const timeR = outerR + 11;
         const timeX = cx + timeR * Math.cos(midAngle);
         const timeY = cy + timeR * Math.sin(midAngle);
 
-        // Active arc
-        const arcR = r - 2;
-        const x1 = cx + arcR * Math.cos(startAngle);
-        const y1 = cy + arcR * Math.sin(startAngle);
-        const x2 = cx + arcR * Math.cos(endAngle);
-        const y2 = cy + arcR * Math.sin(endAngle);
-
         return (
           <g key={i}>
-            {/* Divider line */}
-            <line
-              x1={cx + innerR * Math.cos(startAngle)}
-              y1={cy + innerR * Math.sin(startAngle)}
-              x2={lineX} y2={lineY}
-              stroke="rgba(255,255,255,0.08)"
-              strokeWidth="0.5"
-            />
-
-            {/* Active segment highlight */}
-            {isActive && (
-              <path
-                d={`M ${x1} ${y1} A ${arcR} ${arcR} 0 0 1 ${x2} ${y2}`}
-                fill="none"
-                stroke={elInfo.hex}
-                strokeWidth="3"
-                opacity="0.5"
-                style={{ animation: 'clockPulse 4s ease-in-out infinite' }}
-              />
-            )}
-
-            {/* Element color dot */}
-            <circle
-              cx={cx + (innerR + 12) * Math.cos(midAngle)}
-              cy={cy + (innerR + 12) * Math.sin(midAngle)}
-              r={isActive ? 3 : 1.5}
+            {/* Filled segment */}
+            <path
+              d={segmentPath(startDeg, endDeg)}
               fill={elInfo.hex}
-              opacity={isActive ? 0.8 : 0.25}
+              opacity={isActive ? 0.4 : 0.12}
+              stroke="rgba(8,12,20,0.8)"
+              strokeWidth="1.5"
+              style={isActive ? { animation: 'segPulse 4s ease-in-out infinite' } : undefined}
             />
 
             {/* Organ name */}
             <text
-              x={labelX} y={labelY}
+              x={labelX} y={labelY - 3}
               textAnchor="middle"
               dominantBaseline="central"
-              fill={isActive ? elInfo.hex : 'rgba(255,255,255,0.3)'}
-              fontSize={isActive ? '7' : '5.5'}
-              fontFamily="var(--font-display)"
-              fontWeight="300"
-              fontStyle="italic"
+              fill={isActive ? '#fff' : 'rgba(255,255,255,0.55)'}
+              fontSize={isActive ? '8' : '6.5'}
+              fontFamily="var(--font-body)"
+              fontWeight={isActive ? '500' : '300'}
             >
               {organ.organ.length > 12 ? organ.organ.split(' ')[0] : organ.organ}
+            </text>
+
+            {/* Time on outer edge */}
+            <text
+              x={timeX} y={timeY}
+              textAnchor="middle"
+              dominantBaseline="central"
+              fill="rgba(255,255,255,0.25)"
+              fontSize="4.5"
+              fontFamily="var(--font-body)"
+            >
+              {organ.time.split('–')[0]}
             </text>
           </g>
         );
       })}
 
-      {/* Center */}
-      <circle cx={cx} cy={cy} r="20" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
+      {/* Center circle */}
+      <circle cx={cx} cy={cy} r={innerR - 1} fill="var(--bg)" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" />
+
+      {/* Center info */}
       <text
-        x={cx} y={cy - 4}
+        x={cx} y={cy - 12}
+        textAnchor="middle"
+        fill={activeElInfo.hex}
+        fontSize="9"
+        fontFamily="var(--font-display)"
+        fontWeight="300"
+      >
+        {currentOrgan.organ}
+      </text>
+      <text
+        x={cx} y={cy + 4}
         textAnchor="middle"
         fill="rgba(255,255,255,0.5)"
         fontSize="7"
         fontFamily="var(--font-body)"
-        letterSpacing="0.08em"
       >
-        {currentOrgan.time.split('–')[0]}
+        {currentOrgan.time}
       </text>
       <text
-        x={cx} y={cy + 8}
+        x={cx} y={cy + 18}
         textAnchor="middle"
         fill="rgba(255,255,255,0.25)"
         fontSize="5"
-        fontFamily="var(--font-body)"
-        letterSpacing="0.06em"
+        fontFamily="var(--font-display)"
+        fontStyle="italic"
       >
-        {currentOrgan.time.split('–')[1]}
+        active now
       </text>
     </svg>
   );
