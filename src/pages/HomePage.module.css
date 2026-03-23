@@ -186,3 +186,35 @@
 .spiritActive {
   border-color: rgba(255, 255, 255, 0.1);
 }
+
+/* Tappable cards */
+.tappable {
+  cursor: pointer;
+}
+
+.tappable:active {
+  transform: scale(0.985);
+}
+
+.tapHint {
+  display: block;
+  margin-top: var(--space-sm);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-align: right;
+  opacity: 0.5;
+  transition: opacity var(--transition);
+}
+
+.tappable:hover .tapHint {
+  opacity: 0.8;
+}
+
+/* Branch character for Day Pillar */
+.branchCharacter {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-top: var(--space-xs);
+}

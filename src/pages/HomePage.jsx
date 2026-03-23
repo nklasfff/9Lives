@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import { getElementInfo } from '../engine/elements';
 import { getDayPillar } from '../engine/calendar';
@@ -11,6 +12,7 @@ import GlassCard from '../components/common/GlassCard';
 import styles from './HomePage.module.css';
 
 export default function HomePage() {
+  const navigate = useNavigate();
   const { getDerivedData } = useUser();
   const data = getDerivedData();
 
@@ -46,7 +48,7 @@ export default function HomePage() {
       </section>
 
       <section className={styles.cards}>
-        <GlassCard glowColor={`${phaseElementInfo.hex}20`}>
+        <GlassCard glowColor={`${phaseElementInfo.hex}20`} onClick={() => navigate('/explore/phases')} className={styles.tappable}>
           <div className={styles.cardHeader}>
             <span className={styles.cardLabel}>Life Phase {data.phase.phase}</span>
             <span className={styles.cardAccent} style={{ color: phaseElementInfo.hex }}>
@@ -56,9 +58,10 @@ export default function HomePage() {
           <h3 className={styles.cardTitle}>{data.phase.title}</h3>
           <p className={styles.cardQuote}>{data.phase.subtitle}</p>
           <p className={styles.cardBody}>{data.phase.description}</p>
+          <span className={styles.tapHint}>Explore all phases →</span>
         </GlassCard>
 
-        <GlassCard glowColor={`${today.dayElementInfo.hex}20`}>
+        <GlassCard glowColor={`${today.dayElementInfo.hex}20`} onClick={() => navigate('/time')} className={styles.tappable}>
           <div className={styles.cardHeader}>
             <span className={styles.cardLabel}>Today</span>
             <span className={styles.cardAccent} style={{ color: today.dayElementInfo.hex }}>
@@ -70,18 +73,20 @@ export default function HomePage() {
             {today.dayPillar.chineseLabel} {today.dayPillar.label}
           </p>
           <p className={styles.cardQuote}>{today.dayPillar.stemImage}</p>
+          <p className={styles.branchCharacter}>{today.dayPillar.branchCharacter}</p>
           {today.relationship && (
             <div className={styles.relationship}>
               <span className={styles.relType}>{today.relationship.name}</span>
               <p className={styles.relDesc}>{today.relationship.description}</p>
             </div>
           )}
+          <span className={styles.tapHint}>Explore any date →</span>
         </GlassCard>
 
         {today.currentOrgan && (() => {
           const organElementInfo = getElementInfo(today.currentOrgan.element);
           return (
-            <GlassCard glowColor={`${organElementInfo.hex}15`}>
+            <GlassCard glowColor={`${organElementInfo.hex}15`} onClick={() => navigate('/time')} className={styles.tappable}>
               <div className={styles.cardHeader}>
                 <span className={styles.cardLabel}>Organ Clock</span>
                 <span className={styles.cardAccent} style={{ color: organElementInfo.hex }}>
@@ -91,6 +96,7 @@ export default function HomePage() {
               <OrganClockVisualization currentOrgan={today.currentOrgan} />
               <p className={styles.cardQuote}>{today.currentOrgan.quality}</p>
               <p className={styles.cardBody}>{today.currentOrgan.guidance}</p>
+              <span className={styles.tapHint}>Time Travel →</span>
             </GlassCard>
           );
         })()}
@@ -105,8 +111,9 @@ export default function HomePage() {
             return (
               <GlassCard
                 key={spirit.key}
-                className={spirit.isActive ? styles.spiritActive : ''}
+                className={`${spirit.isActive ? styles.spiritActive : ''} ${styles.tappable}`}
                 glowColor={spirit.isActive ? `${spiritElementInfo.hex}25` : undefined}
+                onClick={() => navigate('/explore/spirits')}
               >
                 <div className={styles.spiritHeader}>
                   <div>
@@ -122,6 +129,7 @@ export default function HomePage() {
                   )}
                 </div>
                 <p className={styles.spiritReflection}>{spirit.todayReflection}</p>
+                <span className={styles.tapHint}>Read more →</span>
               </GlassCard>
             );
           })}
