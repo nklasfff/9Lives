@@ -97,6 +97,7 @@ export default function HomePage() {
         <div className={styles.spiritsSection}>
           <h2 className={styles.sectionTitle}>The Five Spirits</h2>
           <p className={styles.sectionSubtitle}>Today's reflections for your inner landscape</p>
+          <SpiritsIllustration />
 
           {today.spirits.map((spirit) => {
             const spiritElementInfo = getElementInfo(spirit.element);
@@ -126,5 +127,48 @@ export default function HomePage() {
         </div>
       </section>
     </div>
+  );
+}
+
+function SpiritsIllustration() {
+  const colors = ['#c75a3a', '#4a9e6e', '#a8b8c8', '#c9a84c', '#3a6fa0'];
+  return (
+    <svg viewBox="0 0 240 80" className={styles.spiritsIllustration}>
+      {/* Five circles connected by lines — representing the five spirits */}
+      {colors.map((color, i) => {
+        const x = 30 + i * 45;
+        const y = 40;
+        return (
+          <g key={i}>
+            {i < 4 && (
+              <line
+                x1={x + 10} y1={y}
+                x2={x + 35} y2={y}
+                stroke="rgba(255,255,255,0.08)"
+                strokeWidth="0.5"
+                strokeDasharray="2 3"
+              />
+            )}
+            <circle cx={x} cy={y} r="10" fill="none" stroke={color} strokeWidth="0.6" opacity="0.4" />
+            <circle cx={x} cy={y} r="3" fill={color} opacity="0.2" />
+          </g>
+        );
+      })}
+      {/* Subtle arcs connecting non-adjacent spirits (Sheng cycle) */}
+      {[0, 1, 2, 3, 4].map((i) => {
+        const x1 = 30 + i * 45;
+        const x2 = 30 + ((i + 2) % 5) * 45;
+        const midX = (x1 + x2) / 2;
+        return (
+          <path
+            key={`arc-${i}`}
+            d={`M ${x1} 40 Q ${midX} ${i % 2 === 0 ? 15 : 65} ${x2} 40`}
+            fill="none"
+            stroke="rgba(255,255,255,0.04)"
+            strokeWidth="0.5"
+          />
+        );
+      })}
+    </svg>
   );
 }

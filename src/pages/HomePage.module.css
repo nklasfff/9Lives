@@ -117,6 +117,14 @@
   gap: var(--space-md);
 }
 
+.spiritsIllustration {
+  width: 240px;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+  opacity: 0.8;
+}
+
 .sectionTitle {
   font-family: var(--font-display);
   font-size: 1.6rem;
