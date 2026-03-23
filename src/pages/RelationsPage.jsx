@@ -211,39 +211,33 @@ export default function RelationsPage() {
           <span className={styles.deepLabel}>Wu Shen · Relational Layer</span>
           <h3 className={styles.deepTitle}>Spirits Between You</h3>
           <p className={styles.deepBody}>
-            When two elements meet, the spirit that governs their connection reveals the quality of the space between them. A Fire-Wood relationship is held by Hun — the dreaming, creative spirit. A Water-Earth meeting is held by Yi — the ground of shared thought and care.
-          </p>
-          <p className={styles.deepHint}>
-            Add someone to discover which spirit governs the space between you.
+            When two elements meet, a spirit governs the space between them. Add someone to discover which spirit holds your connection.
           </p>
         </GlassCard>
 
         <GlassCard className={styles.deepCard}>
           <span className={styles.deepLabel}>Qi Jing Ba Mai · Relational Layer</span>
           <h3 className={styles.deepTitle}>The Relational Vessels</h3>
-          <p className={styles.deepBody}>
-            Three of the eight extraordinary meridians speak directly to how we bond, inherit, and hold what is unprocessed between us.
-          </p>
           <div className={styles.vesselList}>
             <div className={styles.vesselItem}>
               <span className={styles.vesselChinese}>任脈</span>
               <div>
                 <span className={styles.vesselName}>Ren Mai</span>
-                <span className={styles.vesselRole}>Bonding & nourishment — can you receive care?</span>
+                <span className={styles.vesselRole}>Bonding — can you receive care?</span>
               </div>
             </div>
             <div className={styles.vesselItem}>
               <span className={styles.vesselChinese}>衝脈</span>
               <div>
                 <span className={styles.vesselName}>Chong Mai</span>
-                <span className={styles.vesselRole}>Ancestral patterns — what is inherited between you?</span>
+                <span className={styles.vesselRole}>Ancestry — what is inherited between you?</span>
               </div>
             </div>
             <div className={styles.vesselItem}>
               <span className={styles.vesselChinese}>帶脈</span>
               <div>
                 <span className={styles.vesselName}>Dai Mai</span>
-                <span className={styles.vesselRole}>Unprocessed residue — what is held but not yet spoken?</span>
+                <span className={styles.vesselRole}>Shadow — what is held but not yet spoken?</span>
               </div>
             </div>
           </div>
@@ -253,10 +247,7 @@ export default function RelationsPage() {
           <span className={styles.deepLabel}>Life Phases · Relational Layer</span>
           <h3 className={styles.deepTitle}>Phase Rhythms</h3>
           <p className={styles.deepBody}>
-            Women move through 7-year cycles, men through 8-year cycles. This biological offset means partners, parents and children are almost never in the same life phase at the same time — creating both friction and growth.
-          </p>
-          <p className={styles.deepBody}>
-            A woman at 42 enters the Harvest (Metal/Autumn). Her same-age partner is still in Responsibility (Earth/Late Summer). They are living different seasons simultaneously — and understanding this difference can transform how they meet each other.
+            Women move through 7-year cycles, men through 8-year cycles. Partners are almost never in the same life phase — and understanding this difference transforms how you meet each other.
           </p>
         </GlassCard>
       </div>
@@ -330,37 +321,51 @@ function IkigaiIllustration({ userColor }) {
         </g>
       ))}
 
-      {/* Sequenced intersection dots — each appears alone then fades */}
+      {/* Sequenced intersection dots — precisely placed in overlap regions */}
       {(() => {
-        // All possible intersection zones with descriptions
+        // For 2-circle intersections: the dot goes at the midpoint between centers,
+        // pushed toward the overlap region (weighted toward the intersection)
+        function twoCircleCenter(a, b) {
+          // Midpoint between centers — this IS the center of the lens/vesica
+          return { x: (positions[a].x + positions[b].x) / 2, y: (positions[a].y + positions[b].y) / 2 };
+        }
+
+        // For 3-circle intersections: centroid of the three centers
+        // (the triple overlap region is centered at the centroid when circles are equal)
+        function threeCircleCenter(a, b, c) {
+          return {
+            x: (positions[a].x + positions[b].x + positions[c].x) / 3,
+            y: (positions[a].y + positions[b].y + positions[c].y) / 3,
+          };
+        }
+
+        // For 4-circle: centroid of all four
+        const fourCenter = {
+          x: positions.reduce((s, p) => s + p.x, 0) / 4,
+          y: positions.reduce((s, p) => s + p.y, 0) / 4,
+        };
+
         const zones = [
-          // 2-circle pairwise intersections
-          { circles: [0, 1], label: '2' },  // You + Partner
-          { circles: [0, 2], label: '2' },  // You + Child
-          { circles: [1, 3], label: '2' },  // Partner + Friend
-          { circles: [2, 3], label: '2' },  // Child + Friend
-          { circles: [0, 3], label: '2' },  // You + Friend
-          // 3-circle intersections
-          { circles: [0, 1, 3], label: '3' }, // You + Partner + Friend
-          { circles: [0, 2, 3], label: '3' }, // You + Child + Friend
-          { circles: [0, 1, 2], label: '3' }, // You + Partner + Child
-          // 4-circle center
-          { circles: [0, 1, 2, 3], label: '4' },
+          { ...twoCircleCenter(0, 1), label: '2' },  // You + Partner
+          { ...twoCircleCenter(0, 2), label: '2' },  // You + Child
+          { ...twoCircleCenter(1, 3), label: '2' },  // Partner + Friend
+          { ...twoCircleCenter(2, 3), label: '2' },  // Child + Friend
+          { ...twoCircleCenter(0, 3), label: '2' },  // You + Friend
+          { ...threeCircleCenter(0, 1, 3), label: '3' }, // You + Partner + Friend
+          { ...threeCircleCenter(0, 2, 3), label: '3' }, // You + Child + Friend
+          { ...threeCircleCenter(0, 1, 2), label: '3' }, // You + Partner + Child
+          { ...fourCenter, label: '4' },               // All four
         ];
-        const totalDuration = zones.length * 3; // 3 seconds per zone
+        const totalDuration = zones.length * 3;
 
         return zones.map((zone, idx) => {
-          const mx = zone.circles.reduce((s, c) => s + positions[c].x, 0) / zone.circles.length;
-          const my = zone.circles.reduce((s, c) => s + positions[c].y, 0) / zone.circles.length;
           const dotR = zone.label === '4' ? 4 : zone.label === '3' ? 3 : 2.5;
           const brightness = zone.label === '4' ? 0.7 : zone.label === '3' ? 0.5 : 0.4;
-
           return (
-            <circle key={`seq-${idx}`} cx={mx} cy={my} r={dotR}
+            <circle key={`seq-${idx}`} cx={zone.x} cy={zone.y} r={dotR}
               fill={`rgba(255,255,255,${brightness})`}
-              style={{
-                animation: `dotSequence ${totalDuration}s ease-in-out ${idx * 3}s infinite`,
-              }} />
+              style={{ animation: `dotSequence ${totalDuration}s ease-in-out ${idx * 3}s infinite` }}
+            />
           );
         });
       })()}
@@ -401,7 +406,7 @@ function CyclesIllustration() {
       `}</style>
 
       {/* Outer ring */}
-      <circle cx="100" cy="90" r="70" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" />
+      <circle cx="100" cy="90" r="70" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="0.6" />
 
       {/* Sheng cycle — pentagon */}
       {[0, 1, 2, 3, 4].map((i) => {
@@ -411,7 +416,7 @@ function CyclesIllustration() {
         const x2 = 100 + 65 * Math.cos(a2), y2 = 90 + 65 * Math.sin(a2);
         return (
           <line key={`s-${i}`} x1={x1} y1={y1} x2={x2} y2={y2}
-            stroke={colors[i]} strokeWidth="0.5" opacity="0.25"
+            stroke={colors[i]} strokeWidth="0.6" opacity="0.35"
             style={{ animation: `cyclePulse ${7 + i}s ease-in-out ${i * 0.5}s infinite` }} />
         );
       })}
@@ -435,7 +440,7 @@ function CyclesIllustration() {
         const y = 90 + 65 * Math.sin(angle);
         return (
           <g key={i}>
-            <circle cx={x} cy={y} r="12" fill={`${colors[i]}10`} stroke={colors[i]} strokeWidth="0.6" opacity="0.5" />
+            <circle cx={x} cy={y} r="12" fill={`${colors[i]}15`} stroke={colors[i]} strokeWidth="0.7" opacity="0.6" />
             <text x={x} y={y + 1} textAnchor="middle" dominantBaseline="central"
               fill={colors[i]} fontSize="7" fontWeight="300" opacity="0.7">
               {chars[i]}
