@@ -19,24 +19,24 @@ function ExploreIllustration() {
           key={i}
           d={`M ${100 - r} 95 A ${r} ${r} 0 0 1 ${100 + r} 95`}
           fill="none"
-          stroke="rgba(255,255,255,0.12)"
-          strokeWidth={i === 0 ? 0.8 : 0.5}
+          stroke="rgba(255,255,255,0.25)"
+          strokeWidth={i === 0 ? 1 : 0.7}
           strokeDasharray={i % 2 === 0 ? 'none' : '3 3'}
         />
       ))}
       {/* Center dot */}
-      <circle cx="100" cy="95" r="3" fill="rgba(255,255,255,0.15)" />
+      <circle cx="100" cy="95" r="3" fill="rgba(255,255,255,0.3)" />
       {/* Small dots at arc intersections */}
       {[90, 60, 30].map((r, i) => (
         <g key={`dots-${i}`}>
-          <circle cx={100 - r} cy="95" r="1.5" fill="rgba(255,255,255,0.1)" />
-          <circle cx={100 + r} cy="95" r="1.5" fill="rgba(255,255,255,0.1)" />
+          <circle cx={100 - r} cy="95" r="1.5" fill="rgba(255,255,255,0.2)" />
+          <circle cx={100 + r} cy="95" r="1.5" fill="rgba(255,255,255,0.2)" />
         </g>
       ))}
       {/* Vertical line from center upward */}
-      <line x1="100" y1="95" x2="100" y2="5" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" strokeDasharray="2 4" />
+      <line x1="100" y1="95" x2="100" y2="5" stroke="rgba(255,255,255,0.15)" strokeWidth="0.5" strokeDasharray="2 4" />
       {/* Top circle */}
-      <circle cx="100" cy="5" r="4" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="0.5" />
+      <circle cx="100" cy="5" r="4" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="0.7" />
     </svg>
   );
 }
