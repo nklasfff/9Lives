@@ -56,7 +56,7 @@ export default function RelationsPage() {
         <p className={styles.subtitle}>Elemental dynamics between lives</p>
       </header>
 
-      <MergingCirclesIllustration userColor={userEl.hex} />
+      <IkigaiIllustration userColor={userEl.hex} />
 
       <div className={styles.content}>
         {friends.length > 0 && (
@@ -156,52 +156,108 @@ export default function RelationsPage() {
   );
 }
 
-function MergingCirclesIllustration({ userColor }) {
+function IkigaiIllustration({ userColor }) {
+  // Four overlapping circles in ikigai pattern — you + up to 3 others
+  const colors = [userColor || '#c75a3a', '#4a9e6e', '#3a6fa0', '#c9a84c'];
+  const labels = ['You', 'Partner', 'Child', 'Friend'];
+  const cx = 130, cy = 110, spread = 32, r = 42;
+
+  // Four circle positions (top, right, bottom-right, left)
+  const positions = [
+    { x: cx, y: cy - spread * 0.6 },           // You (top center)
+    { x: cx + spread * 0.9, y: cy + spread * 0.3 }, // Partner (right)
+    { x: cx - spread * 0.9, y: cy + spread * 0.3 }, // Child (left)
+    { x: cx, y: cy + spread * 0.9 },            // Friend (bottom)
+  ];
+
   return (
-    <svg viewBox="0 0 240 120" className={styles.heroIllustration}>
+    <svg viewBox="0 0 260 220" className={styles.heroIllustration}>
       <style>{`
-        @keyframes mergeLeft {
-          0%, 100% { transform: translateX(8px); }
-          50% { transform: translateX(-2px); }
+        @keyframes ikigaiBreathe1 {
+          0%, 100% { transform: translate(0, 2px); }
+          50% { transform: translate(0, -2px); }
         }
-        @keyframes mergeRight {
-          0%, 100% { transform: translateX(-8px); }
-          50% { transform: translateX(2px); }
+        @keyframes ikigaiBreathe2 {
+          0%, 100% { transform: translate(2px, 0); }
+          50% { transform: translate(-2px, 0); }
         }
-        @keyframes vesicaAppear {
-          0%, 20% { opacity: 0; }
-          50% { opacity: 0.5; }
-          80%, 100% { opacity: 0; }
+        @keyframes ikigaiBreathe3 {
+          0%, 100% { transform: translate(-2px, 0); }
+          50% { transform: translate(2px, 0); }
         }
-        @keyframes innerDotPulse {
-          0%, 30% { opacity: 0; r: 2; }
-          50% { opacity: 0.6; r: 3.5; }
-          70%, 100% { opacity: 0; r: 2; }
+        @keyframes ikigaiBreathe4 {
+          0%, 100% { transform: translate(0, -2px); }
+          50% { transform: translate(0, 2px); }
+        }
+        @keyframes centerGlow {
+          0%, 100% { opacity: 0.15; }
+          50% { opacity: 0.45; }
+        }
+        @keyframes intersectPulse {
+          0%, 100% { opacity: 0; }
+          30%, 70% { opacity: 0.35; }
         }
       `}</style>
 
-      {/* Left circle — the user */}
-      <g style={{ animation: 'mergeLeft 12s ease-in-out infinite' }}>
-        <circle cx="95" cy="60" r="35" fill="none" stroke={userColor || '#c75a3a'} strokeWidth="0.8" opacity="0.4" />
-        <circle cx="95" cy="60" r="20" fill="none" stroke={userColor || '#c75a3a'} strokeWidth="0.4" opacity="0.2" strokeDasharray="2 3" />
-      </g>
+      <defs>
+        {colors.map((color, i) => (
+          <radialGradient key={`rg${i}`} id={`ikGrad${i}`} cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor={color} stopOpacity="0.12" />
+            <stop offset="70%" stopColor={color} stopOpacity="0.04" />
+            <stop offset="100%" stopColor={color} stopOpacity="0" />
+          </radialGradient>
+        ))}
+      </defs>
 
-      {/* Right circle — the other */}
-      <g style={{ animation: 'mergeRight 12s ease-in-out infinite' }}>
-        <circle cx="145" cy="60" r="35" fill="none" stroke="#4a9e6e" strokeWidth="0.8" opacity="0.4" />
-        <circle cx="145" cy="60" r="20" fill="none" stroke="#4a9e6e" strokeWidth="0.4" opacity="0.2" strokeDasharray="2 3" />
-      </g>
+      {/* The four overlapping circles */}
+      {positions.map(({ x, y }, i) => (
+        <g key={i} style={{ animation: `ikigaiBreathe${i + 1} ${10 + i * 2}s ease-in-out infinite` }}>
+          {/* Filled glow */}
+          <circle cx={x} cy={y} r={r} fill={`url(#ikGrad${i})`} />
+          {/* Outer ring */}
+          <circle cx={x} cy={y} r={r} fill="none" stroke={colors[i]} strokeWidth="0.8" opacity="0.35" />
+          {/* Inner ring */}
+          <circle cx={x} cy={y} r={r * 0.55} fill="none" stroke={colors[i]} strokeWidth="0.4" opacity="0.15" strokeDasharray="2 3" />
+        </g>
+      ))}
 
-      {/* Vesica piscis — the meeting place */}
-      <ellipse cx="120" cy="60" rx="12" ry="28" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5"
-        style={{ animation: 'vesicaAppear 12s ease-in-out infinite' }} />
+      {/* Intersection dots — where circles overlap (pairwise) */}
+      {[[0,1],[0,2],[0,3],[1,3],[2,3]].map(([a, b], idx) => {
+        const mx = (positions[a].x + positions[b].x) / 2;
+        const my = (positions[a].y + positions[b].y) / 2;
+        return (
+          <circle key={`int-${idx}`} cx={mx} cy={my} r="2.5"
+            fill="rgba(255,255,255,0.3)"
+            style={{ animation: `intersectPulse ${8 + idx}s ease-in-out ${idx * 1.5}s infinite` }} />
+        );
+      })}
 
-      {/* The new point that emerges */}
-      <circle cx="120" cy="60" r="3" fill="rgba(255,255,255,0.3)"
-        style={{ animation: 'innerDotPulse 12s ease-in-out infinite' }} />
+      {/* Center point — where all lives meet */}
+      <circle cx={cx} cy={cy + 5} r="5" fill="rgba(255,255,255,0.1)"
+        style={{ animation: 'centerGlow 6s ease-in-out infinite' }} />
+      <circle cx={cx} cy={cy + 5} r="2" fill="rgba(255,255,255,0.35)"
+        style={{ animation: 'centerGlow 6s ease-in-out 1s infinite' }} />
 
-      {/* Subtle connecting line */}
-      <line x1="60" y1="60" x2="180" y2="60" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" strokeDasharray="2 4" />
+      {/* Labels */}
+      {positions.map(({ x, y }, i) => {
+        const labelY = i === 0 ? y - r - 6 : i === 3 ? y + r + 10 : y;
+        const labelX = i === 1 ? x + r + 4 : i === 2 ? x - r - 4 : x;
+        const anchor = i === 1 ? 'start' : i === 2 ? 'end' : 'middle';
+        return (
+          <text key={`lbl-${i}`}
+            x={labelX} y={labelY}
+            textAnchor={anchor}
+            fill={colors[i]}
+            fontSize="7"
+            fontFamily="var(--font-display)"
+            fontStyle="italic"
+            fontWeight="300"
+            opacity="0.6"
+          >
+            {labels[i]}
+          </text>
+        );
+      })}
     </svg>
   );
 }
