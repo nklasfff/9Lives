@@ -6,7 +6,7 @@
 
 .header {
   text-align: center;
-  padding: var(--space-xl) 0 var(--space-lg);
+  padding: var(--space-xl) 0 var(--space-md);
   animation: fadeDown 0.8s var(--ease-out) both;
 }
 
@@ -23,25 +23,249 @@
   margin-top: var(--space-xs);
 }
 
-.empty {
+/* Hero illustration */
+.heroIllustration {
+  width: 220px;
+  height: auto;
+  margin: 0 auto var(--space-md);
+  display: block;
+}
+
+/* Content area */
+.content {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: var(--space-md);
-  padding: var(--space-3xl) 0;
   animation: fadeUp 0.8s var(--ease-out) 0.2s both;
 }
 
-.emptyText {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  text-align: center;
-  max-width: 280px;
+/* Friends list */
+.friendsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
 }
 
-.emptyHint {
-  font-size: 0.75rem;
+.friendHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-sm);
+}
+
+.friendIdentity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.friendSymbol {
+  font-size: 1.8rem;
+  font-weight: 300;
+  text-shadow: 0 0 20px currentColor;
+  line-height: 1;
+}
+
+.friendName {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: var(--text-bright);
+}
+
+.friendMeta {
+  font-size: 0.72rem;
   color: var(--text-muted);
+  display: block;
+  margin-top: 2px;
+}
+
+.removeBtn {
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  padding: 4px 8px;
+  transition: color var(--transition);
+  line-height: 1;
+}
+
+.removeBtn:hover {
+  color: var(--element-fire);
+}
+
+/* Relation type visual */
+.relationType {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin: var(--space-sm) 0;
+  padding: var(--space-sm) 0;
+  border-top: 1px solid var(--glass-border);
+}
+
+.relDots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.relDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.relLine {
+  width: 20px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.relName {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.relDesc {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  line-height: 1.7;
+}
+
+/* Add person button */
+.addPersonBtn {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--text-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-full);
+  padding: 14px 32px;
+  margin: var(--space-sm) auto;
+  display: block;
+  transition: all var(--transition);
+  letter-spacing: 0.03em;
+}
+
+.addPersonBtn:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  color: var(--text-bright);
+}
+
+/* Form */
+.formCard {
+  animation: fadeUp 0.4s var(--ease-out) both;
+}
+
+.formTitle {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  margin-bottom: var(--space-md);
+  text-align: center;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: var(--space-md);
+}
+
+.formField label {
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.formField input {
+  font-family: var(--font-body);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  color: var(--text-bright);
+  font-size: 1rem;
+}
+
+.formField input:focus {
+  border-color: var(--border-light);
+  outline: none;
+}
+
+.genderRow {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.genderBtn {
+  flex: 1;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  transition: all var(--transition);
+}
+
+.genderBtn:hover {
+  background: var(--glass-hover);
+}
+
+.genderActive {
+  background: var(--glass-hover);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-bright);
+}
+
+.formActions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-lg);
+}
+
+.cancelBtn {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  padding: var(--space-sm) var(--space-md);
+  transition: color var(--transition);
+}
+
+.cancelBtn:hover {
+  color: var(--text-secondary);
+}
+
+.addBtn {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--text-bright);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-full);
+  padding: var(--space-sm) var(--space-lg);
+  transition: all var(--transition);
+}
+
+.addBtn:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.addBtn:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+/* Cycles illustration */
+.cyclesIllustration {
+  width: 180px;
+  height: auto;
+  margin: var(--space-xl) auto var(--space-md);
+  display: block;
+  opacity: 0.7;
 }
