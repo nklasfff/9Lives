@@ -289,6 +289,150 @@ const PHASE_DEEP = {
     },
   },
 
+  3: {
+    title: 'Transformation',
+    subtitle: 'The fire is lit',
+    ageRange: '14–21',
+    element: 'fire',
+    season: 'Summer',
+
+    transition: {
+      title: 'The Transition into Phase 3',
+      body: 'Around fourteen, another great shift begins. Puberty arrives in earnest, and with it an intensity that can catch everyone off guard — the young person themselves not least. Something new is burning through.',
+      detail: 'Wood, which carried the first fourteen years with its upward force, now nourishes the next element in the Sheng cycle: Fire. Wood feeds Fire, just as wood burns. The growth energy that filled childhood and early youth begins to transform into something warmer, more intense, more connected. The Heart awakens — both literally, in the first infatuations, and in the deeper sense that Shen, consciousness itself, truly begins to mature.',
+    },
+
+    personal: {
+      title: 'A mother once said to me:',
+      quote: 'I miss my child. Her daughter was sitting in the next room — sixteen, headphones on, a closed door as a permanent accessory. The mother laughed a little when she said it, but there was something real beneath the laughter. Something that looked like grief.',
+      reflection: 'This phase is among the most intense in an entire life — for the young person and for everyone around them. In the middle of the fire, something crucial is happening: an adult human being is coming into existence.',
+    },
+
+    bodyInBalance: {
+      title: 'When Fire Is in Balance',
+      body: 'A young person in balance during this phase has a warmth that draws others in. There is energy and passion, but also an ability to connect — to listen, to sense, to be truly present with another person. Emotions are intense, but they move through without getting stuck. Shen shines in the eyes — that presence, that glow, that lets you look at a teenager and simply know that someone is home. Physically, the body is changing rapidly, finding its adult form. The cardiovascular system is strong, energy is high, and there is a radiance that belongs to youth.',
+    },
+
+    bodyImbalanced: {
+      title: 'When the Body Is Challenged',
+      physical: [
+        'Palpitations, flushing, sweating — Fire running at full throttle. Many teenagers experience this as social anxiety, because the body reacts visibly',
+        'Skin problems — acne is Fire\'s heat seeking outward through the skin',
+        'Menstrual pain, irregular cycles, PMS that looms large — the Heart and blood are in transition',
+        'Sleep difficulties: unable to fall asleep because thoughts and feelings are racing — Shen that cannot find rest',
+        'Headaches and tension, especially when emotions accumulate',
+        'Digestive issues, nausea, fluctuating appetite — the Small Intestine overwhelmed by everything that needs sorting',
+      ],
+      emotional: [
+        'Intense anxiety and social fear — the Heart is open and vulnerable, and the world feels overwhelming',
+        'Overexcitement and mania — running at full speed, emotionally and physically, unable to stop',
+        'Or the opposite: a closed, apathetic state where Shen has withdrawn and the fire has gone out',
+        'Fierce self-criticism and a feeling of being fundamentally wrong — the Heart judging itself',
+        'Mood shifts that feel uncontrollable and frightening',
+        'Explosive outbursts — Fire that flares when it has no space to burn steadily',
+      ],
+    },
+
+    emotion: {
+      title: 'Passion and Connection',
+      body: 'Fire\'s joy is the pure joy of connection — that feeling that courses through you when you sit with your best friend laughing until you cry, when you kiss someone for the first time, when you stand on a stage and feel the audience\'s attention. That is Shen shining, and that radiance is unique to this age.',
+      grief: 'The shadow side is overexcitement — when the Fire burns too high, too fast, without enough fuel to sustain it. It can show up as anxiety, as sleeplessness, as a feeling of being "too much." The Heart pounds, thoughts race, and the young person can feel trapped in their own intensity. That is Fire without a hearth to burn in — and the hearth is connection, calm, and the safety that makes it possible to burn.',
+      gift: 'Neuroscience confirms what Chinese medicine has long known: the brain undergoes massive reconstruction during these years. The limbic system — the brain\'s emotional centre — runs at full power, while the prefrontal cortex, governing impulse control and risk assessment, is not fully developed until around twenty-five. The young person experiences emotions with adult intensity but with a child\'s capacity to regulate them. They are neither foolish nor irresponsible — they have a brain that is not yet finished.',
+    },
+
+    menopause: {
+      title: 'This Phase in You',
+      body: 'Whether you are fourteen or sixty, the fire you discovered in this phase still burns somewhere inside you. The passions that ignited, the connections that opened your Heart, the intensity that made everything feel so alive — those experiences shaped the way you love, create, and connect today.',
+      gift: 'It can be a revealing exercise to ask: what set me on fire between fourteen and twenty-one? What did I burn for? And do I still allow myself that kind of intensity — or have I learned to keep the flame low for safety\'s sake?',
+      wisdom: 'Many women find that reconnecting with their Phase 3 fire — not recklessly, but with the wisdom of years — brings a vitality back into their lives that they had quietly assumed was gone for good.',
+    },
+
+    advice: [
+      { title: 'Make room for the feelings', body: 'The intensity is the point — it is Shen awakening. Help to hold, never to suppress. A teenager who is allowed to feel their emotions learns to carry them.' },
+      { title: 'Keep the connection alive', body: 'Even when the young person pushes you away. The Heart needs to know someone is on the other side. Leave the door ajar — literally and figuratively.' },
+      { title: 'Choose your battles', body: 'Not everything matters equally. Save your energy for what truly counts — safety, health, basic respect. The rest can often be negotiated.' },
+      { title: 'Let them fail', body: 'Their own experiences teach more than good advice ever could. Be there to pick up the pieces afterward, without saying "I told you so."' },
+      { title: 'Movement is essential', body: 'Fire energy needs an outlet — sport, dance, walks, anything that lets the body use the intensity that would otherwise overheat.' },
+      { title: 'Protect sleep', body: 'Teenage brains need nine to ten hours, and Shen needs darkness to find rest. Screens away in the last hour can make a tangible difference.' },
+      { title: 'Support friendships', body: 'Friendships are Fire\'s nourishment. Make space for the young person to be with their friends — it is not wasted time, it is the Heart\'s training ground.' },
+      { title: 'Hold onto hope', body: 'The fire settles. The child you miss will come back in a new form — as an adult whose Heart has learned to burn steadily.' },
+    ],
+
+    exercises: [
+      {
+        title: 'Heart Breathing',
+        body: 'Sit or lie somewhere comfortable. Place your hand on your chest, over the Heart, and feel the beats beneath your palm. Breathe in deeply for four counts and imagine the breath flowing straight into the Heart. Hold for two counts. Exhale slowly for six counts with a soft "haaa" sound — the Heart\'s healing sound in Chinese medicine. Feel the chest soften with each exhale. Eight to ten times.',
+      },
+      {
+        title: 'Heart Meridian Stroking',
+        body: 'The Heart meridian runs from the armpit down the inner arm to the little finger. Lift one arm to the side and stroke with the other hand from the armpit down the inner upper arm, forearm, all the way to the little finger. Gently, with warmth. Five to seven times on each arm. This opens the Heart meridian and can release tightness in the chest when emotions feel stuck.',
+      },
+      {
+        title: 'Yin Yoga: Open Wing',
+        body: 'Lie on your side with arms stretched out in front of you, palms together. Slowly open the top arm up and back, so you look like an open book. Let the arm fall toward the floor and feel the opening across the chest. Three to five minutes on each side. This directly opens the Heart meridian and gives a deep stretch through the ribcage. Many people notice emotions surfacing — that is natural, because the Heart stores what we struggle to say aloud.',
+      },
+      {
+        title: 'Mind: Who Am I Today?',
+        body: 'Take a notebook and write at the top: Who am I today? Write everything that comes to mind — what you burn for, what you love, what you dream about, what frightens you. Write without filtering. Do this once a month for a year. Look back and see how the answers have changed. This is svadhyaya in practice — an ongoing conversation with Shen about who you are becoming.',
+      },
+      {
+        title: 'Movement as Release',
+        body: 'When feelings are too big for words, use the body. Run as fast as you can, dance to music that matches your mood, swim until your arms give out. Fire energy stagnates when the body sits still too long, and in this phase there is so much energy that it simply must come out. Ten minutes at full intensity can shift an entire mood.',
+      },
+    ],
+
+    diet: {
+      title: 'Diet and Body',
+      intro: 'Diet in this phase is about supporting the Heart, cooling overheating, and nourishing a body in rapid growth. Fire\'s food is light, fresh, and cooling — and it makes a real difference to inner balance.',
+      foods: [
+        { category: 'Fire-supporting foods', items: 'Red foods nourish the Heart — tomatoes, red peppers, pomegranate, red berries, beetroot. Bitter taste supports Fire and cools overheating: red cabbage, rocket, cacao, green tea. Protein matters during rapid growth — eggs, fish, beans. Whole grains provide steady energy for a body that burns fast.' },
+        { category: 'Herbs and spices', items: 'Hibiscus tea gently cools the Heart and supports circulation. Chamomile and lavender calm an overheated nervous system. Rosewater or rosebud tea are classic Heart remedies in Chinese medicine.' },
+        { category: 'Cooling and calming', items: 'Cucumber, watermelon, mint, and green leafy vegetables help cool excess heat. These are especially valuable during summer or when anxiety and restlessness are high.' },
+        { category: 'Reduce', items: 'Alcohol burdens the Heart directly and disturbs Shen. Caffeine and energy drinks overheat and disrupt sleep. Very hot spices can amplify heat that is already running high. Fire needs cooling and balance — not more fuel.' },
+      ],
+    },
+
+    themes: [
+      {
+        title: 'Breaking Away',
+        body: 'One of the most important tasks of this phase is separating from parents — moving from being a child in a family to becoming an independent person. Fire drives that movement, because the Heart seeks its own connections — not the inherited ones, but the chosen ones. Some young people rebel openly: arguing, breaking rules, testing every boundary. Others withdraw quietly: closing the door, sharing less. Both serve the same purpose — creating space for Shen to find its own shape.',
+      },
+      {
+        title: 'Identity',
+        body: 'The question "who am I?" becomes truly pressing. The young person tries on different identities like clothing — this style, this music, this attitude. It can look confusing from the outside, but it is a necessary experiment. Beneath the surface, important work is happening: Shen is finding its home — the consciousness that will inhabit this Heart for the rest of a life is searching for its own form.',
+      },
+      {
+        title: 'Love and First Relationships',
+        body: 'Falling in love during this phase is something quite extraordinary — Fire in its purest form. It is often the first time the Heart opens in this way, and the intensity can be overwhelming. Cheeks flush, pulse rises, and the world narrows to one person. Heartbreak belongs here too. When the first relationship ends, it can feel like the end of the world — and in a way it is, because the Heart has never been open and rejected before. The only thing that helps is being there. Listening, holding, letting them cry as long as they need to.',
+      },
+    ],
+
+    seasons: {
+      title: 'The Year\'s Rhythm in the Transformation Years',
+      entries: [
+        { season: 'Summer', body: 'Speaks most directly to this phase, because the season and life phase share the same element. The long bright evenings, the warmth, the freedom from school, the first romances under open skies — Fire meets Fire, and the double effect can feel like an intensity that will never end. Many of us remember our teenage summers as the most vivid moments of our entire lives. That is no coincidence.' },
+        { season: 'Spring', body: 'Wood nourishes Fire in the Sheng cycle. Spring\'s forward energy gives Fire its fuel — new energy, new projects, a sense that anything is possible. Many young people experience spring as the time when they feel most alive.' },
+        { season: 'Late Summer', body: 'Fire nourishes Earth in the Sheng cycle. The heat that burned all summer begins to transform into something more stable. School starts again, and everyday life calls. It can feel like a comedown, but it is also a necessary landing.' },
+        { season: 'Autumn', body: 'Metal\'s inward clarity arrives. The quieter, darker months can feel constraining for a young person whose Fire energy wants to connect and be out in the world. Extra movement and light can help.' },
+        { season: 'Winter', body: 'Water controls Fire in the Ke cycle. The dark months can feel heavy for someone whose Fire wants to reach outward. But winter\'s rest also gives Shen space to mature in silence — and that maturing is essential.' },
+      ],
+    },
+
+    reflections: [
+      'When did you last feel the pure joy of being truly connected to another person?',
+      'What set you on fire as a teenager — and does it still burn?',
+      'When did you feel most alive between fourteen and twenty-one?',
+      'Is there a passion in you that you have dampened, one that deserves to be rekindled?',
+      'Who were you before you learned to turn the volume down?',
+    ],
+
+    transitionNext: {
+      title: 'The Transition to Phase 4',
+      body: 'Around twenty-one, a new shift begins. The young adult who has burned with Fire\'s full intensity for seven years feels a new pull: to land. To find solid ground. To build something that lasts.',
+      next: 'Fire nourishes Earth, just as ash becomes soil. The passion and intensity that filled the youth years begin to transform into something more stable, more nourishing, more grounded. The Spleen and Stomach step forward with their ability to digest, gather, and stabilise — and the young woman is ready to plant what she has learned about herself in the soil her life will grow from.',
+    },
+  },
+
   7: {
     title: 'Harvest',
     subtitle: 'Seeing what truly matters',
