@@ -30,58 +30,326 @@
   margin-top: var(--space-xs);
 }
 
-.cards {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
+/* Overview Chart */
+.chartCard {
+  margin-bottom: var(--space-md);
   animation: fadeUp 0.8s var(--ease-out) 0.2s both;
 }
 
-.cardTitle {
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  font-weight: 300;
-  color: var(--text-bright);
-  margin-bottom: var(--space-md);
-}
-
-.grid {
+.chartGrid {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0;
 }
 
-.detail {
+.chartRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--space-xs) 0;
+  padding: 10px 0;
   border-bottom: 1px solid var(--glass-border);
 }
 
-.detail:last-child {
+.chartRow:last-child {
   border-bottom: none;
 }
 
-.detailLabel {
-  font-size: 0.78rem;
+.chartLabel {
+  font-size: 0.72rem;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
 }
 
-.detailValue {
-  font-size: 0.9rem;
+.chartValue {
+  font-size: 0.88rem;
   color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
 }
 
-.description {
-  font-size: 0.9rem;
+.chartSymbol {
+  font-size: 1rem;
+  opacity: 0.7;
+}
+
+/* Illustrations */
+.illustration {
+  width: 220px;
+  height: auto;
+  margin: var(--space-lg) auto;
+  display: block;
+  opacity: 0.85;
+}
+
+/* Tappable cards */
+.tappable {
+  cursor: pointer;
+}
+
+.tappable:active {
+  transform: scale(0.985);
+}
+
+.tapHint {
+  display: block;
+  margin-top: var(--space-sm);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-align: right;
+  opacity: 0.5;
+  transition: opacity var(--transition);
+}
+
+.tappable:hover .tapHint {
+  opacity: 0.8;
+}
+
+/* Deep dive cards */
+.deepLabel {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: var(--space-sm);
+}
+
+.deepTitle {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  margin-bottom: var(--space-sm);
+}
+
+.deepBody {
+  font-size: 0.88rem;
   color: var(--text-primary);
   line-height: 1.8;
+}
+
+/* Element balance */
+.balanceSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--glass-border);
+}
+
+.balanceLabel {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.balanceText {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* Spirit section */
+.spiritHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.spiritSymbol {
+  font-size: 2.5rem;
+  font-weight: 300;
+  text-shadow: 0 0 25px currentColor;
+}
+
+.spiritTitle {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-style: italic;
+  display: block;
+  margin-top: 2px;
+}
+
+.qualitiesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--glass-border);
+}
+
+.qualityItem {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-top: 4px;
+}
+
+/* Phase section */
+.phaseHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.phaseNum {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 300;
+  line-height: 1;
+  text-shadow: 0 0 20px currentColor;
+}
+
+.phaseMeta {
+  font-size: 0.78rem;
+  display: block;
+  margin-top: 2px;
+}
+
+.phaseQuote {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.keywords {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--glass-border);
+}
+
+/* Zodiac section */
+.zodiacHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.zodiacSymbol {
+  font-size: 2.5rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
+.zodiacTrait {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-style: italic;
+  display: block;
+  margin-top: 2px;
+}
+
+.zodiacDetail {
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--glass-border);
+}
+
+/* Organ Clock */
+.organClockList {
+  margin-top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.organClockItem {
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--glass-border);
+}
+
+.organClockItem:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.organClockHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xs);
+}
+
+.organClockTime {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.organClockName {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
   font-style: italic;
 }
 
+.organClockQuality {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xs);
+}
+
+.organClockGuidance {
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  line-height: 1.7;
+}
+
+/* Sheng Cycle */
+.cycleFlow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.cycleItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.cycleSymbol {
+  font-size: 1.6rem;
+  font-weight: 300;
+}
+
+.cycleName {
+  font-size: 0.78rem;
+  color: var(--text-primary);
+}
+
+.cycleRole {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.cycleArrow {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: -16px;
+}
+
+/* Reset button */
 .resetBtn {
   background: transparent;
   border: 1px solid var(--border);
@@ -92,11 +360,16 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   transition: all var(--transition);
-  margin: var(--space-md) auto 0;
+  margin: var(--space-xl) auto var(--space-lg);
   display: block;
 }
 
 .resetBtn:hover {
   border-color: var(--element-fire);
   color: var(--element-fire);
+}
+
+/* Card spacing */
+.page > :not(.header):not(.illustration):not(.resetBtn) {
+  margin-bottom: var(--space-md);
 }
