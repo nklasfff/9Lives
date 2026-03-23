@@ -12,40 +12,60 @@ const LAYERS = [
 ];
 
 function ExploreIllustration() {
+  const layerColors = ['#3a6fa0', '#a8b8c8', '#c9a84c', '#c75a3a', '#4a9e6e', '#7a9ab5'];
+
   return (
-    <svg viewBox="0 0 200 120" className={styles.illustration}>
+    <svg viewBox="0 0 200 130" className={styles.illustration}>
       <style>{`
-        @keyframes arcExpand { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.35; } }
-        @keyframes centerPulse { 0%, 100% { r: 2.5; opacity: 0.25; } 50% { r: 3.5; opacity: 0.45; } }
-        .explore-arc { animation: arcExpand 7s ease-in-out infinite; }
-        .explore-center { animation: centerPulse 5s ease-in-out infinite; }
+        @keyframes arcWave {
+          0% { opacity: 0; stroke-dashoffset: 60; }
+          20% { opacity: 0.45; stroke-dashoffset: 0; }
+          70% { opacity: 0.45; stroke-dashoffset: 0; }
+          100% { opacity: 0; stroke-dashoffset: -60; }
+        }
+        @keyframes corePulse {
+          0%, 100% { opacity: 0.2; }
+          50% { opacity: 0.5; }
+        }
       `}</style>
-      {/* Six concentric arcs representing the 6 layers */}
-      {[90, 75, 60, 45, 30, 18].map((r, i) => (
+
+      {/* Six concentric arcs — each in an element color, breathing in waves */}
+      {[92, 76, 60, 46, 32, 20].map((r, i) => (
         <path
           key={i}
-          d={`M ${100 - r} 95 A ${r} ${r} 0 0 1 ${100 + r} 95`}
+          d={`M ${100 - r} 100 A ${r} ${r} 0 0 1 ${100 + r} 100`}
           fill="none"
-          stroke="rgba(255,255,255,0.25)"
-          strokeWidth={i === 0 ? 1 : 0.7}
-          strokeDasharray={i % 2 === 0 ? 'none' : '3 3'}
-          className="explore-arc"
-          style={{ animationDelay: `${i * 0.5}s` }}
+          stroke={layerColors[i]}
+          strokeWidth={0.9}
+          strokeDasharray={i % 2 === 0 ? 'none' : '4 3'}
+          opacity="0.35"
+          style={{
+            animation: `arcWave ${8 + i * 0.5}s ease-in-out ${i * 1.2}s infinite`,
+          }}
         />
       ))}
-      {/* Center dot */}
-      <circle cx="100" cy="95" r="3" fill="rgba(255,255,255,0.3)" className="explore-center" />
-      {/* Small dots at arc intersections */}
-      {[90, 60, 30].map((r, i) => (
-        <g key={`dots-${i}`}>
-          <circle cx={100 - r} cy="95" r="1.5" fill="rgba(255,255,255,0.2)" />
-          <circle cx={100 + r} cy="95" r="1.5" fill="rgba(255,255,255,0.2)" />
+
+      {/* Dots at the endpoints of each arc */}
+      {[92, 60, 32].map((r, i) => (
+        <g key={`d-${i}`}>
+          <circle cx={100 - r} cy="100" r="1.5" fill={layerColors[i * 2]} opacity="0.3"
+            style={{ animation: `corePulse ${6 + i}s ease-in-out ${i * 2}s infinite` }} />
+          <circle cx={100 + r} cy="100" r="1.5" fill={layerColors[i * 2]} opacity="0.3"
+            style={{ animation: `corePulse ${6 + i}s ease-in-out ${i * 2 + 1}s infinite` }} />
         </g>
       ))}
-      {/* Vertical line from center upward */}
-      <line x1="100" y1="95" x2="100" y2="5" stroke="rgba(255,255,255,0.15)" strokeWidth="0.5" strokeDasharray="2 4" />
+
+      {/* Vertical axis */}
+      <line x1="100" y1="100" x2="100" y2="5" stroke="rgba(255,255,255,0.12)" strokeWidth="0.5" strokeDasharray="2 4" />
+
       {/* Top circle */}
-      <circle cx="100" cy="5" r="4" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="0.7" />
+      <circle cx="100" cy="5" r="4" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="0.6"
+        style={{ animation: 'corePulse 7s ease-in-out infinite' }} />
+
+      {/* Center dot */}
+      <circle cx="100" cy="100" r="3.5" fill="rgba(255,255,255,0.15)"
+        style={{ animation: 'corePulse 5s ease-in-out infinite' }} />
+      <circle cx="100" cy="100" r="1.5" fill="rgba(255,255,255,0.35)" />
     </svg>
   );
 }
