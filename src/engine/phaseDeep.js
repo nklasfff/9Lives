@@ -11,8 +11,8 @@ const PHASE_DEEP = {
 
     transition: {
       title: 'The Transition into Phase 7',
-      body: 'Around forty-two, another shift begins within the element that has already shaped you for seven years. Metal, which entered with Phase 6, has done its first work — cutting through the layers that no longer fit, giving you a beginning clarity. Now it goes deeper.',
-      detail: 'Perhaps you feel it as a sharpening of something already in motion. The discernment you found in the early metal years becomes a more thoroughgoing honesty — with yourself and with your life. The body sends clearer signals: menstruation changes more noticeably, the skin responds differently, the lungs ask for deeper breaths than you have given them in years.',
+      body: 'Around forty-two, another shift begins within the element that has already shaped you for seven years. Metal, which entered with Phase 6, has done its first work — cutting through the layers that no longer fit, giving you an emerging clarity. Now it goes deeper.',
+      detail: 'Perhaps you feel it as a sharpening of something already in motion. The discernment you found in the early metal years becomes a deeper, more unflinching honesty — with yourself and with your life. The body sends clearer signals: menstruation changes more noticeably, the skin responds differently, the lungs ask for deeper breaths than you have given them in years.',
     },
 
     personal: {
@@ -47,7 +47,7 @@ const PHASE_DEEP = {
 
     emotion: {
       title: 'Discernment and Grief',
-      body: 'Metal\'s nature is to separate. To see what is core and what is shell. And that ability, building since Phase 6, now reaches a depth that can feel merciless — because it also turns the gaze inward. You see clearly which parts of your life truly nourish you — and which are just habits you never questioned.',
+      body: 'Metal\'s nature is to separate. To see what is core and what is shell. And that ability, deepening since Phase 6, now reaches a depth that can feel merciless — because it also turns the gaze inward. You see clearly which parts of your life truly nourish you — and which are just habits you never questioned.',
       grief: 'The grief is Metal\'s shadow. It can come as a wave in the middle of an ordinary day — a sudden sense that time has passed faster than you thought. A song, a scent, a photo of a younger version of yourself. That grief is healthy, for it means you have loved your life, and that you are beginning to understand it is changing irrevocably now.',
       gift: 'The counterpoint to grief is discernment. This entire phase invites that movement — from soft sorrow toward a sharper, kinder form of clarity. A clarity that knows what matters, because it has lived long enough to know the difference.',
     },
@@ -127,9 +127,9 @@ const PHASE_DEEP = {
       title: 'The Year\'s Rhythm in the Harvest Years',
       entries: [
         { season: 'Autumn', body: 'The season that speaks most directly to you now. Metal meets Metal, and the double effect is felt: discernment sharpens, the urge to clear out grows stronger, and grief can strike deeper. It is also the season when the Lungs are most vulnerable — give them extra care.' },
-        { season: 'Spring', body: 'Can feel more demanding in this phase. Wood\'s forward growth energy pulls in a different direction than Metal\'s gathering calm. But that tension can also be used as counterweight — spring energy can pull you into the world when Metal\'s inwardness becomes too heavy.' },
+        { season: 'Spring', body: 'Often feels more demanding in this phase than it once did. Wood\'s forward growth energy pulls in a different direction from Metal\'s gathering calm. But that tension can also be used as counterweight — spring energy can pull you into the world when Metal\'s inwardness becomes too heavy.' },
         { season: 'Summer', body: 'Brings Fire\'s warmth and lightness. Heart\'s openness and connection to others can feel like a gift amid Metal\'s more withdrawn landscape. Many women in this phase enjoy summer differently — less rushed, more present.' },
-        { season: 'Late Summer', body: 'Earth nourishes Metal in the Sheng cycle, and that nourishment can be felt concretely: digestion functions better, thoughts circle less, the body feels more gathered. Many describe late summer as the season of most calm in this phase.' },
+        { season: 'Late Summer', body: 'Earth nourishes Metal in the Sheng cycle, and that nourishment can be felt concretely: digestion settles, the mind quietens, the body feels more centred. Many describe late summer as the season of most calm in this phase.' },
         { season: 'Winter', body: 'Metal nourishes Water — the energy flows naturally into winter\'s stillness. The dark months that may have felt heavy in younger years can now feel like a natural extension of what you are already working with — turning inward, listening inward, letting silence speak.' },
       ],
     },
@@ -143,7 +143,7 @@ const PHASE_DEEP = {
 
     transitionNext: {
       title: 'The Transition to Phase 8',
-      body: 'Around forty-nine, menopause is in full swing or nearly complete. Metal has done its work through two full seven-year cycles — fourteen years of clarity, refinement, and discernment.',
+      body: 'Around forty-nine, the body\'s great transition is well underway — or already behind you. Metal has done its work through two full seven-year cycles — fourteen years of clarity, refinement, and discernment.',
       next: 'Now the next movement in the Sheng cycle begins: Metal nourishes Water. The energy that has been directed toward sorting and refining begins to flow downward and inward — toward stillness, toward depth, toward the place where wisdom lives. It is like autumn slowly giving way to winter\'s rest.',
     },
   },
@@ -157,7 +157,7 @@ const PHASE_DEEP = {
 
     transition: {
       title: 'The Transition into Phase 8',
-      body: 'Around forty-nine, menopause is in full swing or nearly complete. Menstruation ceases, and a new hormonal reality takes shape. The Metal element that shaped you for fourteen years — with its clarity and discernment — has done its work. What needed to be cut away has been cut. What needed to be released has been released.',
+      body: 'Around forty-nine, the body\'s great transition is well underway — or already behind you. Menstruation ceases, and a new hormonal reality takes shape. The Metal element that shaped you for fourteen years — with its clarity and discernment — has done its work. What needed to be cut away has been cut. What needed to be released has been released.',
       detail: 'Now the next movement in the Sheng cycle begins: Metal nourishes Water. The energy that was directed toward sorting and refining begins to flow downward and inward — toward stillness, toward depth, toward the place where the body\'s essential life force lives. Perhaps you feel it as a new calm landing in the body. Or perhaps as a pull inward — away from the noise, away from the demands, into a silence you haven\'t had access to in decades.',
     },
 
@@ -194,7 +194,7 @@ const PHASE_DEEP = {
     emotion: {
       title: 'Fear and Wisdom',
       body: 'Water\'s fear is different from the anxiety you may know from earlier phases. It is more fundamental, more existential. It is about looking death in the eye — your own and others\' — and discovering that you can still breathe on the other side. This is the fear that can make us wise, if we dare to meet it.',
-      grief: 'Women in this phase describe a peculiar freedom. The fears they carried in their twenties and thirties — fear of failing, of doing it wrong, of being too little — those are gone. Not because they overcame them, but because they simply no longer make sense. And in the place where those fears lived, there is now room for something else: a quiet certainty that they are enough.',
+      grief: 'Women in this phase describe an unexpected freedom. The fears they carried in their twenties and thirties — fear of failing, of doing it wrong, of being too little — those are gone. Not because they overcame them, but because they simply no longer make sense. And in the place where those fears lived, there is now room for something else: a quiet certainty that they are enough.',
       gift: 'The Vedic tradition calls this life stage vanaprastha — withdrawal, the time when one turns from the world\'s busyness and directs the gaze inward. It is never about isolation, but about finding the calm that makes it possible to see clearly and give from a place of depth.',
     },
 
@@ -287,7 +287,7 @@ const PHASE_DEEP = {
 
     transitionNext: {
       title: 'The Transition to Phase 9',
-      body: 'Around fifty-six, the last great movement begins. Water has done its quiet work — the deep rest, the new homeostasis, the wisdom that ripens in silence. And now something surprising happens: beneath the surface, something begins to grow.',
+      body: 'Around fifty-six, the last great movement begins. Water has done its quiet work — the deep rest, the new homeostasis, the wisdom that ripened in silence. And now something surprising happens: beneath the surface, something begins to grow.',
       next: 'Water nourishes Wood, just as rain nourishes a tree. The energy you gathered in stillness begins to flow upward and outward — a new force, a new direction. It is Wood on a new level: not physical growth, but spiritual unfolding. This is what the Second Spring tradition in Chinese medicine calls — the time when a woman is reborn with a whole life\'s experience as her root.',
     },
   },
@@ -336,7 +336,7 @@ const PHASE_DEEP = {
 
     emotion: {
       title: 'Creativity and the Free Voice',
-      body: 'The Liver\'s spiritual aspect is Hun — the ethereal soul, which in Chinese medicine governs visions, dreams, and creative unfolding. In the younger years, when life\'s demands fill so enormously, Hun can be muted. But in this phase, where the roles have fallen away, obligations are lighter, and the deep rest of Phase 8 has filled the reserves, Hun can finally speak freely.',
+      body: 'The Liver\'s spiritual aspect is Hun — the ethereal soul, which in Chinese medicine governs visions, dreams, and creative unfolding. In the younger years, when life\'s demands loom so large, Hun falls quiet — there is simply no room. But in this phase, where the roles have fallen away, obligations are lighter, and the deep rest of Phase 8 has filled the reserves, Hun can finally speak freely.',
       grief: 'Women in this phase describe it as waking up after a long sleep. One woman of fifty-eight told me she had begun painting for the first time in her life — and that it felt as though she had always been a painter, just without knowing it. Another had quit her secure job and opened a small shop. Not because she could afford to. Because she could no longer afford not to.',
       gift: 'The Vedic tradition calls this the time when dharma — life\'s deepest purpose — can finally be lived fully. Not because you have found all the answers, but because you are no longer searching. You are the answer. You are the way. And that freedom is Wood\'s greatest gift.',
     },
@@ -405,7 +405,7 @@ const PHASE_DEEP = {
       },
       {
         title: 'Meeting Death',
-        body: 'In this phase, death becomes a reality that can no longer be pushed away. Friends and siblings may begin to pass. Wood gives a special answer to death: growth. Not in the naive sense that everything just continues, but in the deeper sense that what you have planted lives on. Your words, your actions, your love — those are seeds already sown, and they grow whether you are here to see it or not.',
+        body: 'In this phase, death becomes a reality that can no longer be pushed away. Friends and siblings begin to pass away. Wood gives a special answer to death: growth. Not in the naive sense that everything just continues, but in the deeper sense that what you have planted lives on. Your words, your actions, your love — those are seeds already sown, and they grow whether you are here to see it or not.',
       },
     ],
 
@@ -413,7 +413,7 @@ const PHASE_DEEP = {
       title: 'The Year\'s Rhythm in the Second Spring',
       entries: [
         { season: 'Spring', body: 'Your natural ally. When the days lengthen and the first shoots break through, you feel a recognition in the body — because the season and your life phase share the same element. Wood meets Wood, and the double effect can give a sense of renewal that feels stronger than your age should allow.' },
-        { season: 'Summer', body: 'Wood nourishes Fire in the Sheng cycle. Summer\'s joy and connection feels like a natural extension of spring\'s growth — the warmth, the outdoor life, the meetings with other people. Many women in this phase enjoy summer in a way they haven\'t in decades.' },
+        { season: 'Summer', body: 'Wood nourishes Fire in the Sheng cycle. Summer\'s joy and connection feel like a natural extension of spring\'s growth — the warmth, the outdoor life, the meetings with other people. Many women in this phase enjoy summer in a way they haven\'t in decades.' },
         { season: 'Late Summer', body: 'Wood controls Earth in the Ke cycle, which can create restlessness — a feeling that the upward energy is being braked. But late summer\'s ripe fruits and warm evenings can also give a well-deserved pause from Wood\'s drive.' },
         { season: 'Autumn', body: 'Metal controls Wood in the Ke cycle, and it can feel like a slowing — a time when the body asks for more rest than Wood energy actually wants. Follow the movement: more inside time, quieter evenings. Metal\'s clarity can also help you focus your Wood energy toward what matters most.' },
         { season: 'Winter', body: 'Water nourishes Wood in the Sheng cycle. This is the season that supports your life phase most deeply — winter\'s rest fills your reserves and gives Wood energy root and nourishment. Allow yourself extra rest in winter. It is not laziness. It is the roots drinking.' },
