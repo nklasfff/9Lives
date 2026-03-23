@@ -1,3 +1,4 @@
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import GlassCard from '../components/common/GlassCard';
 import styles from './ExplorePage.module.css';
@@ -70,6 +71,64 @@ function ExploreIllustration() {
   );
 }
 
+function WuXingFlowIllustration() {
+  const elements = [
+    { char: '水', color: '#3a6fa0', x: 100, y: 18 },
+    { char: '木', color: '#4a9e6e', x: 170, y: 45 },
+    { char: '火', color: '#c75a3a', x: 155, y: 105 },
+    { char: '土', color: '#c9a84c', x: 45, y: 105 },
+    { char: '金', color: '#a8b8c8', x: 30, y: 45 },
+  ];
+
+  return (
+    <svg viewBox="0 0 200 130" className={styles.midIllustration}>
+      <style>{`
+        @keyframes flowDot {
+          0%, 100% { offset-distance: 0%; opacity: 0; }
+          10% { opacity: 0.6; }
+          90% { opacity: 0.6; }
+          95% { opacity: 0; }
+        }
+        @keyframes elementBreathe {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.55; }
+        }
+      `}</style>
+
+      {/* Sheng cycle connecting lines */}
+      {elements.map((el, i) => {
+        const next = elements[(i + 1) % 5];
+        return (
+          <line key={`flow-${i}`}
+            x1={el.x} y1={el.y} x2={next.x} y2={next.y}
+            stroke={el.color} strokeWidth="0.5" opacity="0.2"
+            style={{ animation: `elementBreathe ${8 + i}s ease-in-out ${i * 1.2}s infinite` }}
+          />
+        );
+      })}
+
+      {/* Element circles with characters */}
+      {elements.map((el, i) => (
+        <g key={i}>
+          <circle cx={el.x} cy={el.y} r="14" fill="none" stroke={el.color} strokeWidth="0.6" opacity="0.35"
+            style={{ animation: `elementBreathe ${7 + i * 0.8}s ease-in-out ${i * 0.5}s infinite` }} />
+          <text
+            x={el.x} y={el.y + 1}
+            textAnchor="middle" dominantBaseline="central"
+            fill={el.color} fontSize="9" fontWeight="300" opacity="0.6"
+          >
+            {el.char}
+          </text>
+        </g>
+      ))}
+
+      {/* Center dot */}
+      <circle cx="100" cy="65" r="2" fill="rgba(255,255,255,0.2)"
+        style={{ animation: 'elementBreathe 5s ease-in-out infinite' }} />
+    </svg>
+  );
+}
+
 export default function ExplorePage() {
   const navigate = useNavigate();
 
@@ -82,23 +141,25 @@ export default function ExplorePage() {
       </header>
 
       <div className={styles.layers}>
-        {LAYERS.map((layer) => (
-          <GlassCard
-            key={layer.number}
-            className={`${styles.layerCard} ${layer.route ? styles.clickable : ''}`}
-            onClick={layer.route ? () => navigate(layer.route) : undefined}
-          >
-            <div className={styles.layerHeader}>
-              <div>
-                <span className={styles.layerNumber}>{layer.number}</span>
-                <h3 className={styles.layerTitle}>{layer.title}</h3>
-                <p className={styles.layerSubtitle}>{layer.subtitle}</p>
+        {LAYERS.map((layer, idx) => (
+          <React.Fragment key={layer.number}>
+            {idx === 3 && <WuXingFlowIllustration />}
+            <GlassCard
+              className={`${styles.layerCard} ${layer.route ? styles.clickable : ''}`}
+              onClick={layer.route ? () => navigate(layer.route) : undefined}
+            >
+              <div className={styles.layerHeader}>
+                <div>
+                  <span className={styles.layerNumber}>{layer.number}</span>
+                  <h3 className={styles.layerTitle}>{layer.title}</h3>
+                  <p className={styles.layerSubtitle}>{layer.subtitle}</p>
+                </div>
+                {layer.route && <span className={styles.arrow}>→</span>}
+                {!layer.route && <span className={styles.comingSoon}>Soon</span>}
               </div>
-              {layer.route && <span className={styles.arrow}>→</span>}
-              {!layer.route && <span className={styles.comingSoon}>Soon</span>}
-            </div>
-            <p className={styles.layerDesc}>{layer.description}</p>
-          </GlassCard>
+              <p className={styles.layerDesc}>{layer.description}</p>
+            </GlassCard>
+          </React.Fragment>
         ))}
       </div>
     </div>

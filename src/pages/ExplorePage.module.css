@@ -38,6 +38,13 @@
   animation: fadeUp 0.8s var(--ease-out) 0.2s both;
 }
 
+.midIllustration {
+  width: 180px;
+  height: auto;
+  margin: var(--space-lg) auto;
+  display: block;
+}
+
 .layerCard {
   cursor: default;
 }
