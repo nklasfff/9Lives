@@ -188,4 +188,42 @@ export function getSpiritByElement(element) {
   return Object.values(SPIRITS).find(s => s.element === element);
 }
 
+// The spirit that mediates the space between two elements
+// In Sheng: the child element's spirit (what is born between you)
+// In Ke: the controlled element's spirit (what is being shaped)
+// Same: that element's own spirit (a mirror)
+const SHENG = ['wood', 'fire', 'earth', 'metal', 'water'];
+export function getSpiritBetween(element1, element2) {
+  if (element1 === element2) {
+    return { spirit: getSpiritByElement(element1), reason: 'When two of the same element meet, their shared spirit deepens — like a mirror that reflects back what is most true.' };
+  }
+  const i1 = SHENG.indexOf(element1);
+  const i2 = SHENG.indexOf(element2);
+  // Sheng: element1 nourishes element2
+  if ((i1 + 1) % 5 === i2) {
+    return { spirit: getSpiritByElement(element2), reason: `${getElementName(element1)} nourishes ${getElementName(element2)} — the spirit of what is born between you governs this connection.` };
+  }
+  // Sheng: element2 nourishes element1
+  if ((i2 + 1) % 5 === i1) {
+    return { spirit: getSpiritByElement(element1), reason: `${getElementName(element2)} nourishes ${getElementName(element1)} — the spirit of what is received governs this connection.` };
+  }
+  // Ke: element1 controls element2
+  const KE = ['wood', 'earth', 'water', 'fire', 'metal'];
+  const k1 = KE.indexOf(element1);
+  const k2 = KE.indexOf(element2);
+  if ((k1 + 1) % 5 === k2) {
+    return { spirit: getSpiritByElement(element2), reason: `${getElementName(element1)} tempers ${getElementName(element2)} — the spirit being shaped holds the key to this relationship.` };
+  }
+  // Ke: element2 controls element1
+  if ((k2 + 1) % 5 === k1) {
+    return { spirit: getSpiritByElement(element1), reason: `${getElementName(element2)} tempers ${getElementName(element1)} — the spirit being shaped holds the key to this relationship.` };
+  }
+  // Fallback
+  return { spirit: getSpiritByElement(element1), reason: 'A complex elemental meeting — both spirits are active in this space.' };
+}
+
+function getElementName(el) {
+  return el.charAt(0).toUpperCase() + el.slice(1);
+}
+
 export { SPIRITS, SPIRIT_ORDER };

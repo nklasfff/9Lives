@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import { getZodiacAnimal } from '../engine/zodiac';
 import { getElement, getElementInfo } from '../engine/elements';
 import { getRelationship } from '../engine/cycles';
 import { getLifePhase } from '../engine/lifePhase';
+import { getSpiritBetween } from '../engine/wuShen';
 import { calculateAge } from '../utils/dateUtils';
 import { loadFriends, saveFriends } from '../utils/localStorage';
 import GlassCard from '../components/common/GlassCard';
 import styles from './RelationsPage.module.css';
 
 export default function RelationsPage() {
+  const navigate = useNavigate();
   const { getDerivedData } = useUser();
   const data = getDerivedData();
   const [friends, setFriends] = useState(() => loadFriends());
@@ -210,12 +213,34 @@ export default function RelationsPage() {
         <GlassCard className={styles.deepCard}>
           <span className={styles.deepLabel}>Wu Shen · Relational Layer</span>
           <h3 className={styles.deepTitle}>Spirits Between You</h3>
-          <p className={styles.deepBody}>
-            When two elements meet, a spirit governs the space between them. Add someone to discover which spirit holds your connection.
-          </p>
+          {friends.length > 0 ? (
+            <div className={styles.spiritBetweenList}>
+              {friends.map((friend) => {
+                const { spirit, reason } = getSpiritBetween(data.element, friend.element);
+                const spiritEl = getElementInfo(spirit.element);
+                return (
+                  <div key={friend.id} className={styles.spiritBetweenItem}>
+                    <div className={styles.spiritBetweenHeader}>
+                      <span className={styles.spiritBetweenChinese} style={{ color: spiritEl.hex }}>{spirit.chinese}</span>
+                      <div>
+                        <span className={styles.spiritBetweenName} style={{ color: spiritEl.hex }}>{spirit.name}</span>
+                        <span className={styles.spiritBetweenWith}>with {friend.name}</span>
+                      </div>
+                    </div>
+                    <p className={styles.spiritBetweenTitle}>{spirit.title}</p>
+                    <p className={styles.spiritBetweenReason}>{reason}</p>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p className={styles.deepBody}>
+              When two elements meet, a spirit governs the space between them. Add someone to discover which spirit holds your connection.
+            </p>
+          )}
         </GlassCard>
 
-        <GlassCard className={styles.deepCard}>
+        <GlassCard className={`${styles.deepCard} ${styles.tappable}`} onClick={() => navigate('/explore/depths')}>
           <span className={styles.deepLabel}>Qi Jing Ba Mai · Relational Layer</span>
           <h3 className={styles.deepTitle}>The Relational Vessels</h3>
           <div className={styles.vesselList}>
@@ -241,14 +266,48 @@ export default function RelationsPage() {
               </div>
             </div>
           </div>
+          <span className={styles.tapHint}>Explore all eight vessels →</span>
         </GlassCard>
 
         <GlassCard className={styles.deepCard}>
           <span className={styles.deepLabel}>Life Phases · Relational Layer</span>
           <h3 className={styles.deepTitle}>Phase Rhythms</h3>
-          <p className={styles.deepBody}>
-            Women move through 7-year cycles, men through 8-year cycles. Partners are almost never in the same life phase — and understanding this difference transforms how you meet each other.
-          </p>
+          {friends.length > 0 ? (
+            <div className={styles.phaseRhythmList}>
+              {friends.map((friend) => {
+                const friendAge = calculateAge(friend.birthYear, 6, 15);
+                const friendPhase = getLifePhase(friendAge, friend.gender);
+                const friendPhaseEl = getElementInfo(friendPhase.element);
+                const userPhaseEl = getElementInfo(data.phase.element);
+                const phaseDiff = Math.abs(data.phase.phase - friendPhase.phase);
+                return (
+                  <div key={friend.id} className={styles.phaseRhythmItem}>
+                    <div className={styles.phaseRhythmPair}>
+                      <div className={styles.phaseRhythmPerson}>
+                        <span className={styles.phaseRhythmDot} style={{ background: userPhaseEl.hex }} />
+                        <span>You · Phase {data.phase.phase}</span>
+                        <span className={styles.phaseRhythmSeason}>{data.phase.title}</span>
+                      </div>
+                      <div className={styles.phaseRhythmPerson}>
+                        <span className={styles.phaseRhythmDot} style={{ background: friendPhaseEl.hex }} />
+                        <span>{friend.name} · Phase {friendPhase.phase}</span>
+                        <span className={styles.phaseRhythmSeason}>{friendPhase.title}</span>
+                      </div>
+                    </div>
+                    {phaseDiff === 0 ? (
+                      <p className={styles.phaseRhythmInsight}>You share the same life season — a rare synchrony that deepens understanding.</p>
+                    ) : (
+                      <p className={styles.phaseRhythmInsight}>{phaseDiff} phase{phaseDiff > 1 ? 's' : ''} apart — different seasons bring different wisdom to the relationship.</p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p className={styles.deepBody}>
+              Women move through 7-year cycles, men through 8-year cycles. Partners are almost never in the same life phase — and understanding this difference transforms how you meet each other.
+            </p>
+          )}
         </GlassCard>
       </div>
     </div>
