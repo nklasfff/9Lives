@@ -36,9 +36,17 @@ A TCM (Traditional Chinese Medicine) life mapping app. React + Vite, deployed to
 3. `git add` + `git commit` + `git push origin main` + `npm run deploy`
 4. User checks on phone at https://nklasfff.github.io/9Lives/
 
+## Navigation Structure
+- **Home** — Life Arc, Phase card, Today's Day Pillar, Organ Clock (visual), Five Spirits
+- **Explore** — 6 layer cards (4 with detail pages: Element, Life Phase, Spirits, Depths)
+- **Relations** — Ikigai illustration, add friends, elemental dynamics, deeper cards
+- **Time** — Date picker, Day Pillar for any date, Life Phase at any age, organ clock
+- **Profile** — Full element correspondences, zodiac, phase, reset
+
 ## Key Principles
 - Harmony between screens — no screen heavier than others
 - Illustrations create breathing room between cards
 - Subtle element colors, never garish
 - Build incrementally, deploy frequently
 - Be honest about limitations and context capacity
+- See `.claude/rules/` for detailed design and engine rules
