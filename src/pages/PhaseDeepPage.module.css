@@ -1,0 +1,353 @@
+.page {
+  padding: var(--space-lg) var(--space-md);
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.backBtn {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  align-self: flex-start;
+  padding: var(--space-xs) 0;
+  transition: color var(--transition);
+}
+
+.backBtn:hover { color: var(--text-bright); }
+
+/* Header */
+.header {
+  text-align: center;
+  padding: var(--space-lg) 0 var(--space-md);
+  animation: fadeDown 0.8s var(--ease-out) both;
+}
+
+.phaseLabel {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 300;
+  margin-top: var(--space-xs);
+}
+
+.subtitle {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin-top: var(--space-xs);
+}
+
+.currentBadge {
+  display: inline-block;
+  font-size: 0.65rem;
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: var(--space-sm);
+}
+
+/* Coming soon fallback */
+.comingSoon {
+  text-align: center;
+  padding: var(--space-xl) 0;
+}
+
+.comingSoon h2 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--text-bright);
+}
+
+.comingSoon p {
+  color: var(--text-muted);
+  margin-top: var(--space-sm);
+}
+
+/* Illustrations */
+.illustration {
+  width: 200px;
+  height: auto;
+  margin: var(--space-sm) auto;
+  display: block;
+  opacity: 0.85;
+}
+
+/* Section titles */
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  margin-bottom: var(--space-md);
+}
+
+/* Body text */
+.body {
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  line-height: 1.8;
+  margin-bottom: var(--space-sm);
+}
+
+.body:last-child { margin-bottom: 0; }
+
+.bodyAccent {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  font-style: italic;
+}
+
+/* Quote */
+.quoteIntro {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: var(--space-sm);
+}
+
+.quote {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  padding-left: var(--space-md);
+  border-left: 2px solid;
+  margin-bottom: var(--space-md);
+}
+
+.quoteReflection {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Element bar */
+.elementGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.elDetail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.elDetail:last-child { border-bottom: none; }
+
+.elLabel {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.elValue {
+  font-size: 0.82rem;
+  color: var(--text-primary);
+}
+
+.elSymbol {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+/* Lists */
+.listSection {
+  margin-bottom: var(--space-md);
+}
+
+.listSection:last-child { margin-bottom: 0; }
+
+.listTitle {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.listItem {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  line-height: 1.7;
+  margin-bottom: 6px;
+}
+
+/* Themes */
+.themesSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.themesTitle {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  text-align: center;
+}
+
+.themeTitle {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  margin-bottom: var(--space-sm);
+}
+
+/* Advice */
+.adviceList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.adviceItem {
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--glass-border);
+}
+
+.adviceItem:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.adviceTitle {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--text-bright);
+  margin-bottom: 4px;
+}
+
+.adviceBody {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  line-height: 1.7;
+}
+
+/* Exercises */
+.exerciseList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.exerciseItem {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.exerciseNum {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  opacity: 0.4;
+  line-height: 1;
+  min-width: 28px;
+}
+
+.exerciseTitle {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--text-bright);
+  margin-bottom: var(--space-xs);
+}
+
+/* Diet */
+.dietList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.dietItem {
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--glass-border);
+}
+
+.dietCategory {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xs);
+}
+
+/* Seasons */
+.seasonList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.seasonItem {
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--glass-border);
+}
+
+.seasonItem:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.seasonName {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.seasonBody {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  line-height: 1.7;
+}
+
+/* Reflections */
+.reflectionList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.reflectionItem {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  padding-left: var(--space-md);
+  border-left: 1px solid var(--glass-border);
+}
+
+.reflectionNote {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: var(--space-md);
+  text-align: center;
+}

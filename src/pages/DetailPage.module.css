@@ -339,3 +339,27 @@
   color: var(--text-bright);
   line-height: 1.6;
 }
+
+/* Clickable cards */
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:active {
+  transform: scale(0.985);
+}
+
+.tapHint {
+  display: block;
+  margin-top: var(--space-sm);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-align: right;
+  opacity: 0.5;
+  transition: opacity var(--transition);
+}
+
+.clickable:hover .tapHint {
+  opacity: 0.8;
+}

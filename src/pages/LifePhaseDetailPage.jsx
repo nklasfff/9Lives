@@ -1,6 +1,7 @@
 import { useUser } from '../context/UserContext';
 import { getAllPhases } from '../engine/lifePhase';
 import { getElementInfo } from '../engine/elements';
+import { getPhaseDeep } from '../engine/phaseDeep';
 import { useNavigate } from 'react-router-dom';
 import LifeArcVisualization from '../components/hero/LifeArcVisualization';
 import GlassCard from '../components/common/GlassCard';
@@ -35,8 +36,9 @@ export default function LifePhaseDetailPage() {
           return (
             <GlassCard
               key={phase.phase}
-              className={isCurrent ? styles.activeCard : ''}
+              className={`${isCurrent ? styles.activeCard : ''} ${getPhaseDeep(phase.phase) ? styles.clickable : ''}`}
               glowColor={isCurrent ? `${phaseEl.hex}20` : undefined}
+              onClick={getPhaseDeep(phase.phase) ? () => navigate(`/explore/phases/${phase.phase}`) : undefined}
             >
               <div className={styles.phaseHeader}>
                 <span className={styles.phaseNumber} style={{ color: phaseEl.hex }}>
@@ -58,6 +60,9 @@ export default function LifePhaseDetailPage() {
               <p className={styles.bodyText}>{phase.description}</p>
               {phase.keywords && (
                 <p className={styles.keywords}>{phase.keywords}</p>
+              )}
+              {getPhaseDeep(phase.phase) && (
+                <span className={styles.tapHint}>Read the full chapter →</span>
               )}
             </GlassCard>
           );

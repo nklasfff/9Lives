@@ -12,6 +12,7 @@ import ElementDetailPage from './pages/ElementDetailPage';
 import LifePhaseDetailPage from './pages/LifePhaseDetailPage';
 import SpiritsDetailPage from './pages/SpiritsDetailPage';
 import DepthDetailPage from './pages/DepthDetailPage';
+import PhaseDeepPage from './pages/PhaseDeepPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -33,6 +34,7 @@ function AppRoutes() {
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/explore/element" element={<ElementDetailPage />} />
         <Route path="/explore/phases" element={<LifePhaseDetailPage />} />
+        <Route path="/explore/phases/:phaseId" element={<PhaseDeepPage />} />
         <Route path="/explore/spirits" element={<SpiritsDetailPage />} />
         <Route path="/explore/depths" element={<DepthDetailPage />} />
         <Route path="/relations" element={<RelationsPage />} />
