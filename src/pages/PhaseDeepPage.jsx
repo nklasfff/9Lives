@@ -130,17 +130,17 @@ export default function PhaseDeepPage() {
 
       <LeavesIllustration color={el.hex} />
 
-      <ThemesIllustration color={el.hex} />
+      <ThemesIllustration color={el.hex} element={deep.element} />
 
       {/* Themes — each collapsible */}
-      <h2 className={styles.themesTitle}>Themes in the Harvest Years</h2>
+      <h2 className={styles.themesTitle}>Themes in the {deep.title} Years</h2>
       {deep.themes.map((theme, i) => (
         <Expandable key={i} title={theme.title}>
           <p className={styles.body}>{theme.body}</p>
         </Expandable>
       ))}
 
-      <OrganFlowIllustration color={el.hex} />
+      <OrganFlowIllustration color={el.hex} yinOrgan={el.organs.yin} yangOrgan={el.organs.yang} />
 
       <Expandable title="Guidance for This Phase">
         <div className={styles.adviceList}>
@@ -288,15 +288,39 @@ function LeavesIllustration({ color }) {
   );
 }
 
-function ThemesIllustration({ color }) {
-  // A harvest basket / gathering motif — arcs converging into center
+function ThemesIllustration({ color, element }) {
+  if (element === 'water') {
+    // Water: still lake with depth lines
+    return (
+      <svg viewBox="0 0 220 80" className={styles.illustration}>
+        <style>{`
+          @keyframes waterStill { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.5; } }
+          @keyframes waterDepth { 0%, 100% { opacity: 0.15; transform: scaleX(1); } 50% { opacity: 0.35; transform: scaleX(1.03); } }
+        `}</style>
+        {/* Horizontal depth lines — like a still lake */}
+        {[25, 38, 50, 60].map((y, i) => (
+          <line key={i} x1={40 + i * 8} y1={y} x2={180 - i * 8} y2={y}
+            stroke={color} strokeWidth={0.8 - i * 0.1} opacity={0.4 - i * 0.08}
+            style={{ animation: `waterDepth ${8 + i * 1.5}s ease-in-out ${i * 0.8}s infinite`, transformOrigin: '110px 40px' }}
+          />
+        ))}
+        {/* Surface reflection */}
+        <ellipse cx="110" cy="20" rx="50" ry="3" fill="none" stroke={color} strokeWidth="0.6" opacity="0.35"
+          style={{ animation: 'waterStill 7s ease-in-out infinite' }} />
+        {/* Deep center dot */}
+        <circle cx="110" cy="55" r="4" fill={color} opacity="0.3"
+          style={{ animation: 'waterStill 6s ease-in-out infinite' }} />
+        <circle cx="110" cy="55" r="8" fill="none" stroke={color} strokeWidth="0.4" opacity="0.15" />
+      </svg>
+    );
+  }
+  // Default: harvest/gathering motif (for metal/phase 7)
   return (
     <svg viewBox="0 0 220 80" className={styles.illustration}>
       <style>{`
         @keyframes themeGather { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.55; } }
         @keyframes themePulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.6; } }
       `}</style>
-      {/* Converging arcs */}
       {[-40, -20, 0, 20, 40].map((offset, i) => (
         <path key={i}
           d={`M ${60 + offset * 0.5} 65 Q 110 ${15 + Math.abs(offset) * 0.3} ${160 - offset * 0.5} 65`}
@@ -304,11 +328,9 @@ function ThemesIllustration({ color }) {
           style={{ animation: `themeGather ${7 + i}s ease-in-out ${i * 0.6}s infinite` }}
         />
       ))}
-      {/* Center gathering point */}
       <circle cx="110" cy="35" r="8" fill={color} opacity="0.1"
         style={{ animation: 'themePulse 6s ease-in-out infinite' }} />
       <circle cx="110" cy="35" r="4" fill={color} opacity="0.25" />
-      {/* Small harvest dots */}
       {[75, 90, 110, 130, 145].map((x, i) => (
         <circle key={`d${i}`} cx={x} cy={60 - (i % 2) * 5} r="2" fill={color} opacity="0.2"
           style={{ animation: `themePulse ${5 + i * 0.8}s ease-in-out ${i * 0.4}s infinite` }} />
@@ -317,19 +339,19 @@ function ThemesIllustration({ color }) {
   );
 }
 
-function OrganFlowIllustration({ color }) {
+function OrganFlowIllustration({ color, yinOrgan, yangOrgan }) {
   return (
     <svg viewBox="0 0 200 55" className={styles.illustration}>
       <style>{`@keyframes organPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.65; } }`}</style>
       <circle cx="70" cy="28" r="16" fill={color} opacity="0.06" />
       <circle cx="70" cy="28" r="16" fill="none" stroke={color} strokeWidth="0.8" opacity="0.45"
         style={{ animation: 'organPulse 6s ease-in-out infinite' }} />
-      <text x="70" y="29" textAnchor="middle" dominantBaseline="central" fill={color} fontSize="6" opacity="0.65" fontFamily="var(--font-display)" fontStyle="italic">Lungs</text>
+      <text x="70" y="29" textAnchor="middle" dominantBaseline="central" fill={color} fontSize="6" opacity="0.65" fontFamily="var(--font-display)" fontStyle="italic">{yinOrgan}</text>
       <line x1="86" y1="28" x2="114" y2="28" stroke={color} strokeWidth="0.6" opacity="0.3" strokeDasharray="2 3" />
       <circle cx="130" cy="28" r="16" fill={color} opacity="0.06" />
       <circle cx="130" cy="28" r="16" fill="none" stroke={color} strokeWidth="0.8" opacity="0.45"
         style={{ animation: 'organPulse 6s ease-in-out 1.5s infinite' }} />
-      <text x="130" y="29" textAnchor="middle" dominantBaseline="central" fill={color} fontSize="5" opacity="0.65" fontFamily="var(--font-display)" fontStyle="italic">L. Intestine</text>
+      <text x="130" y="29" textAnchor="middle" dominantBaseline="central" fill={color} fontSize="6" opacity="0.65" fontFamily="var(--font-display)" fontStyle="italic">{yangOrgan}</text>
     </svg>
   );
 }
