@@ -108,6 +108,119 @@
   color: var(--text-muted);
 }
 
+.dateContext {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: var(--space-sm);
+}
+
+/* ─── Day Energy (main synthesis card) ─── */
+.dayEnergyHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.dayEnergyChinese {
+  font-size: 3rem;
+  font-weight: 300;
+  line-height: 1;
+  text-shadow: 0 0 30px currentColor;
+}
+
+.dayEnergyTitle {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: var(--text-bright);
+}
+
+.dayEnergyElement {
+  font-size: 0.75rem;
+  font-style: italic;
+  display: block;
+  margin-top: 2px;
+}
+
+.dayEnergyDesc {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--space-md);
+}
+
+.dayEnergyGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.dayEnergyItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dayEnergyLabel {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.dayEnergyValue {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+}
+
+/* Meeting section (user element meets day element) */
+.meetingSection {
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--glass-border);
+}
+
+.meetingElements {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.meetingEl {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 300;
+}
+
+.meetingArrow {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.meetingType {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.meetingDesc {
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  line-height: 1.7;
+}
+
 /* Pillar */
 .pillarDisplay {
   display: flex;
@@ -156,6 +269,66 @@
   margin-top: 4px;
 }
 
+/* Spirit card */
+.spiritTitle {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  margin-bottom: var(--space-sm);
+}
+
+.spiritDesc {
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  line-height: 1.75;
+  margin-bottom: var(--space-md);
+}
+
+.reflectionBox {
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 2px solid rgba(255, 255, 255, 0.12);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.reflectionLabel {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.reflectionText {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.spiritMeeting {
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--glass-border);
+}
+
+.spiritMeetingLabel {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.spiritMeetingText {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  line-height: 1.7;
+}
+
 /* Phase */
 .phaseDisplay {
   display: flex;
@@ -197,6 +370,42 @@
   font-size: 0.85rem;
   color: var(--text-primary);
   line-height: 1.75;
+  margin-top: var(--space-xs);
+}
+
+/* Balance / Element details */
+.balanceGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+  margin: var(--space-md) 0;
+}
+
+.balanceItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.balanceLabel {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.balanceValue {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+}
+
+.imbalanceNote {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.7;
 }
 
 /* Friend phases */
@@ -424,4 +633,84 @@
   font-style: italic;
   color: var(--text-secondary);
   line-height: 1.6;
+}
+
+/* ─── Five Spirits Grid ─── */
+.spiritsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.spiritItem {
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.spiritItem:last-child {
+  border-bottom: none;
+}
+
+.spiritItem:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.spiritActive {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.spiritItemHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.spiritChinese {
+  font-size: 1.6rem;
+  font-weight: 300;
+  line-height: 1;
+  text-shadow: 0 0 15px currentColor;
+}
+
+.spiritName {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--text-bright);
+  display: block;
+}
+
+.spiritSubtitle {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.spiritBadge {
+  margin-left: auto;
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  color: var(--bg);
+  font-weight: 600;
+}
+
+.spiritBadge:not([style*="background"]) {
+  background: transparent;
+  border: 1px solid;
+}
+
+.spiritExpanded {
+  margin-top: var(--space-sm);
+  padding-left: calc(1.6rem + var(--space-sm));
+}
+
+.spiritExpandedDesc {
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  line-height: 1.75;
+  margin-bottom: var(--space-sm);
 }

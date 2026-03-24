@@ -1,0 +1,489 @@
+.page {
+  padding: var(--space-lg) var(--space-md);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.backBtn {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  padding: var(--space-sm) 0;
+  cursor: pointer;
+  transition: color var(--transition);
+}
+
+.backBtn:hover {
+  color: var(--text-secondary);
+}
+
+/* Header */
+.header {
+  text-align: center;
+  padding: var(--space-md) 0 var(--space-sm);
+  animation: fadeDown 0.8s var(--ease-out) both;
+}
+
+.label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.header h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  margin-top: var(--space-xs);
+}
+
+.elementPair {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  margin: var(--space-md) 0 var(--space-xs);
+}
+
+.elementSymbol {
+  font-size: 3.5rem;
+  font-weight: 300;
+  text-shadow: 0 0 35px currentColor;
+  line-height: 1;
+}
+
+.pairBridge {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-top: var(--space-xs);
+}
+
+/* Illustration */
+.illustration {
+  width: 360px;
+  height: auto;
+  margin: var(--space-sm) auto var(--space-md);
+  display: block;
+}
+
+/* Cards */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  animation: fadeUp 0.8s var(--ease-out) 0.2s both;
+  margin-bottom: var(--space-lg);
+}
+
+.cardLabel {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  margin-bottom: var(--space-sm);
+}
+
+.bodyText {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  line-height: 1.75;
+  margin-top: var(--space-xs);
+}
+
+.metaphor {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+/* Emotion meeting */
+.emotionMeeting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  margin: var(--space-md) 0;
+  padding: var(--space-md) 0;
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.emotionSide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.emotionElement {
+  font-size: 1.8rem;
+  font-weight: 300;
+  text-shadow: 0 0 20px currentColor;
+  line-height: 1;
+}
+
+.emotionBalanced {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--text-bright);
+}
+
+.emotionShadow {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.emotionBridge {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Spirit */
+.spiritHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.spiritChinese {
+  font-size: 2.8rem;
+  font-weight: 300;
+  text-shadow: 0 0 30px currentColor;
+  line-height: 1;
+}
+
+.spiritSubtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+  display: block;
+  margin-top: 2px;
+}
+
+.spiritReason {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-sm);
+}
+
+.spiritQualities {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--glass-border);
+}
+
+.qualitySection {
+  /* intentionally simple */
+}
+
+.qualityLabel {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.qualityList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.qualityList li {
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+  padding: 4px 0 4px var(--space-sm);
+  border-left: 1px solid var(--glass-border);
+  margin-bottom: 4px;
+}
+
+/* Reflection box */
+.reflectionBox {
+  margin-top: var(--space-md);
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 2px solid rgba(255, 255, 255, 0.12);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.reflectionLabel {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.reflectionText {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* Organ pairs */
+.organPairs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--glass-border);
+}
+
+.organPair {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.organPair:last-child {
+  border-bottom: none;
+}
+
+.organLabel {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.organValue {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.organMeta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Phase comparison */
+.phaseComparison {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.phaseCard {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.phaseCard:last-child {
+  border-bottom: none;
+}
+
+.phaseNum {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1;
+  text-shadow: 0 0 15px currentColor;
+  min-width: 36px;
+}
+
+.phaseName {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  display: block;
+}
+
+.phaseTitle {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--text-bright);
+}
+
+.phaseSeason {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-style: italic;
+  display: block;
+  margin-top: 2px;
+}
+
+.phaseInsight {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-top: var(--space-sm);
+}
+
+/* Meridian sections */
+.meridianSection {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--glass-border);
+}
+
+.meridianSection:first-of-type {
+  margin-top: var(--space-md);
+}
+
+.meridianHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.meridianChinese {
+  font-size: 2rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1;
+}
+
+.meridianName {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--text-bright);
+}
+
+.meridianEnglish {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-style: italic;
+  display: block;
+  margin-top: 2px;
+}
+
+.meridianEssence {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-sm);
+}
+
+.meridianStates {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--glass-border);
+}
+
+.stateText {
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  line-height: 1.7;
+  margin-top: 4px;
+}
+
+/* Spirit pair */
+.spiritPair {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.spiritSide {
+  text-align: center;
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.spiritSide:last-child {
+  border-bottom: none;
+}
+
+.spiritSideChinese {
+  font-size: 2.2rem;
+  font-weight: 300;
+  text-shadow: 0 0 25px currentColor;
+  line-height: 1;
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.spiritSideName {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: var(--text-bright);
+}
+
+.spiritSideTitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.spiritSideDesc {
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  line-height: 1.7;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+/* Final reflection */
+.finalReflection {
+  text-align: center;
+}
+
+.finalText {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-top: var(--space-sm);
+}

@@ -120,7 +120,7 @@ export default function RelationsPage() {
                         </span>
                       </div>
                     </div>
-                    <button className={styles.removeBtn} onClick={() => removeFriend(friend.id)}>×</button>
+                    <button className={styles.removeBtn} onClick={(e) => { e.stopPropagation(); removeFriend(friend.id); }}>×</button>
                   </div>
 
                   <div className={styles.relationType}>
@@ -143,6 +143,10 @@ export default function RelationsPage() {
                       <span className={styles.phaseValue}>Phase {friendPhaseInfo.phase} · {friendPhaseInfo.title}</span>
                     </div>
                   </div>
+
+                  <button className={styles.exploreBtn} onClick={() => navigate(`/relations/${friend.id}`)}>
+                    Explore this connection →
+                  </button>
                 </GlassCard>
               );
             })}
@@ -210,6 +214,26 @@ export default function RelationsPage() {
 
       {/* Deeper layer cards */}
       <div className={styles.deeperCards}>
+        {friends.length >= 2 && (
+          <GlassCard className={`${styles.deepCard} ${styles.tappable}`} onClick={() => navigate('/relations/group')}>
+            <span className={styles.deepLabel}>Group Constellation</span>
+            <h3 className={styles.deepTitle}>The Field Between You All</h3>
+            <p className={styles.deepBody}>
+              See how all your people relate — elemental flows, shared spirits, tensions and harmonies across the whole group.
+            </p>
+            <div className={styles.groupPreview}>
+              {friends.slice(0, 4).map((friend) => {
+                const fEl = getElementInfo(friend.element);
+                return (
+                  <span key={friend.id} className={styles.groupDot} style={{ background: fEl.hex }} title={friend.name} />
+                );
+              })}
+              <span className={styles.groupDot} style={{ background: userEl.hex }} title="You" />
+            </div>
+            <span className={styles.tapHint}>Explore group dynamics →</span>
+          </GlassCard>
+        )}
+
         <GlassCard className={styles.deepCard}>
           <span className={styles.deepLabel}>Wu Shen · Relational Layer</span>
           <h3 className={styles.deepTitle}>Spirits Between You</h3>
