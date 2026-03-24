@@ -6,11 +6,11 @@
   --surface-hover: #162436;
 
   /* ── Text ── */
-  --text-bright: #e6edf3;
-  --text-primary: #c4d5e2;
-  --text-secondary: #7a9ab5;
-  --text-muted: #4a657d;
-  --text-dim: #607a92;
+  --text-bright: #edf3f8;
+  --text-primary: #cddce9;
+  --text-secondary: #91b2cb;
+  --text-muted: #5e7d97;
+  --text-dim: #7590a8;
 
   /* ── Borders ── */
   --border: #1a2d42;
