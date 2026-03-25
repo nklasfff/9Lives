@@ -27,7 +27,7 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
 
   return (
     <div className={styles.container}>
-      <svg viewBox="0 0 620 192" className={styles.svg}>
+      <svg viewBox="0 0 620 202" className={styles.svg}>
         <defs>
           <filter id="glow-active" x="-60%" y="-60%" width="220%" height="220%">
             <feGaussianBlur stdDeviation="6" result="blur" />
@@ -91,7 +91,7 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
               textAnchor="middle"
               dominantBaseline="central"
               style={{ fill: isActive ? 'var(--text-bright)' : 'var(--text-illustration)' }}
-              fontSize={isActive ? '14' : '11'}
+              fontSize={isActive ? '18' : '15'}
               fontFamily="var(--font-display)"
               fontWeight={isActive ? '500' : '300'}
             >
@@ -127,10 +127,10 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
           <text
             key={text}
             x={x}
-            y={178}
+            y={186}
             textAnchor="middle"
             style={{ fill: 'var(--text-illustration)' }}
-            fontSize="12"
+            fontSize="14"
             fontFamily="var(--font-display)"
             fontStyle="italic"
             fontWeight="300"
