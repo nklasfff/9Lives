@@ -26,7 +26,7 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
 
   return (
     <div className={styles.container}>
-      <svg viewBox="0 0 620 185" className={styles.svg}>
+      <svg viewBox="0 0 620 192" className={styles.svg}>
         <defs>
           {circles.map(({ i, elementInfo, isActive }) => (
             isActive && (
@@ -43,11 +43,18 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
           ))}
         </defs>
 
-        {/* Connecting arc — smooth curve */}
+        <style>{`
+          @keyframes travelRing {
+            0%, 15%, 100% { opacity: 0; }
+            7.5% { opacity: 0.55; }
+          }
+        `}</style>
+
+        {/* Connecting arc */}
         <path
           d={`M ${circles[0].x} ${circles[0].y} ${circles.slice(1).map(c => `L ${c.x} ${c.y}`).join(' ')}`}
           fill="none"
-          stroke="rgba(255,255,255,0.15)"
+          style={{ stroke: 'var(--line-subtle)' }}
           strokeWidth="0.8"
           strokeDasharray="3 4"
           className={styles.arcPath}
@@ -66,7 +73,7 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
               cy={y}
               r={isActive ? 22 : 17}
               fill={isActive ? `${elementInfo.hex}18` : `${elementInfo.hex}0a`}
-              stroke={isActive ? elementInfo.hex : 'rgba(255,255,255,0.35)'}
+              style={{ stroke: isActive ? elementInfo.hex : 'var(--line-medium)' }}
               strokeWidth={isActive ? 1.2 : 0.8}
               filter={isActive ? `url(#glow-${i})` : undefined}
               className={styles.circle}
@@ -76,7 +83,7 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
               y={y + 1}
               textAnchor="middle"
               dominantBaseline="central"
-              fill={isActive ? elementInfo.hex : 'rgba(255,255,255,0.6)'}
+              style={{ fill: isActive ? elementInfo.hex : 'var(--text-illustration)' }}
               fontSize={isActive ? '14' : '11'}
               fontFamily="var(--font-display)"
               fontWeight="300"
@@ -86,15 +93,38 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
           </g>
         ))}
 
-        {/* Season labels — italic, elegant */}
+        {/* Traveling ring — visits each non-active circle sequentially */}
+        {(() => {
+          const nonActive = circles.filter(c => !c.isActive);
+          const slotDur = 2.5;
+          const cycleDur = nonActive.length * slotDur;
+          const userElementHex = getElementInfo(userElement).hex;
+          return nonActive.map(({ x, y, i }, slot) => (
+            <circle
+              key={`travel-${i}`}
+              cx={x}
+              cy={y}
+              r="21"
+              fill="none"
+              stroke={userElementHex}
+              strokeWidth="1"
+              opacity="0"
+              style={{
+                animation: `travelRing ${cycleDur}s ease-in-out ${slot * slotDur}s infinite`,
+              }}
+            />
+          ));
+        })()}
+
+        {/* Season labels */}
         {SEASON_LABELS.map(({ text, x }) => (
           <text
             key={text}
             x={x}
-            y={172}
+            y={178}
             textAnchor="middle"
-            fill="rgba(255,255,255,0.45)"
-            fontSize="10"
+            style={{ fill: 'var(--text-illustration)' }}
+            fontSize="12"
             fontFamily="var(--font-display)"
             fontStyle="italic"
             fontWeight="300"
