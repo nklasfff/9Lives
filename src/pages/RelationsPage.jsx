@@ -371,15 +371,6 @@ function IkigaiIllustration({ userColor }) {
           0%, 100% { transform: translate(0, -2px); }
           50% { transform: translate(0, 2px); }
         }
-        @keyframes centerGlow {
-          0%, 100% { opacity: 0.15; }
-          50% { opacity: 0.45; }
-        }
-        @keyframes dotSequence {
-          0%, 8% { opacity: 0; r: 1; }
-          12%, 20% { opacity: 0.6; r: 3.5; }
-          28%, 100% { opacity: 0; r: 1; }
-        }
       `}</style>
 
       <defs>
@@ -395,63 +386,17 @@ function IkigaiIllustration({ userColor }) {
       {/* The four overlapping circles */}
       {positions.map(({ x, y }, i) => (
         <g key={i} style={{ animation: `ikigaiBreathe${i + 1} ${10 + i * 2}s ease-in-out infinite` }}>
-          {/* Filled glow */}
           <circle cx={x} cy={y} r={r} fill={`url(#ikGrad${i})`} />
-          {/* Outer ring */}
           <circle cx={x} cy={y} r={r} fill="none" stroke={colors[i]} strokeWidth="0.8" opacity="0.35" />
-          {/* Inner ring */}
           <circle cx={x} cy={y} r={r * 0.55} fill="none" stroke={colors[i]} strokeWidth="0.4" opacity="0.15" strokeDasharray="2 3" />
         </g>
       ))}
 
-      {/* Sequenced intersection dots — precisely placed in overlap regions */}
-      {(() => {
-        // For 2-circle intersections: the dot goes at the midpoint between centers,
-        // pushed toward the overlap region (weighted toward the intersection)
-        function twoCircleCenter(a, b) {
-          // Midpoint between centers — this IS the center of the lens/vesica
-          return { x: (positions[a].x + positions[b].x) / 2, y: (positions[a].y + positions[b].y) / 2 };
-        }
-
-        // For 3-circle intersections: centroid of the three centers
-        // (the triple overlap region is centered at the centroid when circles are equal)
-        function threeCircleCenter(a, b, c) {
-          return {
-            x: (positions[a].x + positions[b].x + positions[c].x) / 3,
-            y: (positions[a].y + positions[b].y + positions[c].y) / 3,
-          };
-        }
-
-        // For 4-circle: centroid of all four
-        const fourCenter = {
-          x: positions.reduce((s, p) => s + p.x, 0) / 4,
-          y: positions.reduce((s, p) => s + p.y, 0) / 4,
-        };
-
-        const zones = [
-          { ...twoCircleCenter(0, 1), label: '2' },  // You + Partner
-          { ...twoCircleCenter(0, 2), label: '2' },  // You + Child
-          { ...twoCircleCenter(1, 3), label: '2' },  // Partner + Friend
-          { ...twoCircleCenter(2, 3), label: '2' },  // Child + Friend
-          { ...twoCircleCenter(0, 3), label: '2' },  // You + Friend
-          { ...threeCircleCenter(0, 1, 3), label: '3' }, // You + Partner + Friend
-          { ...threeCircleCenter(0, 2, 3), label: '3' }, // You + Child + Friend
-          { ...threeCircleCenter(0, 1, 2), label: '3' }, // You + Partner + Child
-          { ...fourCenter, label: '4' },               // All four
-        ];
-        const totalDuration = zones.length * 3;
-
-        return zones.map((zone, idx) => {
-          const dotR = zone.label === '4' ? 4 : zone.label === '3' ? 3 : 2.5;
-          const brightness = zone.label === '4' ? 0.7 : zone.label === '3' ? 0.5 : 0.4;
-          return (
-            <circle key={`seq-${idx}`} cx={zone.x} cy={zone.y} r={dotR}
-              style={{ fill: brightness > 0.5 ? 'var(--text-illustration-bright)' : 'var(--text-illustration)' }}
-              style={{ animation: `dotSequence ${totalDuration}s ease-in-out ${idx * 3}s infinite` }}
-            />
-          );
-        });
-      })()}
+      {/* Single breathing center dot */}
+      <circle cx="130" cy="117" r="4" fill={userColor} opacity="0.6">
+        <animate attributeName="r" values="3;8;3" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
+        <animate attributeName="opacity" values="0.6;0.2;0.6" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
+      </circle>
 
       {/* Labels */}
       {positions.map(({ x, y }, i) => {
