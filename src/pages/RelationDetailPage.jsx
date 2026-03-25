@@ -393,7 +393,7 @@ function RelationIllustration({ userColor, friendColor, spiritColor }) {
 
       {/* Connection line flowing between */}
       <line x1="90" y1="80" x2="150" y2="80"
-        stroke="rgba(255,255,255,0.25)" strokeWidth="0.8"
+        style={{ stroke: 'var(--text-illustration-dim)' }} strokeWidth="0.8"
         strokeDasharray="3 6"
         style={{ animation: 'relFlow 8s linear infinite' }}
       />
@@ -406,8 +406,8 @@ function RelationIllustration({ userColor, friendColor, spiritColor }) {
       <circle cx="120" cy="80" r="3.5" fill={spiritColor} opacity="0.7" />
 
       {/* Subtle outer rings */}
-      <circle cx="120" cy="80" r="70" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.6" />
-      <circle cx="120" cy="80" r="75" fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="0.5" strokeDasharray="1 5" />
+      <circle cx="120" cy="80" r="70" fill="none" style={{ stroke: 'var(--line-subtle)' }} strokeWidth="0.6" />
+      <circle cx="120" cy="80" r="75" fill="none" style={{ stroke: 'var(--line-faint)' }} strokeWidth="0.5" strokeDasharray="1 5" />
     </svg>
   );
 }

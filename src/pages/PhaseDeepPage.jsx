@@ -407,7 +407,7 @@ function SeasonsIllustration({ color }) {
         const isActive = s.c === color;
         return (
           <g key={i}>
-            {i < 4 && <line x1={x + 12} y1="22" x2={x + 38} y2="22" stroke="rgba(255,255,255,0.12)" strokeWidth="0.6" />}
+            {i < 4 && <line x1={x + 12} y1="22" x2={x + 38} y2="22" style={{ stroke: 'var(--line-subtle)' }} strokeWidth="0.6" />}
             {isActive && <circle cx={x} cy="22" r="13" fill={s.c} opacity="0.1" />}
             <circle cx={x} cy="22" r={isActive ? '10' : '7'} fill="none" stroke={s.c}
               strokeWidth={isActive ? '1.2' : '0.7'} opacity={isActive ? '0.7' : '0.35'}

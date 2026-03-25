@@ -228,7 +228,7 @@ function WelcomeIllustration({ className }) {
       </defs>
 
       {/* Outer circle — the cycle of life */}
-      <circle cx="120" cy="100" r="88" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="0.5" />
+      <circle cx="120" cy="100" r="88" fill="none" style={{ stroke: 'var(--line-subtle)' }} strokeWidth="0.5" />
 
       {/* Five element points with glowing halos */}
       {[0, 1, 2, 3, 4].map((i) => {
@@ -263,7 +263,7 @@ function WelcomeIllustration({ className }) {
           <line key={`sh-${i}`}
             x1={120 + 88 * Math.cos(a1)} y1={100 + 88 * Math.sin(a1)}
             x2={120 + 88 * Math.cos(a2)} y2={100 + 88 * Math.sin(a2)}
-            stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+            style={{ stroke: 'var(--line-subtle)' }} strokeWidth="0.5" />
         );
       })}
 
@@ -275,30 +275,30 @@ function WelcomeIllustration({ className }) {
           <line key={`ke-${i}`}
             x1={120 + 88 * Math.cos(a1)} y1={100 + 88 * Math.sin(a1)}
             x2={120 + 88 * Math.cos(a2)} y2={100 + 88 * Math.sin(a2)}
-            stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" strokeDasharray="3 4" />
+            style={{ stroke: 'var(--line-faint)' }} strokeWidth="0.5" strokeDasharray="3 4" />
         );
       })}
 
       {/* Middle ring — the 9 lives */}
-      <circle cx="120" cy="100" r="55" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" strokeDasharray="2 3" />
+      <circle cx="120" cy="100" r="55" fill="none" style={{ stroke: 'var(--line-faint)' }} strokeWidth="0.5" strokeDasharray="2 3" />
 
       {/* Nine life dots */}
       {Array.from({ length: 9 }, (_, i) => {
         const angle = (-90 + i * 40) * (Math.PI / 180);
         const x = 120 + 55 * Math.cos(angle);
         const y = 100 + 55 * Math.sin(angle);
-        return <circle key={`l-${i}`} cx={x} cy={y} r="2" fill="rgba(255,255,255,0.2)" />;
+        return <circle key={`l-${i}`} cx={x} cy={y} r="2" style={{ fill: 'var(--dot-illustration)' }} />;
       })}
 
       {/* Inner ring */}
-      <circle cx="120" cy="100" r="30" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" />
+      <circle cx="120" cy="100" r="30" fill="none" style={{ stroke: 'var(--line-faint)' }} strokeWidth="0.5" />
 
       {/* Center — the self */}
-      <circle cx="120" cy="100" r="8" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
-      <circle cx="120" cy="100" r="3" fill="rgba(255,255,255,0.25)" />
+      <circle cx="120" cy="100" r="8" fill="none" style={{ stroke: 'var(--line-medium)' }} strokeWidth="0.5" />
+      <circle cx="120" cy="100" r="3" style={{ fill: 'var(--text-illustration-dim)' }} />
 
       {/* Vertical axis — heaven and earth */}
-      <line x1="120" y1="5" x2="120" y2="195" stroke="rgba(255,255,255,0.05)" strokeWidth="0.5" strokeDasharray="1 4" />
+      <line x1="120" y1="5" x2="120" y2="195" style={{ stroke: 'var(--line-faint)' }} strokeWidth="0.5" strokeDasharray="1 4" />
     </svg>
   );
 }

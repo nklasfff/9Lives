@@ -446,7 +446,7 @@ function IkigaiIllustration({ userColor }) {
           const brightness = zone.label === '4' ? 0.7 : zone.label === '3' ? 0.5 : 0.4;
           return (
             <circle key={`seq-${idx}`} cx={zone.x} cy={zone.y} r={dotR}
-              fill={`rgba(255,255,255,${brightness})`}
+              style={{ fill: brightness > 0.5 ? 'var(--text-illustration-bright)' : 'var(--text-illustration)' }}
               style={{ animation: `dotSequence ${totalDuration}s ease-in-out ${idx * 3}s infinite` }}
             />
           );
@@ -489,7 +489,7 @@ function CyclesIllustration() {
       `}</style>
 
       {/* Outer ring */}
-      <circle cx="100" cy="90" r="70" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="0.6" />
+      <circle cx="100" cy="90" r="70" fill="none" style={{ stroke: 'var(--line-subtle)' }} strokeWidth="0.6" />
 
       {/* Sheng cycle — pentagon */}
       {[0, 1, 2, 3, 4].map((i) => {
@@ -512,7 +512,7 @@ function CyclesIllustration() {
         const x2 = 100 + 65 * Math.cos(a2), y2 = 90 + 65 * Math.sin(a2);
         return (
           <line key={`k-${i}`} x1={x1} y1={y1} x2={x2} y2={y2}
-            stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" strokeDasharray="3 4" />
+            style={{ stroke: 'var(--line-faint)' }} strokeWidth="0.5" strokeDasharray="3 4" />
         );
       })}
 
@@ -533,8 +533,8 @@ function CyclesIllustration() {
       })}
 
       {/* Center */}
-      <circle cx="100" cy="90" r="3" fill="rgba(255,255,255,0.15)"
-        style={{ animation: 'cyclePulse 6s ease-in-out infinite' }} />
+      <circle cx="100" cy="90" r="3"
+        style={{ fill: 'var(--line-subtle)', animation: 'cyclePulse 6s ease-in-out infinite' }} />
     </svg>
   );
 }

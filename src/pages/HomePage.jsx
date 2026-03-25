@@ -162,7 +162,7 @@ function SpiritsIllustration() {
               <line
                 x1={x + 12} y1={y}
                 x2={x + 38} y2={y}
-                stroke="rgba(255,255,255,0.1)"
+                style={{ stroke: 'var(--line-subtle)' }}
                 strokeWidth="0.5"
                 strokeDasharray="2 3"
               />
@@ -242,7 +242,7 @@ function OrganClockVisualization({ currentOrgan }) {
               d={segmentPath(startDeg, endDeg)}
               fill={elInfo.hex}
               opacity={isActive ? 0.25 : 0.06}
-              stroke="rgba(8,12,20,0.9)"
+              style={{ stroke: 'var(--clock-border)' }}
               strokeWidth="1"
               style={isActive ? { animation: 'segPulse 4s ease-in-out infinite' } : undefined}
             />
@@ -250,7 +250,7 @@ function OrganClockVisualization({ currentOrgan }) {
             <path
               d={segmentPath(startDeg, endDeg)}
               fill="none"
-              stroke={isActive ? elInfo.hex : 'rgba(255,255,255,0.08)'}
+              style={{ stroke: isActive ? elInfo.hex : 'var(--line-faint)' }}
               strokeWidth="0.5"
               opacity={isActive ? 0.5 : 1}
             />
@@ -260,7 +260,7 @@ function OrganClockVisualization({ currentOrgan }) {
               x={labelX} y={labelY - 3}
               textAnchor="middle"
               dominantBaseline="central"
-              fill={isActive ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.4)'}
+              style={{ fill: isActive ? 'var(--text-illustration-bright)' : 'var(--text-illustration)' }}
               fontSize={isActive ? '7.5' : '6'}
               fontFamily="var(--font-display)"
               fontWeight="300"
@@ -274,7 +274,7 @@ function OrganClockVisualization({ currentOrgan }) {
               x={timeX} y={timeY}
               textAnchor="middle"
               dominantBaseline="central"
-              fill="rgba(255,255,255,0.25)"
+              style={{ fill: 'var(--text-illustration-dim)' }}
               fontSize="4.5"
               fontFamily="var(--font-body)"
             >
@@ -285,13 +285,13 @@ function OrganClockVisualization({ currentOrgan }) {
       })}
 
       {/* Center circle */}
-      <circle cx={cx} cy={cy} r={innerR - 1} fill="var(--bg)" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" />
+      <circle cx={cx} cy={cy} r={innerR - 1} fill="var(--bg)" style={{ stroke: 'var(--line-faint)' }} strokeWidth="0.5" />
 
       {/* Center info */}
       <text
         x={cx} y={cy - 12}
         textAnchor="middle"
-        fill="rgba(255,255,255,0.7)"
+        style={{ fill: 'var(--text-illustration-bright)' }}
         fontSize="8"
         fontFamily="var(--font-display)"
         fontWeight="300"
@@ -302,7 +302,7 @@ function OrganClockVisualization({ currentOrgan }) {
       <text
         x={cx} y={cy + 4}
         textAnchor="middle"
-        fill="rgba(255,255,255,0.5)"
+        style={{ fill: 'var(--text-illustration)' }}
         fontSize="7"
         fontFamily="var(--font-body)"
       >
@@ -311,7 +311,7 @@ function OrganClockVisualization({ currentOrgan }) {
       <text
         x={cx} y={cy + 18}
         textAnchor="middle"
-        fill="rgba(255,255,255,0.25)"
+        style={{ fill: 'var(--text-illustration-dim)' }}
         fontSize="5"
         fontFamily="var(--font-display)"
         fontStyle="italic"

@@ -396,7 +396,7 @@ function ConstellationIllustration({ members, memberColors, pairs }) {
           <line key={`conn-${idx}`}
             x1={positions[ai].x} y1={positions[ai].y}
             x2={positions[bi].x} y2={positions[bi].y}
-            stroke={isKe ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.2)'}
+            style={{ stroke: isKe ? 'var(--line-subtle)' : 'var(--line-medium)' }}
             strokeWidth={isKe ? '0.5' : '0.8'}
             strokeDasharray={isKe ? '3 5' : '4 6'}
             style={{ animation: 'grpFlow 10s linear infinite' }}
@@ -431,9 +431,8 @@ function ConstellationIllustration({ members, memberColors, pairs }) {
       {/* Center pulse */}
       {count > 2 && (
         <>
-          <circle cx={cx} cy={cy} r="15" fill="rgba(255,255,255,0.04)"
-            style={{ animation: 'grpPulse 7s ease-in-out infinite' }} />
-          <circle cx={cx} cy={cy} r="2.5" fill="rgba(255,255,255,0.4)" />
+          <circle cx={cx} cy={cy} r="15" style={{ fill: 'var(--line-faint)', animation: 'grpPulse 7s ease-in-out infinite' }} />
+          <circle cx={cx} cy={cy} r="2.5" style={{ fill: 'var(--text-illustration)' }} />
         </>
       )}
 
