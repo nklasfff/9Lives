@@ -106,7 +106,7 @@ export default function HomePage() {
         {today.currentPractice && (() => {
           const organElementInfo = getElementInfo(today.currentOrgan.element);
           return (
-            <GlassCard glowColor={`${organElementInfo.hex}12`}>
+            <GlassCard glowColor={`${organElementInfo.hex}12`} onClick={() => navigate('/practice')} className={styles.tappable}>
               <div className={styles.cardHeader}>
                 <span className={styles.cardLabel}>Practice of the Moment</span>
                 <span className={styles.cardAccent} style={{ color: organElementInfo.hex }}>
@@ -123,6 +123,7 @@ export default function HomePage() {
                 <p className={styles.practiceText}>{today.currentPractice.dietary}</p>
               </div>
               <p className={styles.practiceIntention}>{today.currentPractice.intention}</p>
+              <span className={styles.tapHint}>Full exercises & diet for your phase →</span>
             </GlassCard>
           );
         })()}

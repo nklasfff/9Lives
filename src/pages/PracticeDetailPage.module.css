@@ -1,0 +1,218 @@
+.page {
+  padding: var(--space-lg) var(--space-md);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.backBtn {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  padding: var(--space-sm) 0;
+  cursor: pointer;
+  transition: color var(--transition);
+}
+
+.backBtn:hover {
+  color: var(--text-secondary);
+}
+
+.header {
+  text-align: center;
+  padding: var(--space-md) 0 var(--space-md);
+  animation: fadeDown 0.8s var(--ease-out) both;
+}
+
+.label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: var(--space-sm);
+}
+
+.bigSymbol {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  font-weight: 300;
+  line-height: 1;
+  margin-bottom: var(--space-sm);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  margin-bottom: var(--space-xs);
+}
+
+.subtitle {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.illustration {
+  width: 240px;
+  height: auto;
+  display: block;
+  margin: var(--space-sm) auto var(--space-md);
+  opacity: 0.85;
+}
+
+/* Tab switcher */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--glass-border);
+  margin-bottom: var(--space-lg);
+  gap: 0;
+}
+
+.tab {
+  flex: 1;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition);
+  font-family: var(--font-body);
+  margin-bottom: -1px;
+  letter-spacing: 0.04em;
+}
+
+.tab:hover {
+  color: var(--text-secondary);
+}
+
+.tabActive {
+  color: var(--text-bright);
+  font-weight: 500;
+}
+
+/* Content */
+.content {
+  animation: fadeUp 0.5s var(--ease-out) both;
+}
+
+.intro {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  font-style: italic;
+  margin-bottom: var(--space-md);
+}
+
+/* Exercise cards */
+.exerciseList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.exerciseCard {
+  cursor: pointer;
+  transition: transform 0.15s var(--ease-out);
+}
+
+.exerciseCard:active {
+  transform: scale(0.985);
+}
+
+.exHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.exChar {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 300;
+  min-width: 36px;
+  text-align: center;
+  line-height: 1;
+}
+
+.exMeta {
+  flex: 1;
+}
+
+.exCategory {
+  display: block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 3px;
+}
+
+.exName {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--text-bright);
+}
+
+.exToggle {
+  font-size: 0.6rem;
+  opacity: 0.6;
+}
+
+.exDescription {
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  line-height: 1.8;
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--glass-border);
+}
+
+/* Diet cards */
+.dietContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.dietIntro {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.8;
+  font-style: italic;
+}
+
+.dietHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.dietChar {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 300;
+  min-width: 36px;
+  text-align: center;
+  line-height: 1;
+}
+
+.dietTitle {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--text-bright);
+}
+
+.dietText {
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  line-height: 1.8;
+}
