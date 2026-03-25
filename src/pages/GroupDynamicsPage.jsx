@@ -12,7 +12,6 @@ import styles from './GroupDynamicsPage.module.css';
 
 const ALL_ELEMENTS = ['wood', 'fire', 'earth', 'metal', 'water'];
 
-// Unique group dynamic texts
 const GROUP_THEMES = {
   allSame: 'Every person in this constellation carries the same element. This is a field of deep resonance — an echo chamber in the truest sense. What one feels, all feel. The gift is effortless understanding. The risk is collective blind spots.',
   allSheng: 'The nourishing cycle flows unbroken through this group. Each person feeds the next — a living chain of elemental generosity. This constellation has a natural forward momentum, a sense of creative unfolding.',
@@ -20,6 +19,125 @@ const GROUP_THEMES = {
   balanced: 'This group holds a rare balance — multiple elements represented, with flows of both nourishment and gentle tempering. Like a garden with sun, rain, and season, there is a natural wholeness here.',
   missingElements: (missing) => `This constellation is missing the ${missing.join(' and ')} element${missing.length > 1 ? 's' : ''}. What is absent shapes the group as much as what is present. The missing element represents a quality the group must consciously cultivate — or find elsewhere.`,
 };
+
+// ─── Deeper layer: The Pattern ───────────────────────────────────────────────
+const PATTERN_DEPTH = {
+  allSame: {
+    gift: 'Effortless recognition — you see each other clearly because you are made of the same material. There is almost no translation needed between you.',
+    shadow: 'A field of one element has no internal mirror. Collective blind spots run deep: what one misses, all miss. The group cannot challenge itself from within.',
+    practice: 'Deliberately seek out people with opposing elements. Your growth edges live in the qualities you do not carry — and this group cannot generate them alone.',
+  },
+  allSheng: {
+    gift: 'Natural creative momentum flows through this constellation. Energy moves forward without resistance — one person\'s output becomes another\'s nourishment.',
+    shadow: 'Without tempering, growth becomes excess. This field can over-expand, over-commit, over-produce before anything is fully completed or integrated.',
+    practice: 'Build in deliberate pauses. Ask: what needs to be finished, pruned, or released before the next wave of creation begins?',
+  },
+  hasKe: {
+    gift: 'Ke relationships hold the intelligence of structure. The friction here is real — and that is exactly where the most durable transformation lives.',
+    shadow: 'When the tempering dynamic runs unconsciously, it can slide into control, subtle dominance, or long-held resentment on both sides.',
+    practice: 'Name the ke relationships openly: "You tend to structure me. I tend to diffuse you." Making it explicit transforms friction into conscious collaboration.',
+  },
+  balanced: {
+    gift: 'Multiple flows — nourishing and tempering together — create a self-regulating field. This balance is rare and takes time to build.',
+    shadow: 'Equilibrium can be mistaken for stasis. A balanced field must still choose direction, or it simply maintains itself without moving toward anything.',
+    practice: 'Use your natural balance as a foundation, not a destination. What does this stable field want to create, protect, or serve?',
+  },
+};
+
+function getPatternDepth(relTypes) {
+  if (Object.values(relTypes).every((_, i, a) => true) && relTypes.same && !relTypes.sheng_give && !relTypes.sheng_receive && !relTypes.ke_control && !relTypes.ke_controlled) return PATTERN_DEPTH.allSame;
+  if (!relTypes.ke_control && !relTypes.ke_controlled) return PATTERN_DEPTH.allSheng;
+  if (relTypes.ke_control || relTypes.ke_controlled) return PATTERN_DEPTH.hasKe;
+  return PATTERN_DEPTH.balanced;
+}
+
+// ─── Deeper layer: Wu Shen group field ───────────────────────────────────────
+const SPIRIT_FIELD_DEPTH = {
+  'Shen': {
+    quality: 'Consciousness & Presence',
+    field: 'When the Heart-Mind governs most of the space between you, this group thinks and sees clearly together. Insight and genuine presence are available here. The shadow is over-illumination — a field that examines everything and allows nothing to mature quietly in the dark.',
+  },
+  'Hun': {
+    quality: 'Vision & Possibility',
+    field: 'The Ethereal Soul holds your connections in the direction of dreaming, planning, and creative imagining. The gift is collective vision. The shadow is drift — inspiring futures without the roots to reach them.',
+  },
+  'Po': {
+    quality: 'Instinct & Body',
+    field: 'When the Corporeal Soul governs the field between you, this group operates through physical presence, sensory attunement, and gut-level knowing. The shadow is reactivity: instinct without the pause of reflection.',
+  },
+  'Yi': {
+    quality: 'Thought & Integration',
+    field: 'The Intellect spirit in dominance means this group thinks carefully together — integrative, meaning-making, thorough. The shadow is over-deliberation: a field that maps every inch of the territory but forgets to walk it.',
+  },
+  'Zhi': {
+    quality: 'Will & Endurance',
+    field: 'When the Will governs most of the connections between you, this group can sustain what others abandon. Deep reserves of endurance live here. The shadow is rigidity — will that becomes stubbornness, persistence that closes the door on necessary change.',
+  },
+};
+
+function getDominantSpiritInsight(pairs) {
+  const counts = {};
+  pairs.forEach(p => { counts[p.spirit.name] = (counts[p.spirit.name] || 0) + 1; });
+  const dominant = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+  return dominant ? SPIRIT_FIELD_DEPTH[dominant[0]] : null;
+}
+
+// ─── Deeper layer: Emotional Landscape ───────────────────────────────────────
+function getEmotionalFieldInsight(presentElements) {
+  const has = (e) => presentElements.includes(e);
+  if (has('fire') && has('water'))
+    return 'Fire and Water together create a field of intensity and depth. This constellation can swing between passionate engagement and quiet withdrawal. Under pressure, one polarity tends to dominate — the work is to hold both without choosing.';
+  if (has('wood') && has('metal'))
+    return 'Wood and Metal in the same field hold the tension of growth meeting structure. What wants to reach meets what wants to refine. This is the group\'s most generative creative force — as long as neither silences the other.';
+  if (has('fire') && has('metal'))
+    return 'Fire illuminates, Metal discerns. Together they create a rare combination: inspiration and critical clarity in the same field. Watch for Fire feeling judged and Metal feeling dismissed — both need the other to be whole.';
+  if (has('wood') && has('earth'))
+    return 'Wood reaches toward what could be; Earth asks what is actually needed right now. The tension between future and present is this group\'s most useful ongoing conversation — not a problem to resolve, but a rhythm to inhabit.';
+  if (has('water') && has('earth'))
+    return 'Water and Earth together bring depth and containment. Water fears being dammed; Earth fears being flooded. When both are honored, this becomes a field of sustained, quiet power — slow, deep, and lasting.';
+  if (has('water') && has('fire'))
+    return 'Where Water meets Fire, steam rises — rapid transformation lives in this field. The gift is alchemical change. The shadow is volatility: the same heat that transforms can also exhaust.';
+  if (has('wood') && has('water'))
+    return 'Water feeds Wood: this is a deeply nourishing emotional field, rich with creative potential and the courage to begin. The shadow is over-growth without harvest — always generating, rarely completing.';
+  const balancedEmotions = presentElements.map(e => getElementInfo(e).emotion.balanced);
+  return `This constellation holds ${balancedEmotions.join(', ')} as its living emotional resources — the qualities most available when the group is in its fullest expression.`;
+}
+
+function getEmotionalShadow(presentElements) {
+  const absent = ALL_ELEMENTS.filter(e => !presentElements.includes(e));
+  if (absent.length === 0) return 'With all five elements present, the full emotional spectrum is available. The work is integration — learning to move between joy, grief, fear, anger, and reflection without collapsing into any one of them.';
+  const shadows = absent.map(e => getElementInfo(e).emotion.imbalanced);
+  const names = absent.map(e => getElementInfo(e).name);
+  return `The absent ${names.join(' and ')} element${names.length > 1 ? 's' : ''} point toward emotional territory this group may avoid or project outward: ${shadows.join(' and ')}. What we do not carry consciously, we tend to meet in others.`;
+}
+
+// ─── Deeper layer: Life Seasons ───────────────────────────────────────────────
+const PHASE_WISDOM = {
+  1: 'Phase 1 brings the energy of pure beginning — untested, curious, full of potential.',
+  2: 'Phase 2 carries the drive to establish — to build foundations and prove capacity.',
+  3: 'Phase 3 holds the hunger for expression and connection in full creative bloom.',
+  4: 'Phase 4 is the consolidation phase — learning to choose depth over breadth.',
+  5: 'Phase 5 sits at the center of life\'s arc, where questioning and reorientation begin.',
+  6: 'Phase 6 brings the ripening of discernment — knowing what matters and what does not.',
+  7: 'Phase 7 is a season of release and refinement — letting go of what is no longer essential.',
+  8: 'Phase 8 carries the quality of deep integration — all of life\'s threads beginning to weave together.',
+  9: 'Phase 9 holds the completion — wisdom embodied, presence without needing to prove.',
+};
+
+function getPhaseSpreadInsight(memberPhases) {
+  const phases = memberPhases.map(m => m.phase.phase);
+  const spread = Math.max(...phases) - Math.min(...phases);
+  const min = Math.min(...phases);
+  const max = Math.max(...phases);
+
+  if (spread === 0)
+    return 'You inhabit the same life season simultaneously — a rare convergence. There is effortless recognition here: you are asking the same questions, moving through the same passage, at the same time. The gift is synchrony. The risk is that no one holds the longer view.';
+  if (spread <= 2)
+    return 'Adjacent seasons. Like late summer meeting early autumn — distinct yet continuous. You can hear each other\'s questions because they are close variations on a shared theme. The wisdom flows easily in both directions.';
+  if (spread >= 6)
+    return `This constellation spans from Phase ${min} to Phase ${max} — an extraordinary range of life experience. Spring and winter in the same room. What the younger carries with freshness, the elder holds with earned depth. This is a field of full-spectrum wisdom, if it finds its common language.`;
+  return `${spread} phases span this constellation. Each person stands at a genuinely different moment in the arc — asking different questions, carrying different wisdom. The younger brings what the elder has released; the elder holds what the younger is still approaching.`;
+}
 
 export default function GroupDynamicsPage() {
   const navigate = useNavigate();
@@ -213,6 +331,27 @@ export default function GroupDynamicsPage() {
                 </div>
               )}
             </div>
+
+            {/* Deeper layer */}
+            {(() => {
+              const depth = getPatternDepth(relTypes);
+              return (
+                <div className={styles.deeperLayer}>
+                  <div className={styles.deeperRow}>
+                    <span className={styles.deeperLabel}>Gift</span>
+                    <p className={styles.deeperText}>{depth.gift}</p>
+                  </div>
+                  <div className={styles.deeperRow}>
+                    <span className={styles.deeperLabel}>Shadow</span>
+                    <p className={styles.deeperText}>{depth.shadow}</p>
+                  </div>
+                  <div className={styles.deeperRow}>
+                    <span className={styles.deeperLabel}>Practice</span>
+                    <p className={styles.deeperText}>{depth.practice}</p>
+                  </div>
+                </div>
+              );
+            })()}
           </GlassCard>
 
           {/* ─── All Pairwise Dynamics ─── */}
@@ -267,6 +406,19 @@ export default function GroupDynamicsPage() {
                 <p className={styles.spiritReason}>{pair.reason}</p>
               </div>
             ))}
+
+            {/* Deeper layer — dominant spirit in the field */}
+            {(() => {
+              const insight = getDominantSpiritInsight(pairs);
+              if (!insight) return null;
+              return (
+                <div className={styles.deeperLayer}>
+                  <span className={styles.deeperHeading}>The dominant spirit in this field</span>
+                  <span className={styles.deeperQuality}>{insight.quality}</span>
+                  <p className={styles.deeperText}>{insight.field}</p>
+                </div>
+              );
+            })()}
           </GlassCard>
 
           {/* ─── Emotional Landscape ─── */}
@@ -288,6 +440,18 @@ export default function GroupDynamicsPage() {
                   </div>
                 </div>
               ))}
+            </div>
+
+            {/* Deeper layer — collective field insight */}
+            <div className={styles.deeperLayer}>
+              <div className={styles.deeperRow}>
+                <span className={styles.deeperLabel}>Field</span>
+                <p className={styles.deeperText}>{getEmotionalFieldInsight(presentElements)}</p>
+              </div>
+              <div className={styles.deeperRow}>
+                <span className={styles.deeperLabel}>Absence</span>
+                <p className={styles.deeperText}>{getEmotionalShadow(presentElements)}</p>
+              </div>
             </div>
           </GlassCard>
 
@@ -327,6 +491,21 @@ export default function GroupDynamicsPage() {
               const spread = Math.max(...phases) - Math.min(...phases);
               return <p className={styles.phaseInsight}>{spread} phases span this group — from the youngest season to the oldest. Each person brings the wisdom of their particular moment in time.</p>;
             })()}
+
+            {/* Deeper layer — phase wisdom per person + spread insight */}
+            <div className={styles.deeperLayer}>
+              <span className={styles.deeperHeading}>What each season carries</span>
+              {memberPhases.map((m, idx) => (
+                <div key={idx} className={styles.deeperPhaseRow}>
+                  <span className={styles.deeperPhaseName}>{m.name}</span>
+                  <p className={styles.deeperText}>{PHASE_WISDOM[m.phase.phase]}</p>
+                </div>
+              ))}
+              <div className={styles.deeperRow} style={{ marginTop: 'var(--space-sm)' }}>
+                <span className={styles.deeperLabel}>Together</span>
+                <p className={styles.deeperText}>{getPhaseSpreadInsight(memberPhases)}</p>
+              </div>
+            </div>
           </GlassCard>
 
           {/* ─── Group Reflection ─── */}

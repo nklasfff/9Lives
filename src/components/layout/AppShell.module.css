@@ -9,3 +9,30 @@
   z-index: 1;
   padding-bottom: calc(var(--bottom-nav-height) + var(--safe-bottom) + var(--space-md));
 }
+
+/* Theme toggle — fixed top right, subtle */
+.themeBtn {
+  position: fixed;
+  top: calc(var(--safe-top, 0px) + 14px);
+  right: 16px;
+  z-index: 100;
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  color: var(--text-muted);
+  opacity: 0.5;
+  transition: opacity var(--transition), color var(--transition);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.themeBtn:hover {
+  opacity: 0.85;
+  color: var(--text-secondary);
+}
+
+.themeIcon {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
