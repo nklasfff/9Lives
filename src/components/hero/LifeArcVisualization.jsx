@@ -50,6 +50,16 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
           }
         `}</style>
 
+        {/* Active circle breathing glow — rendered first so main circle sits on top */}
+        {circles.filter(c => c.isActive).map(({ x, y, elementInfo, i }) => (
+          <circle key={`breath-${i}`} cx={x} cy={y} r="22" fill={elementInfo.hex} opacity="0.18">
+            <animate attributeName="r" values="22;32;22" dur="4s" repeatCount="indefinite"
+              calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
+            <animate attributeName="opacity" values="0.18;0;0.18" dur="4s" repeatCount="indefinite"
+              calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
+          </circle>
+        ))}
+
         {/* Connecting arc */}
         <path
           d={`M ${circles[0].x} ${circles[0].y} ${circles.slice(1).map(c => `L ${c.x} ${c.y}`).join(' ')}`}
@@ -72,9 +82,9 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
               cx={x}
               cy={y}
               r={isActive ? 22 : 17}
-              fill={isActive ? `${elementInfo.hex}18` : `${elementInfo.hex}0a`}
+              fill={isActive ? `${elementInfo.hex}45` : `${elementInfo.hex}0a`}
               style={{ stroke: isActive ? elementInfo.hex : 'var(--line-medium)' }}
-              strokeWidth={isActive ? 1.2 : 0.8}
+              strokeWidth={isActive ? 1.5 : 0.8}
               filter={isActive ? `url(#glow-${i})` : undefined}
               className={styles.circle}
             />
@@ -83,10 +93,10 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
               y={y + 1}
               textAnchor="middle"
               dominantBaseline="central"
-              style={{ fill: isActive ? elementInfo.hex : 'var(--text-illustration)' }}
+              style={{ fill: isActive ? 'var(--text-bright)' : 'var(--text-illustration)' }}
               fontSize={isActive ? '14' : '11'}
               fontFamily="var(--font-display)"
-              fontWeight="300"
+              fontWeight={isActive ? '500' : '300'}
             >
               {i + 1}
             </text>
