@@ -534,6 +534,60 @@
   opacity: 0.6;
 }
 
+/* Group constellation card (inline in friends list) */
+.groupCard {
+  cursor: pointer;
+  transition: transform var(--transition);
+}
+
+.groupCard:hover {
+  transform: translateY(-2px);
+}
+
+.groupCardInner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.groupDots {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 2px;
+  flex-shrink: 0;
+}
+
+.groupDotLarge {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+.groupCardLabel {
+  display: block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.groupCardTitle {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 300;
+  margin: 0 0 4px;
+}
+
+.groupCardBody {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
 /* Spirit Between */
 .spiritBetweenList {
   display: flex;
