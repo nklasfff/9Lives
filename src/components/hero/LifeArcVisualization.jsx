@@ -98,14 +98,15 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
           const nonActive = circles.filter(c => !c.isActive);
           const slotDur = 2.5;
           const cycleDur = nonActive.length * slotDur;
-          return nonActive.map(({ x, y, elementInfo, i }, slot) => (
+          const userElementHex = getElementInfo(userElement).hex;
+          return nonActive.map(({ x, y, i }, slot) => (
             <circle
               key={`travel-${i}`}
               cx={x}
               cy={y}
               r="21"
               fill="none"
-              stroke={elementInfo.hex}
+              stroke={userElementHex}
               strokeWidth="1"
               opacity="0"
               style={{
