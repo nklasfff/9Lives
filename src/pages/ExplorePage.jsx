@@ -136,8 +136,9 @@ export default function ExplorePage() {
       <header className={styles.header}>
         <h1>Explore</h1>
         <p className={styles.subtitle}>Six layers of understanding</p>
-        <ExploreIllustration />
       </header>
+
+      <ExploreIllustration />
 
       <div className={styles.layers}>
         {LAYERS.map((layer, idx) => (
