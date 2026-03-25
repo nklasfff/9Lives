@@ -150,6 +150,35 @@ export default function RelationsPage() {
                 </GlassCard>
               );
             })}
+
+            {/* Group constellation entry — visible when 2+ friends */}
+            {friends.length >= 2 && (
+              <GlassCard
+                glowColor={`${userEl.hex}12`}
+                className={styles.groupCard}
+                onClick={() => navigate('/relations/group')}
+              >
+                <div className={styles.groupCardInner}>
+                  <div className={styles.groupDots}>
+                    <span className={styles.groupDotLarge} style={{ background: userEl.hex }} />
+                    {friends.slice(0, 3).map((f) => {
+                      const fEl = getElementInfo(f.element);
+                      return <span key={f.id} className={styles.groupDotLarge} style={{ background: fEl.hex }} />;
+                    })}
+                  </div>
+                  <div>
+                    <span className={styles.groupCardLabel}>Group Constellation</span>
+                    <h3 className={styles.groupCardTitle}>See all {friends.length + 1} together</h3>
+                    <p className={styles.groupCardBody}>
+                      Elemental flows, tensions, and harmonies across the whole field.
+                    </p>
+                  </div>
+                </div>
+                <span className={styles.exploreBtn} style={{ display: 'block', marginTop: 'var(--space-sm)' }}>
+                  Explore group dynamics →
+                </span>
+              </GlassCard>
+            )}
           </div>
         )}
 
