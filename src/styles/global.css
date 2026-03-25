@@ -105,3 +105,21 @@ select {
   min-height: 100vh;
   min-height: 100dvh;
 }
+
+/* ── Desktop frame: centre app in 700px column ── */
+@media (min-width: 768px) {
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 700px;
+    margin: 0 auto;
+    border-left: 1px solid var(--glass-border);
+    border-right: 1px solid var(--glass-border);
+    pointer-events: none;
+    z-index: 150;
+  }
+}
