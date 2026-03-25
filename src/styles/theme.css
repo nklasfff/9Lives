@@ -37,8 +37,15 @@
   --nav-bg: rgba(8, 12, 20, 0.92);
 
   /* ── Illustrations ── */
+  --line-faint: rgba(255, 255, 255, 0.06);
   --line-subtle: rgba(255, 255, 255, 0.12);
+  --line-medium: rgba(255, 255, 255, 0.2);
+  --line-strong: rgba(255, 255, 255, 0.35);
+  --text-illustration-dim: rgba(255, 255, 255, 0.25);
   --text-illustration: rgba(255, 255, 255, 0.45);
+  --text-illustration-bright: rgba(255, 255, 255, 0.7);
+  --dot-illustration: rgba(255, 255, 255, 0.2);
+  --clock-border: rgba(8, 12, 20, 0.9);
 
   /* ── Typography ── */
   --font-display: 'Cormorant Garamond', Georgia, serif;
@@ -99,8 +106,15 @@
 
   --nav-bg: rgba(250, 248, 245, 0.95);
 
+  --line-faint: rgba(0, 0, 0, 0.05);
   --line-subtle: rgba(0, 0, 0, 0.12);
+  --line-medium: rgba(0, 0, 0, 0.14);
+  --line-strong: rgba(0, 0, 0, 0.25);
+  --text-illustration-dim: rgba(0, 0, 0, 0.22);
   --text-illustration: rgba(0, 0, 0, 0.4);
+  --text-illustration-bright: rgba(0, 0, 0, 0.6);
+  --dot-illustration: rgba(0, 0, 0, 0.18);
+  --clock-border: rgba(250, 248, 245, 0.95);
 
   --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   --shadow-up: 0 -2px 20px rgba(0, 0, 0, 0.05);
