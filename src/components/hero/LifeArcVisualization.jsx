@@ -13,6 +13,7 @@ const SEASON_LABELS = [
 
 export default function LifeArcVisualization({ currentPhase = 1, userElement, onPhaseClick }) {
   const activeIndex = currentPhase - 1;
+  const userHex = getElementInfo(userElement).hex;
 
   const circles = Array.from({ length: 9 }, (_, i) => {
     const x = 40 + i * 65;
@@ -28,19 +29,15 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
     <div className={styles.container}>
       <svg viewBox="0 0 620 192" className={styles.svg}>
         <defs>
-          {circles.map(({ i, elementInfo, isActive }) => (
-            isActive && (
-              <filter key={`glow-${i}`} id={`glow-${i}`} x="-60%" y="-60%" width="220%" height="220%">
-                <feGaussianBlur stdDeviation="5" result="blur" />
-                <feFlood floodColor={elementInfo.hex} floodOpacity="0.4" />
-                <feComposite in2="blur" operator="in" />
-                <feMerge>
-                  <feMergeNode />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            )
-          ))}
+          <filter id="glow-active" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="6" result="blur" />
+            <feFlood floodColor={userHex} floodOpacity="0.5" />
+            <feComposite in2="blur" operator="in" />
+            <feMerge>
+              <feMergeNode />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
 
         <style>{`
@@ -51,11 +48,11 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
         `}</style>
 
         {/* Active circle breathing glow — rendered first so main circle sits on top */}
-        {circles.filter(c => c.isActive).map(({ x, y, elementInfo, i }) => (
-          <circle key={`breath-${i}`} cx={x} cy={y} r="22" fill={elementInfo.hex} opacity="0.18">
-            <animate attributeName="r" values="22;32;22" dur="4s" repeatCount="indefinite"
+        {circles.filter(c => c.isActive).map(({ x, y, i }) => (
+          <circle key={`breath-${i}`} cx={x} cy={y} r="22" fill={userHex} opacity="0.2">
+            <animate attributeName="r" values="22;34;22" dur="4s" repeatCount="indefinite"
               calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
-            <animate attributeName="opacity" values="0.18;0;0.18" dur="4s" repeatCount="indefinite"
+            <animate attributeName="opacity" values="0.2;0;0.2" dur="4s" repeatCount="indefinite"
               calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
           </circle>
         ))}
@@ -82,10 +79,10 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
               cx={x}
               cy={y}
               r={isActive ? 22 : 17}
-              fill={isActive ? `${elementInfo.hex}45` : `${elementInfo.hex}0a`}
-              style={{ stroke: isActive ? elementInfo.hex : 'var(--line-medium)' }}
+              fill={isActive ? `${userHex}45` : `${elementInfo.hex}0a`}
+              style={{ stroke: isActive ? userHex : 'var(--line-medium)' }}
               strokeWidth={isActive ? 1.5 : 0.8}
-              filter={isActive ? `url(#glow-${i})` : undefined}
+              filter={isActive ? 'url(#glow-active)' : undefined}
               className={styles.circle}
             />
             <text
@@ -108,7 +105,6 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
           const nonActive = circles.filter(c => !c.isActive);
           const slotDur = 2.5;
           const cycleDur = nonActive.length * slotDur;
-          const userElementHex = getElementInfo(userElement).hex;
           return nonActive.map(({ x, y, i }, slot) => (
             <circle
               key={`travel-${i}`}
@@ -116,7 +112,7 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
               cy={y}
               r="21"
               fill="none"
-              stroke={userElementHex}
+              stroke={userHex}
               strokeWidth="1"
               opacity="0"
               style={{
