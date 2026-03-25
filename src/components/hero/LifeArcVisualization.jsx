@@ -26,7 +26,7 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
 
   return (
     <div className={styles.container}>
-      <svg viewBox="0 0 620 185" className={styles.svg}>
+      <svg viewBox="0 0 620 192" className={styles.svg}>
         <defs>
           {circles.map(({ i, elementInfo, isActive }) => (
             isActive && (
@@ -43,7 +43,14 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
           ))}
         </defs>
 
-        {/* Connecting arc — smooth curve */}
+        <style>{`
+          @keyframes travelRing {
+            0%, 15%, 100% { opacity: 0; }
+            7.5% { opacity: 0.55; }
+          }
+        `}</style>
+
+        {/* Connecting arc */}
         <path
           d={`M ${circles[0].x} ${circles[0].y} ${circles.slice(1).map(c => `L ${c.x} ${c.y}`).join(' ')}`}
           fill="none"
@@ -86,15 +93,37 @@ export default function LifeArcVisualization({ currentPhase = 1, userElement, on
           </g>
         ))}
 
-        {/* Season labels — italic, elegant */}
+        {/* Traveling ring — visits each non-active circle sequentially */}
+        {(() => {
+          const nonActive = circles.filter(c => !c.isActive);
+          const slotDur = 2.5;
+          const cycleDur = nonActive.length * slotDur;
+          return nonActive.map(({ x, y, elementInfo, i }, slot) => (
+            <circle
+              key={`travel-${i}`}
+              cx={x}
+              cy={y}
+              r="21"
+              fill="none"
+              stroke={elementInfo.hex}
+              strokeWidth="1"
+              opacity="0"
+              style={{
+                animation: `travelRing ${cycleDur}s ease-in-out ${slot * slotDur}s infinite`,
+              }}
+            />
+          ));
+        })()}
+
+        {/* Season labels */}
         {SEASON_LABELS.map(({ text, x }) => (
           <text
             key={text}
             x={x}
-            y={172}
+            y={178}
             textAnchor="middle"
-            style={{ fill: 'var(--text-illustration-dim)' }}
-            fontSize="10"
+            style={{ fill: 'var(--text-illustration)' }}
+            fontSize="12"
             fontFamily="var(--font-display)"
             fontStyle="italic"
             fontWeight="300"
