@@ -6,11 +6,11 @@
   --surface-hover: #162436;
 
   /* ── Text ── */
-  --text-bright: #e6edf3;
-  --text-primary: #c4d5e2;
-  --text-secondary: #7a9ab5;
-  --text-muted: #4a657d;
-  --text-dim: #607a92;
+  --text-bright: #edf3f8;
+  --text-primary: #cddce9;
+  --text-secondary: #91b2cb;
+  --text-muted: #5e7d97;
+  --text-dim: #7590a8;
 
   /* ── Borders ── */
   --border: #1a2d42;
@@ -32,6 +32,20 @@
   /* ── Glow ── */
   --glow-blue: rgba(58, 111, 160, 0.15);
   --glow-warm: rgba(199, 90, 58, 0.12);
+
+  /* ── Nav ── */
+  --nav-bg: rgba(8, 12, 20, 0.92);
+
+  /* ── Illustrations ── */
+  --line-faint: rgba(255, 255, 255, 0.06);
+  --line-subtle: rgba(255, 255, 255, 0.12);
+  --line-medium: rgba(255, 255, 255, 0.2);
+  --line-strong: rgba(255, 255, 255, 0.35);
+  --text-illustration-dim: rgba(255, 255, 255, 0.25);
+  --text-illustration: rgba(255, 255, 255, 0.45);
+  --text-illustration-bright: rgba(255, 255, 255, 0.7);
+  --dot-illustration: rgba(255, 255, 255, 0.2);
+  --clock-border: rgba(8, 12, 20, 0.9);
 
   /* ── Typography ── */
   --font-display: 'Cormorant Garamond', Georgia, serif;
@@ -65,4 +79,43 @@
   /* ── Layout ── */
   --bottom-nav-height: 72px;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+[data-theme="light"] {
+  --bg: #FAF8F5;
+  --bg-elevated: #F5F1EC;
+  --surface: #FFFFFF;
+  --surface-hover: #F8F5F0;
+
+  --text-bright: #2A2520;
+  --text-primary: #4A4540;
+  --text-secondary: #9B7B5A;
+  --text-muted: #8A857E;
+  --text-dim: #A09890;
+
+  --border: rgba(0, 0, 0, 0.1);
+  --border-light: rgba(0, 0, 0, 0.15);
+
+  --glass: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --glass-hover: rgba(255, 255, 255, 0.92);
+  --glass-strong: rgba(0, 0, 0, 0.04);
+
+  --glow-blue: rgba(58, 111, 160, 0.07);
+  --glow-warm: rgba(184, 96, 42, 0.06);
+
+  --nav-bg: rgba(250, 248, 245, 0.95);
+
+  --line-faint: rgba(0, 0, 0, 0.05);
+  --line-subtle: rgba(0, 0, 0, 0.12);
+  --line-medium: rgba(0, 0, 0, 0.14);
+  --line-strong: rgba(0, 0, 0, 0.25);
+  --text-illustration-dim: rgba(0, 0, 0, 0.22);
+  --text-illustration: rgba(0, 0, 0, 0.4);
+  --text-illustration-bright: rgba(0, 0, 0, 0.6);
+  --dot-illustration: rgba(0, 0, 0, 0.18);
+  --clock-border: rgba(250, 248, 245, 0.95);
+
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-up: 0 -2px 20px rgba(0, 0, 0, 0.05);
 }

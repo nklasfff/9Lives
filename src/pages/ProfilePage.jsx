@@ -10,7 +10,7 @@ import styles from './ProfilePage.module.css';
 
 export default function ProfilePage() {
   const navigate = useNavigate();
-  const { getDerivedData, resetProfile } = useUser();
+  const { getDerivedData, resetProfile, theme, toggleTheme } = useUser();
   const data = getDerivedData();
 
   if (!data) return null;
@@ -197,9 +197,15 @@ export default function ProfilePage() {
         </div>
       </GlassCard>
 
-      <button className={styles.resetBtn} onClick={resetProfile}>
-        Reset Profile
-      </button>
+      <div className={styles.settingsRow}>
+        <button className={styles.themeToggle} onClick={toggleTheme}>
+          <span className={styles.themeIcon}>{theme === 'dark' ? '月' : '日'}</span>
+          <span>{theme === 'dark' ? 'Night Mode' : 'Day Mode'}</span>
+        </button>
+        <button className={styles.resetBtn} onClick={resetProfile}>
+          Reset Profile
+        </button>
+      </div>
     </div>
   );
 }
@@ -237,7 +243,7 @@ function ElementWheelIllustration({ userElement }) {
         const next = elements[(i + 1) % 5];
         return (
           <line key={`c-${i}`} x1={el.x} y1={el.y} x2={next.x} y2={next.y}
-            stroke={el.key === userElement ? el.color : 'rgba(255,255,255,0.1)'}
+            style={{ stroke: el.key === userElement ? el.color : 'var(--line-subtle)' }}
             strokeWidth={el.key === userElement ? '1' : '0.5'}
             opacity={el.key === userElement ? '0.5' : '1'}
           />
@@ -295,7 +301,7 @@ function CorrespondenceIllustration({ element }) {
               style={{ animation: `corrPulse ${6 + i}s ease-in-out ${i * 0.8}s infinite` }} />
             <text x={100 + 58 * Math.cos(a)} y={70 + 58 * Math.sin(a)}
               textAnchor="middle" dominantBaseline="central"
-              fill="rgba(255,255,255,0.45)" fontSize="6"
+              style={{ fill: 'var(--text-illustration)' }} fontSize="6"
               fontFamily="var(--font-display)" fontStyle="italic">
               {item.label}
             </text>
@@ -334,7 +340,7 @@ function ShengCycleIllustration({ userElement }) {
           <g key={el.key}>
             {i < 4 && (
               <line x1={x + 14} y1="25" x2={x + 36} y2="25"
-                stroke="rgba(255,255,255,0.15)" strokeWidth="0.5" strokeDasharray="2 3" />
+                style={{ stroke: 'var(--line-subtle)' }} strokeWidth="0.5" strokeDasharray="2 3" />
             )}
             <circle cx={x} cy="25" r={isUser ? '16' : '12'} fill="none"
               stroke={el.color} strokeWidth={isUser ? '1' : '0.6'}

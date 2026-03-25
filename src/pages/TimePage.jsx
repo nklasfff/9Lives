@@ -497,7 +497,7 @@ function SpiralIllustration() {
         return (
           <circle key={ring} cx="110" cy="90" r={r}
             fill="none"
-            stroke="rgba(255,255,255,0.12)"
+            style={{ stroke: 'var(--line-subtle)' }}
             strokeWidth="0.6"
             strokeDasharray={ring % 2 === 0 ? 'none' : '2 3'}
           />
@@ -505,14 +505,14 @@ function SpiralIllustration() {
       })}
 
       <circle cx="110" cy="90" r="55" fill="none"
-        stroke="rgba(255,255,255,0.2)" strokeWidth="0.8"
+        strokeWidth="0.8"
         strokeDasharray="4 16"
-        style={{ animation: 'spiralFlow 25s linear infinite' }}
+        style={{ stroke: 'var(--line-medium)', animation: 'spiralFlow 25s linear infinite' }}
       />
       <circle cx="110" cy="90" r="35" fill="none"
-        stroke="rgba(255,255,255,0.15)" strokeWidth="0.6"
+        strokeWidth="0.6"
         strokeDasharray="3 12"
-        style={{ animation: 'spiralFlow 20s linear infinite reverse' }}
+        style={{ stroke: 'var(--line-subtle)', animation: 'spiralFlow 20s linear infinite reverse' }}
       />
 
       {colors.map((color, i) => {
@@ -527,12 +527,12 @@ function SpiralIllustration() {
         );
       })}
 
-      <circle cx="110" cy="90" r="5" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
-      <circle cx="110" cy="90" r="2" fill="rgba(255,255,255,0.35)" />
+      <circle cx="110" cy="90" r="5" style={{ fill: 'var(--line-faint)', stroke: 'var(--line-medium)' }} strokeWidth="0.5" />
+      <circle cx="110" cy="90" r="2" style={{ fill: 'var(--line-strong)' }} />
 
-      <line x1="110" y1="165" x2="110" y2="12" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" strokeDasharray="1 4" />
-      <text x="110" y="8" textAnchor="middle" fill="rgba(255,255,255,0.3)" fontSize="7" fontFamily="var(--font-display)" fontStyle="italic">future</text>
-      <text x="110" y="175" textAnchor="middle" fill="rgba(255,255,255,0.3)" fontSize="7" fontFamily="var(--font-display)" fontStyle="italic">past</text>
+      <line x1="110" y1="165" x2="110" y2="12" style={{ stroke: 'var(--line-faint)' }} strokeWidth="0.5" strokeDasharray="1 4" />
+      <text x="110" y="8" textAnchor="middle" style={{ fill: 'var(--text-illustration-dim)' }} fontSize="7" fontFamily="var(--font-display)" fontStyle="italic">future</text>
+      <text x="110" y="175" textAnchor="middle" style={{ fill: 'var(--text-illustration-dim)' }} fontSize="7" fontFamily="var(--font-display)" fontStyle="italic">past</text>
     </svg>
   );
 }
@@ -560,14 +560,14 @@ function DailyCycleIllustration() {
         return (
           <path key={i}
             d={`M ${ox1} ${oy1} A ${r} ${r} 0 0 1 ${ox2} ${oy2} L ${ix1} ${iy1} A ${ir} ${ir} 0 0 0 ${ix2} ${iy2} Z`}
-            fill={color} stroke="rgba(8,12,20,0.8)" strokeWidth="1.2"
+            fill={color} style={{ stroke: 'var(--clock-border)' }} strokeWidth="1.2"
             style={{ animation: `segGlow ${12 * 2.5}s ease-in-out ${i * 2.5}s infinite` }}
           />
         );
       })}
 
       <circle cx="100" cy="100" r={41} fill="var(--bg)" />
-      <circle cx="100" cy="100" r="3" fill="rgba(255,255,255,0.2)" />
+      <circle cx="100" cy="100" r="3" style={{ fill: 'var(--dot-illustration)' }} />
     </svg>
   );
 }

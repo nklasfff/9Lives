@@ -25,7 +25,8 @@
 
 /* Hero illustration */
 .heroIllustration {
-  width: 250px;
+  width: 100%;
+  max-width: 380px;
   height: auto;
   margin: 0 auto var(--space-md);
   display: block;

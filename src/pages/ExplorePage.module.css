@@ -11,11 +11,12 @@
 }
 
 .illustration {
-  width: 220px;
+  width: 100%;
+  max-width: 340px;
   height: auto;
-  margin: 0 auto var(--space-md);
+  margin: 0 auto var(--space-lg);
   display: block;
-  opacity: 0.7;
+  opacity: 0.85;
 }
 
 .header h1 {

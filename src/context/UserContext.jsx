@@ -9,6 +9,15 @@ const UserContext = createContext(null);
 
 export function UserProvider({ children }) {
   const [profile, setProfile] = useState(() => loadProfile());
+  const [theme, setTheme] = useState(() => localStorage.getItem('9lives-theme') || 'dark');
+
+  const toggleTheme = () => {
+    setTheme(t => {
+      const next = t === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('9lives-theme', next);
+      return next;
+    });
+  };
 
   useEffect(() => {
     if (profile) {
@@ -54,6 +63,8 @@ export function UserProvider({ children }) {
       completeOnboarding,
       resetProfile,
       getDerivedData,
+      theme,
+      toggleTheme,
     }}>
       {children}
     </UserContext.Provider>

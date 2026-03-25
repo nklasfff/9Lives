@@ -57,16 +57,15 @@ function ExploreIllustration() {
       ))}
 
       {/* Vertical axis */}
-      <line x1="100" y1="100" x2="100" y2="5" stroke="rgba(255,255,255,0.12)" strokeWidth="0.5" strokeDasharray="2 4" />
+      <line x1="100" y1="100" x2="100" y2="5" style={{ stroke: 'var(--line-subtle)' }} strokeWidth="0.5" strokeDasharray="2 4" />
 
       {/* Top circle */}
-      <circle cx="100" cy="5" r="4" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="0.6"
-        style={{ animation: 'corePulse 7s ease-in-out infinite' }} />
+      <circle cx="100" cy="5" r="4" fill="none" strokeWidth="0.6"
+        style={{ stroke: 'var(--text-illustration-dim)', animation: 'corePulse 7s ease-in-out infinite' }} />
 
       {/* Center dot */}
-      <circle cx="100" cy="100" r="3.5" fill="rgba(255,255,255,0.15)"
-        style={{ animation: 'corePulse 5s ease-in-out infinite' }} />
-      <circle cx="100" cy="100" r="1.5" fill="rgba(255,255,255,0.35)" />
+      <circle cx="100" cy="100" r="3.5" style={{ fill: 'var(--line-subtle)', animation: 'corePulse 5s ease-in-out infinite' }} />
+      <circle cx="100" cy="100" r="1.5" style={{ fill: 'var(--line-strong)' }} />
     </svg>
   );
 }
@@ -123,7 +122,7 @@ function WuXingFlowIllustration() {
       ))}
 
       {/* Center dot */}
-      <circle cx="100" cy="65" r="2" fill="rgba(255,255,255,0.2)"
+      <circle cx="100" cy="65" r="2" style={{ fill: 'var(--dot-illustration)' }}
         style={{ animation: 'elementBreathe 5s ease-in-out infinite' }} />
     </svg>
   );
@@ -137,8 +136,9 @@ export default function ExplorePage() {
       <header className={styles.header}>
         <h1>Explore</h1>
         <p className={styles.subtitle}>Six layers of understanding</p>
-        <ExploreIllustration />
       </header>
+
+      <ExploreIllustration />
 
       <div className={styles.layers}>
         {LAYERS.map((layer, idx) => (

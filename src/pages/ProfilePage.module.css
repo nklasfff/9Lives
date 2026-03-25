@@ -349,6 +349,41 @@
   margin-top: -16px;
 }
 
+/* Settings row */
+.settingsRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  margin: var(--space-xl) auto var(--space-lg);
+}
+
+/* Theme toggle */
+.themeToggle {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.themeToggle:hover {
+  border-color: var(--text-secondary);
+  color: var(--text-bright);
+}
+
+.themeIcon {
+  font-size: 1rem;
+  font-family: var(--font-display);
+}
+
 /* Reset button */
 .resetBtn {
   background: transparent;
@@ -360,7 +395,6 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   transition: all var(--transition);
-  margin: var(--space-xl) auto var(--space-lg);
   display: block;
 }
 

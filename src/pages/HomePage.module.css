@@ -27,6 +27,15 @@
 .arcSection {
   margin: var(--space-md) 0;
   animation: fadeIn 1s var(--ease-out) 0.2s both;
+  border-radius: var(--radius-lg);
+  transition: background var(--transition), box-shadow var(--transition);
+}
+
+:global([data-theme="light"]) .arcSection {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  padding: var(--space-md) var(--space-sm);
 }
 
 .cards {
@@ -184,7 +193,7 @@
 }
 
 .spiritActive {
-  border-color: rgba(255, 255, 255, 0.1);
+  border-color: var(--glass-border);
 }
 
 /* Tappable cards */

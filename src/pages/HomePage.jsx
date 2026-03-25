@@ -149,35 +149,31 @@ function SpiritsIllustration() {
   ];
   return (
     <svg viewBox="0 0 260 70" className={styles.spiritsIllustration}>
-      <style>{`
-        @keyframes spiritPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.55; } }
-        .spirit-dot { animation: spiritPulse 5s ease-in-out infinite; }
-      `}</style>
       {spirits.map(({ color, char }, i) => {
         const x = 30 + i * 50;
         const y = 32;
         return (
           <g key={i}>
             {i < 4 && (
-              <line
-                x1={x + 12} y1={y}
-                x2={x + 38} y2={y}
-                stroke="rgba(255,255,255,0.1)"
-                strokeWidth="0.5"
-                strokeDasharray="2 3"
-              />
+              <line x1={x + 12} y1={y} x2={x + 38} y2={y}
+                style={{ stroke: 'var(--line-subtle)' }} strokeWidth="0.5" strokeDasharray="2 3">
+                <animate attributeName="stroke-dashoffset" values="0;-10" dur={`${2.5 + i * 0.3}s`} repeatCount="indefinite" />
+              </line>
             )}
-            <circle cx={x} cy={y} r="14" fill="none" stroke={color} strokeWidth="0.7" opacity="0.35" />
-            <circle cx={x} cy={y} r="5" fill={color} opacity="0.15" className="spirit-dot" style={{ animationDelay: `${i * 0.8}s` }} />
-            <text
-              x={x} y={y + 1}
-              textAnchor="middle"
-              dominantBaseline="central"
-              fill={color}
-              fontSize="9"
-              fontWeight="300"
-              opacity="0.6"
-            >
+            {/* Breathing outer ring */}
+            <circle cx={x} cy={y} r="14" fill="none" stroke={color} strokeWidth="0.7" opacity="0.35">
+              <animate attributeName="r" values="14;20;14" dur={`${6 + i * 0.8}s`} begin={`${i * 1.2}s`} repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
+              <animate attributeName="opacity" values="0.35;0.06;0.35" dur={`${6 + i * 0.8}s`} begin={`${i * 1.2}s`} repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
+            </circle>
+            {/* Static inner ring */}
+            <circle cx={x} cy={y} r="10" fill="none" stroke={color} strokeWidth="0.4" opacity="0.2" />
+            {/* Core dot */}
+            <circle cx={x} cy={y} r="3" fill={color}>
+              <animate attributeName="r" values="2;4.5;2" dur={`${5 + i * 0.5}s`} begin={`${i * 0.8}s`} repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
+              <animate attributeName="opacity" values="0.5;0.9;0.5" dur={`${5 + i * 0.5}s`} begin={`${i * 0.8}s`} repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
+            </circle>
+            <text x={x} y={y + 1} textAnchor="middle" dominantBaseline="central"
+              fill={color} fontSize="9" fontWeight="300" opacity="0.65">
               {char}
             </text>
           </g>
@@ -215,7 +211,8 @@ function OrganClockVisualization({ currentOrgan }) {
   return (
     <svg viewBox="0 0 280 280" className={styles.organClock}>
       <style>{`
-        @keyframes segPulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.55; } }
+        @keyframes segPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.55; } }
+        @keyframes segWave { 0%, 6%, 100% { opacity: 0.06; } 3% { opacity: 0.25; } }
       `}</style>
 
       {/* Segments */}
@@ -241,16 +238,20 @@ function OrganClockVisualization({ currentOrgan }) {
             <path
               d={segmentPath(startDeg, endDeg)}
               fill={elInfo.hex}
-              opacity={isActive ? 0.25 : 0.06}
-              stroke="rgba(8,12,20,0.9)"
+              opacity={isActive ? 0.3 : 0.06}
               strokeWidth="1"
-              style={isActive ? { animation: 'segPulse 4s ease-in-out infinite' } : undefined}
+              style={{
+                stroke: 'var(--clock-border)',
+                animation: isActive
+                  ? 'segPulse 4s ease-in-out infinite'
+                  : `segWave 24s ease-in-out ${i * 2}s infinite`,
+              }}
             />
             {/* Subtle border on outer edge */}
             <path
               d={segmentPath(startDeg, endDeg)}
               fill="none"
-              stroke={isActive ? elInfo.hex : 'rgba(255,255,255,0.08)'}
+              style={{ stroke: isActive ? elInfo.hex : 'var(--line-faint)' }}
               strokeWidth="0.5"
               opacity={isActive ? 0.5 : 1}
             />
@@ -260,7 +261,7 @@ function OrganClockVisualization({ currentOrgan }) {
               x={labelX} y={labelY - 3}
               textAnchor="middle"
               dominantBaseline="central"
-              fill={isActive ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.4)'}
+              style={{ fill: isActive ? 'var(--text-illustration-bright)' : 'var(--text-illustration)' }}
               fontSize={isActive ? '7.5' : '6'}
               fontFamily="var(--font-display)"
               fontWeight="300"
@@ -274,7 +275,7 @@ function OrganClockVisualization({ currentOrgan }) {
               x={timeX} y={timeY}
               textAnchor="middle"
               dominantBaseline="central"
-              fill="rgba(255,255,255,0.25)"
+              style={{ fill: 'var(--text-illustration-dim)' }}
               fontSize="4.5"
               fontFamily="var(--font-body)"
             >
@@ -285,13 +286,13 @@ function OrganClockVisualization({ currentOrgan }) {
       })}
 
       {/* Center circle */}
-      <circle cx={cx} cy={cy} r={innerR - 1} fill="var(--bg)" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" />
+      <circle cx={cx} cy={cy} r={innerR - 1} fill="var(--bg)" style={{ stroke: 'var(--line-faint)' }} strokeWidth="0.5" />
 
       {/* Center info */}
       <text
         x={cx} y={cy - 12}
         textAnchor="middle"
-        fill="rgba(255,255,255,0.7)"
+        style={{ fill: 'var(--text-illustration-bright)' }}
         fontSize="8"
         fontFamily="var(--font-display)"
         fontWeight="300"
@@ -302,7 +303,7 @@ function OrganClockVisualization({ currentOrgan }) {
       <text
         x={cx} y={cy + 4}
         textAnchor="middle"
-        fill="rgba(255,255,255,0.5)"
+        style={{ fill: 'var(--text-illustration)' }}
         fontSize="7"
         fontFamily="var(--font-body)"
       >
@@ -311,7 +312,7 @@ function OrganClockVisualization({ currentOrgan }) {
       <text
         x={cx} y={cy + 18}
         textAnchor="middle"
-        fill="rgba(255,255,255,0.25)"
+        style={{ fill: 'var(--text-illustration-dim)' }}
         fontSize="5"
         fontFamily="var(--font-display)"
         fontStyle="italic"
