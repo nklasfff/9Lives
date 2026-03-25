@@ -223,58 +223,83 @@ function ChartRow({ label, value, symbol, color }) {
 }
 
 function ElementWheelIllustration({ userElement }) {
+  const cx = 100, cy = 100, orbit = 66;
   const elements = [
-    { key: 'water', char: '水', color: '#3a6fa0', x: 100, y: 15 },
-    { key: 'wood', char: '木', color: '#4a9e6e', x: 175, y: 50 },
-    { key: 'fire', char: '火', color: '#c75a3a', x: 155, y: 115 },
-    { key: 'earth', char: '土', color: '#c9a84c', x: 45, y: 115 },
-    { key: 'metal', char: '金', color: '#a8b8c8', x: 25, y: 50 },
-  ];
+    { key: 'water', char: '水', color: '#3a6fa0' },
+    { key: 'wood',  char: '木', color: '#4a9e6e' },
+    { key: 'fire',  char: '火', color: '#c75a3a' },
+    { key: 'earth', char: '土', color: '#c9a84c' },
+    { key: 'metal', char: '金', color: '#a8b8c8' },
+  ].map((el, i) => {
+    const a = (i * 72 - 90) * (Math.PI / 180);
+    return { ...el, x: cx + orbit * Math.cos(a), y: cy + orbit * Math.sin(a) };
+  });
 
   return (
-    <svg viewBox="0 0 200 140" className={styles.illustration}>
-      <style>{`
-        @keyframes wheelPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.6; } }
-        @keyframes activeGlow { 0%, 100% { r: 16; opacity: 0.15; } 50% { r: 20; opacity: 0.25; } }
-      `}</style>
+    <svg viewBox="0 0 200 200" className={styles.illustration}>
 
-      {/* Connections */}
+      {/* Outer ring */}
+      <circle cx={cx} cy={cy} r={orbit} fill="none"
+        style={{ stroke: 'var(--line-subtle)' }} strokeWidth="0.6" />
+
+      {/* Pentagon sheng-cycle lines */}
       {elements.map((el, i) => {
         const next = elements[(i + 1) % 5];
+        const isFromUser = el.key === userElement;
         return (
           <line key={`c-${i}`} x1={el.x} y1={el.y} x2={next.x} y2={next.y}
-            style={{ stroke: el.key === userElement ? el.color : 'var(--line-subtle)' }}
-            strokeWidth={el.key === userElement ? '1' : '0.5'}
-            opacity={el.key === userElement ? '0.5' : '1'}
-          />
+            style={{ stroke: isFromUser ? el.color : 'var(--line-subtle)' }}
+            strokeWidth={isFromUser ? '1.2' : '0.5'}
+            opacity={isFromUser ? '0.6' : '1'}>
+            {isFromUser && (
+              <animate attributeName="opacity" values="0.6;1;0.6"
+                dur="4s" repeatCount="indefinite"
+                calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+            )}
+          </line>
         );
       })}
 
-      {/* Elements */}
+      {/* Element circles */}
       {elements.map((el) => {
         const isUser = el.key === userElement;
         return (
           <g key={el.key}>
+            {/* Breathing glow for user element */}
             {isUser && (
-              <circle cx={el.x} cy={el.y} r="18" fill={el.color} opacity="0.15"
-                style={{ animation: 'activeGlow 5s ease-in-out infinite' }} />
+              <circle cx={el.x} cy={el.y} r="16" fill={el.color} opacity="0.2">
+                <animate attributeName="r" values="16;26;16" dur="4s" repeatCount="indefinite"
+                  calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+                <animate attributeName="opacity" values="0.22;0;0.22" dur="4s" repeatCount="indefinite"
+                  calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+              </circle>
             )}
-            <circle cx={el.x} cy={el.y} r="14" fill="none" stroke={el.color}
-              strokeWidth={isUser ? '1.2' : '0.6'} opacity={isUser ? '0.7' : '0.3'} />
+            <circle cx={el.x} cy={el.y} r={isUser ? 17 : 14}
+              fill={isUser ? `${el.color}20` : 'none'}
+              stroke={el.color}
+              strokeWidth={isUser ? '1.4' : '0.7'}
+              opacity={isUser ? '0.9' : '0.35'} />
             <text x={el.x} y={el.y + 1} textAnchor="middle" dominantBaseline="central"
-              fill={el.color} fontSize={isUser ? '11' : '8'} fontWeight="300"
-              opacity={isUser ? '0.9' : '0.5'}>
+              fill={el.color} fontSize={isUser ? '13' : '9'} fontWeight={isUser ? '400' : '300'}
+              opacity={isUser ? '1' : '0.5'}>
               {el.char}
             </text>
           </g>
         );
       })}
+
+      {/* Center dot */}
+      <circle cx={cx} cy={cy} r="2.5" style={{ fill: 'var(--dot-illustration)' }}>
+        <animate attributeName="opacity" values="0.3;0.7;0.3" dur="6s" repeatCount="indefinite"
+          calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+      </circle>
     </svg>
   );
 }
 
 function CorrespondenceIllustration({ element }) {
   const el = getElementInfo(element);
+  const cx = 100, cy = 100;
   const items = [
     { label: el.season, angle: -90 },
     { label: el.organs.yin, angle: -18 },
@@ -284,24 +309,37 @@ function CorrespondenceIllustration({ element }) {
   ];
 
   return (
-    <svg viewBox="0 0 200 140" className={styles.illustration}>
-      <style>{`
-        @keyframes corrPulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.5; } }
-      `}</style>
+    <svg viewBox="0 0 200 200" className={styles.illustration}>
 
-      {/* Radial lines */}
+      {/* Outer ring */}
+      <circle cx={cx} cy={cy} r="72" fill="none"
+        style={{ stroke: 'var(--line-faint)' }} strokeWidth="0.5" />
+
+      {/* Radial lines — sequential SMIL */}
       {items.map((item, i) => {
         const a = item.angle * (Math.PI / 180);
-        const x = 100 + 45 * Math.cos(a);
-        const y = 70 + 45 * Math.sin(a);
+        const x1 = cx + 22 * Math.cos(a);
+        const y1 = cy + 22 * Math.sin(a);
+        const x2 = cx + 58 * Math.cos(a);
+        const y2 = cy + 58 * Math.sin(a);
+        const tx = cx + 74 * Math.cos(a);
+        const ty = cy + 74 * Math.sin(a);
         return (
           <g key={i}>
-            <line x1="100" y1="70" x2={x} y2={y}
-              stroke={el.hex} strokeWidth="0.5" opacity="0.2"
-              style={{ animation: `corrPulse ${6 + i}s ease-in-out ${i * 0.8}s infinite` }} />
-            <text x={100 + 58 * Math.cos(a)} y={70 + 58 * Math.sin(a)}
+            <line x1={x1} y1={y1} x2={x2} y2={y2}
+              stroke={el.hex} strokeWidth="0.7" opacity="0.25">
+              <animate attributeName="opacity" values="0.25;0.65;0.25"
+                dur={`${7 + i}s`} begin={`${i * 0.9}s`} repeatCount="indefinite"
+                calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+            </line>
+            <circle cx={x2} cy={y2} r="2" fill={el.hex} opacity="0.3">
+              <animate attributeName="opacity" values="0.3;0.7;0.3"
+                dur={`${7 + i}s`} begin={`${i * 0.9}s`} repeatCount="indefinite"
+                calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+            </circle>
+            <text x={tx} y={ty}
               textAnchor="middle" dominantBaseline="central"
-              style={{ fill: 'var(--text-illustration)' }} fontSize="6"
+              style={{ fill: 'var(--text-illustration)' }} fontSize="8.5"
               fontFamily="var(--font-display)" fontStyle="italic">
               {item.label}
             </text>
@@ -309,10 +347,13 @@ function CorrespondenceIllustration({ element }) {
         );
       })}
 
-      {/* Center */}
-      <circle cx="100" cy="70" r="18" fill="none" stroke={el.hex} strokeWidth="0.6" opacity="0.3" />
-      <text x="100" y="71" textAnchor="middle" dominantBaseline="central"
-        fill={el.hex} fontSize="12" fontWeight="300" opacity="0.7">
+      {/* Center circle */}
+      <circle cx={cx} cy={cy} r="20" fill={`${el.hex}18`} stroke={el.hex} strokeWidth="0.8" opacity="0.5">
+        <animate attributeName="opacity" values="0.5;0.85;0.5" dur="5s" repeatCount="indefinite"
+          calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+      </circle>
+      <text x={cx} y={cy + 1} textAnchor="middle" dominantBaseline="central"
+        fill={el.hex} fontSize="14" fontWeight="300" opacity="0.9">
         {el.chinese}
       </text>
     </svg>
@@ -321,37 +362,51 @@ function CorrespondenceIllustration({ element }) {
 
 function ShengCycleIllustration({ userElement }) {
   const elements = [
-    { key: 'wood', char: '木', color: '#4a9e6e' },
-    { key: 'fire', char: '火', color: '#c75a3a' },
+    { key: 'wood',  char: '木', color: '#4a9e6e' },
+    { key: 'fire',  char: '火', color: '#c75a3a' },
     { key: 'earth', char: '土', color: '#c9a84c' },
     { key: 'metal', char: '金', color: '#a8b8c8' },
     { key: 'water', char: '水', color: '#3a6fa0' },
   ];
 
   return (
-    <svg viewBox="0 0 260 50" className={styles.illustration}>
-      <style>{`
-        @keyframes flowPulse { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.5; } }
-      `}</style>
+    <svg viewBox="0 0 260 56" className={styles.illustration}>
       {elements.map((el, i) => {
         const x = 30 + i * 50;
         const isUser = el.key === userElement;
         return (
           <g key={el.key}>
+            {/* Arrow connector */}
             {i < 4 && (
-              <line x1={x + 14} y1="25" x2={x + 36} y2="25"
-                style={{ stroke: 'var(--line-subtle)' }} strokeWidth="0.5" strokeDasharray="2 3" />
+              <line x1={x + (isUser ? 18 : 14)} y1="28" x2={x + 36} y2="28"
+                stroke={isUser ? el.color : 'var(--line-subtle)'}
+                strokeWidth={isUser ? '0.9' : '0.5'}
+                strokeDasharray={isUser ? 'none' : '2 3'}
+                opacity={isUser ? '0.55' : '1'}>
+                {isUser && (
+                  <animate attributeName="opacity" values="0.55;0.9;0.55"
+                    dur="3.5s" repeatCount="indefinite"
+                    calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+                )}
+              </line>
             )}
-            <circle cx={x} cy="25" r={isUser ? '16' : '12'} fill="none"
-              stroke={el.color} strokeWidth={isUser ? '1' : '0.6'}
-              opacity={isUser ? '0.6' : '0.3'} />
+            {/* Glow for active */}
             {isUser && (
-              <circle cx={x} cy="25" r="16" fill={el.color} opacity="0.1"
-                style={{ animation: 'flowPulse 5s ease-in-out infinite' }} />
+              <circle cx={x} cy="28" r="17" fill={el.color} opacity="0.18">
+                <animate attributeName="r" values="17;24;17" dur="4s" repeatCount="indefinite"
+                  calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+                <animate attributeName="opacity" values="0.18;0;0.18" dur="4s" repeatCount="indefinite"
+                  calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+              </circle>
             )}
-            <text x={x} y="26" textAnchor="middle" dominantBaseline="central"
-              fill={el.color} fontSize={isUser ? '10' : '7'} fontWeight="300"
-              opacity={isUser ? '0.8' : '0.5'}>
+            <circle cx={x} cy="28" r={isUser ? 16 : 12}
+              fill={isUser ? `${el.color}20` : 'none'}
+              stroke={el.color}
+              strokeWidth={isUser ? '1.3' : '0.7'}
+              opacity={isUser ? '0.9' : '0.4'} />
+            <text x={x} y="29" textAnchor="middle" dominantBaseline="central"
+              fill={el.color} fontSize={isUser ? '11' : '8'} fontWeight={isUser ? '400' : '300'}
+              opacity={isUser ? '1' : '0.55'}>
               {el.char}
             </text>
           </g>

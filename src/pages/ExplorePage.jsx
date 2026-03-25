@@ -71,59 +71,84 @@ function ExploreIllustration() {
 }
 
 function WuXingFlowIllustration() {
+  // 5 elements placed evenly on a circle (72° apart), starting from top
+  const cx = 100, cy = 100, orbit = 68;
   const elements = [
-    { char: '水', color: '#3a6fa0', x: 100, y: 18 },
-    { char: '木', color: '#4a9e6e', x: 170, y: 45 },
-    { char: '火', color: '#c75a3a', x: 155, y: 105 },
-    { char: '土', color: '#c9a84c', x: 45, y: 105 },
-    { char: '金', color: '#a8b8c8', x: 30, y: 45 },
-  ];
+    { char: '水', color: '#3a6fa0' },  // Water — top
+    { char: '木', color: '#4a9e6e' },  // Wood — upper right
+    { char: '火', color: '#c75a3a' },  // Fire — lower right
+    { char: '土', color: '#c9a84c' },  // Earth — lower left
+    { char: '金', color: '#a8b8c8' },  // Metal — upper left
+  ].map((el, i) => {
+    const angle = (i * 72 - 90) * (Math.PI / 180);
+    return { ...el, x: cx + orbit * Math.cos(angle), y: cy + orbit * Math.sin(angle) };
+  });
+
+  const cycleDur = 10; // seconds for full cycle
+  const slotDur = cycleDur / 5; // 2s per element
 
   return (
-    <svg viewBox="0 0 200 130" className={styles.midIllustration}>
-      <style>{`
-        @keyframes flowDot {
-          0%, 100% { offset-distance: 0%; opacity: 0; }
-          10% { opacity: 0.6; }
-          90% { opacity: 0.6; }
-          95% { opacity: 0; }
-        }
-        @keyframes elementBreathe {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 0.55; }
-        }
-      `}</style>
+    <svg viewBox="0 0 200 200" className={styles.midIllustration}>
 
-      {/* Sheng cycle connecting lines */}
+      {/* Outer ring */}
+      <circle cx={cx} cy={cy} r={orbit} fill="none"
+        style={{ stroke: 'var(--line-faint)' }} strokeWidth="0.6" />
+
+      {/* Pentagon sheng-cycle lines */}
       {elements.map((el, i) => {
         const next = elements[(i + 1) % 5];
         return (
-          <line key={`flow-${i}`}
+          <line key={`line-${i}`}
             x1={el.x} y1={el.y} x2={next.x} y2={next.y}
-            stroke={el.color} strokeWidth="0.5" opacity="0.2"
-            style={{ animation: `elementBreathe ${8 + i}s ease-in-out ${i * 1.2}s infinite` }}
-          />
+            stroke={el.color} strokeWidth="0.5" opacity="0.15" />
         );
       })}
 
-      {/* Element circles with characters */}
+      {/* Element circles — sequential glow using SMIL */}
       {elements.map((el, i) => (
         <g key={i}>
-          <circle cx={el.x} cy={el.y} r="14" fill="none" stroke={el.color} strokeWidth="0.6" opacity="0.35"
-            style={{ animation: `elementBreathe ${7 + i * 0.8}s ease-in-out ${i * 0.5}s infinite` }} />
-          <text
-            x={el.x} y={el.y + 1}
+          {/* Breathing glow ring */}
+          <circle cx={el.x} cy={el.y} r="14" fill={el.color} opacity="0">
+            <animate attributeName="r" values="14;26;14"
+              dur={`${cycleDur}s`} begin={`${i * slotDur}s`}
+              repeatCount="indefinite" calcMode="spline"
+              keyTimes="0;0.2;1"
+              keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+            <animate attributeName="opacity" values="0.25;0;0.25"
+              dur={`${cycleDur}s`} begin={`${i * slotDur}s`}
+              repeatCount="indefinite" calcMode="spline"
+              keyTimes="0;0.2;1"
+              keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+          </circle>
+
+          {/* Main circle — brightens when active */}
+          <circle cx={el.x} cy={el.y} r="16" fill={`${el.color}12`} stroke={el.color} strokeWidth="0.7" opacity="0.3">
+            <animate attributeName="opacity" values="0.85;0.3;0.3"
+              dur={`${cycleDur}s`} begin={`${i * slotDur}s`}
+              repeatCount="indefinite" calcMode="spline"
+              keyTimes="0;0.25;1"
+              keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+          </circle>
+
+          {/* Chinese character */}
+          <text x={el.x} y={el.y + 1}
             textAnchor="middle" dominantBaseline="central"
-            fill={el.color} fontSize="9" fontWeight="300" opacity="0.6"
-          >
+            fill={el.color} fontSize="11" fontWeight="300" opacity="0.5">
+            <animate attributeName="opacity" values="0.9;0.5;0.5"
+              dur={`${cycleDur}s`} begin={`${i * slotDur}s`}
+              repeatCount="indefinite" calcMode="spline"
+              keyTimes="0;0.25;1"
+              keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
             {el.char}
           </text>
         </g>
       ))}
 
       {/* Center dot */}
-      <circle cx="100" cy="65" r="2" style={{ fill: 'var(--dot-illustration)' }}
-        style={{ animation: 'elementBreathe 5s ease-in-out infinite' }} />
+      <circle cx={cx} cy={cy} r="2.5" style={{ fill: 'var(--dot-illustration)' }}>
+        <animate attributeName="opacity" values="0.3;0.7;0.3" dur="5s" repeatCount="indefinite"
+          calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+      </circle>
     </svg>
   );
 }
