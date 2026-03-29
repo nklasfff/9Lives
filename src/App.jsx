@@ -13,6 +13,8 @@ import LifePhaseDetailPage from './pages/LifePhaseDetailPage';
 import SpiritsDetailPage from './pages/SpiritsDetailPage';
 import DepthDetailPage from './pages/DepthDetailPage';
 import PhaseDeepPage from './pages/PhaseDeepPage';
+import JournalPage from './pages/JournalPage';
+import TimelinePage from './pages/TimelinePage';
 import RelationDetailPage from './pages/RelationDetailPage';
 import GroupDynamicsPage from './pages/GroupDynamicsPage';
 
@@ -39,6 +41,8 @@ function AppRoutes() {
         <Route path="/explore/phases/:phaseId" element={<PhaseDeepPage />} />
         <Route path="/explore/spirits" element={<SpiritsDetailPage />} />
         <Route path="/explore/depths" element={<DepthDetailPage />} />
+        <Route path="/explore/journal" element={<JournalPage />} />
+        <Route path="/explore/timeline" element={<TimelinePage />} />
         <Route path="/relations" element={<RelationsPage />} />
         <Route path="/relations/group" element={<GroupDynamicsPage />} />
         <Route path="/relations/:friendId" element={<RelationDetailPage />} />

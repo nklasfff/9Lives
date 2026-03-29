@@ -1,0 +1,242 @@
+.page {
+  padding: var(--space-lg) var(--space-md);
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.backBtn {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  align-self: flex-start;
+  padding: var(--space-xs) 0;
+  transition: color var(--transition);
+}
+
+.backBtn:hover { color: var(--text-bright); }
+
+/* Header */
+.header {
+  text-align: center;
+  padding: var(--space-lg) 0 var(--space-md);
+  animation: fadeDown 0.8s var(--ease-out) both;
+}
+
+.phaseLabel {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 300;
+  margin-top: var(--space-xs);
+}
+
+.subtitle {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin-top: var(--space-xs);
+}
+
+.illustration {
+  width: 200px;
+  height: auto;
+  margin: var(--space-sm) auto;
+  display: block;
+}
+
+/* Intro */
+.intro {
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  line-height: 1.8;
+}
+
+/* Theme chooser */
+.prompt {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-secondary);
+  text-align: center;
+  margin: var(--space-sm) 0;
+}
+
+.themeGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.themeCard {
+  cursor: pointer;
+  text-align: center;
+  padding: var(--space-md) !important;
+  transition: transform var(--transition-fast);
+}
+
+.themeCard:active {
+  transform: scale(0.97);
+}
+
+.themeLabel {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+/* Step content */
+.stepLabel {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: var(--space-sm);
+}
+
+.questionText {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--space-md);
+}
+
+.textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-md);
+  line-height: 1.8;
+  resize: vertical;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.textarea:focus {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.textarea::placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+  opacity: 0.6;
+}
+
+/* Step indicator */
+.stepIndicator {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: var(--space-md) 0 var(--space-sm);
+}
+
+.stepDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid;
+  transition: all var(--transition);
+}
+
+/* Next button */
+.nextBtn {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--text-muted);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-full);
+  padding: var(--space-sm) var(--space-lg);
+  display: block;
+  margin: 0 auto;
+  transition: all var(--transition);
+  letter-spacing: 0.04em;
+}
+
+.nextBtn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.nextBtn:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Summary */
+.summaryMessage {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  text-align: center;
+}
+
+.savedText {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  line-height: 1.8;
+  margin-bottom: var(--space-sm);
+}
+
+.savedDivider {
+  border-top: 1px solid;
+  margin: var(--space-md) 0;
+}
+
+.summaryActions {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+}
+
+.actionBtn {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-full);
+  padding: var(--space-sm) var(--space-lg);
+  transition: all var(--transition);
+  letter-spacing: 0.04em;
+}
+
+.actionBtn:hover {
+  color: var(--text-bright);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Past entries note */
+.pastNote {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+  font-style: italic;
+}
+
+.pastLink {
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.pastLink:hover {
+  color: var(--text-bright);
+}

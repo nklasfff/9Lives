@@ -10,6 +10,8 @@ const LAYERS = [
   { number: '04', title: 'Relations', subtitle: 'Elemental Dynamics', description: 'Every relationship carries an elemental signature — nourishing, tempering, or transforming.', route: '/relations' },
   { number: '05', title: 'Time Travel', subtitle: 'Past & Future', description: 'Map the elemental landscape of any day — past or future — and see how it shapes your journey.', route: '/time' },
   { number: '06', title: 'The Depths', subtitle: 'Extraordinary Vessels', description: 'Eight hidden rivers of energy that carry your deepest patterns, traumas, and gifts.', route: '/explore/depths' },
+  { number: '07', title: 'Journal', subtitle: 'Guided Reflection', description: 'A quiet space to reflect on where you are — guided by your element and phase.', route: '/explore/journal' },
+  { number: '08', title: 'Timeline', subtitle: 'Your Path Over Time', description: 'See how your reflections shift and deepen as you move through this phase.', route: '/explore/timeline' },
 ];
 
 function ExploreIllustration() {
@@ -160,7 +162,7 @@ export default function ExplorePage() {
     <div className={styles.page}>
       <header className={styles.header}>
         <h1>Explore</h1>
-        <p className={styles.subtitle}>Six layers of understanding</p>
+        <p className={styles.subtitle}>Eight layers of understanding</p>
       </header>
 
       <ExploreIllustration />
