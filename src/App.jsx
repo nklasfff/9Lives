@@ -15,6 +15,8 @@ import DepthDetailPage from './pages/DepthDetailPage';
 import PhaseDeepPage from './pages/PhaseDeepPage';
 import RelationDetailPage from './pages/RelationDetailPage';
 import GroupDynamicsPage from './pages/GroupDynamicsPage';
+import OrgansDetailPage from './pages/OrgansDetailPage';
+import OrganDeepPage from './pages/OrganDeepPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -38,6 +40,8 @@ function AppRoutes() {
         <Route path="/explore/phases" element={<LifePhaseDetailPage />} />
         <Route path="/explore/phases/:phaseId" element={<PhaseDeepPage />} />
         <Route path="/explore/spirits" element={<SpiritsDetailPage />} />
+        <Route path="/explore/organs" element={<OrgansDetailPage />} />
+        <Route path="/explore/organs/:organKey" element={<OrganDeepPage />} />
         <Route path="/explore/depths" element={<DepthDetailPage />} />
         <Route path="/relations" element={<RelationsPage />} />
         <Route path="/relations/group" element={<GroupDynamicsPage />} />

@@ -7,13 +7,14 @@ const LAYERS = [
   { number: '01', title: 'Your Element', subtitle: 'Identity & Constitution', description: 'Your elemental nature shapes everything — from how you see the world to what foods nourish you.', route: '/explore/element' },
   { number: '02', title: 'Life Phase', subtitle: 'The Nine Seasons', description: 'Nine phases unfold across your lifetime, each with its own element, wisdom, and calling.', route: '/explore/phases' },
   { number: '03', title: 'Daily Spirits', subtitle: 'The Five Shen', description: 'Five spirits govern your inner landscape — consciousness, vision, instinct, thought, and will.', route: '/explore/spirits' },
-  { number: '04', title: 'Relations', subtitle: 'Elemental Dynamics', description: 'Every relationship carries an elemental signature — nourishing, tempering, or transforming.', route: '/relations' },
-  { number: '05', title: 'Time Travel', subtitle: 'Past & Future', description: 'Map the elemental landscape of any day — past or future — and see how it shapes your journey.', route: '/time' },
-  { number: '06', title: 'The Depths', subtitle: 'Extraordinary Vessels', description: 'Eight hidden rivers of energy that carry your deepest patterns, traumas, and gifts.', route: '/explore/depths' },
+  { number: '04', title: 'The Twelve Organs', subtitle: 'Body as Function & Teacher', description: 'Twelve organs in five elemental pairs — each carrying a function, an emotion, and a particular kind of intelligence.', route: '/explore/organs' },
+  { number: '05', title: 'Relations', subtitle: 'Elemental Dynamics', description: 'Every relationship carries an elemental signature — nourishing, tempering, or transforming.', route: '/relations' },
+  { number: '06', title: 'Time Travel', subtitle: 'Past & Future', description: 'Map the elemental landscape of any day — past or future — and see how it shapes your journey.', route: '/time' },
+  { number: '07', title: 'The Depths', subtitle: 'Extraordinary Vessels', description: 'Eight hidden rivers of energy that carry your deepest patterns, traumas, and gifts.', route: '/explore/depths' },
 ];
 
 function ExploreIllustration() {
-  const layerColors = ['#3a6fa0', '#a8b8c8', '#c9a84c', '#c75a3a', '#4a9e6e', '#7a9ab5'];
+  const layerColors = ['#3a6fa0', '#a8b8c8', '#c9a84c', '#c75a3a', '#4a9e6e', '#b88a6a', '#7a9ab5'];
 
   return (
     <svg viewBox="0 0 200 130" className={styles.illustration}>
@@ -30,8 +31,8 @@ function ExploreIllustration() {
         }
       `}</style>
 
-      {/* Six concentric arcs — each in an element color, breathing in waves */}
-      {[92, 76, 60, 46, 32, 20].map((r, i) => (
+      {/* Seven concentric arcs — each in an element color, breathing in waves */}
+      {[96, 82, 68, 54, 42, 30, 20].map((r, i) => (
         <path
           key={i}
           d={`M ${100 - r} 100 A ${r} ${r} 0 0 1 ${100 + r} 100`}
@@ -160,7 +161,7 @@ export default function ExplorePage() {
     <div className={styles.page}>
       <header className={styles.header}>
         <h1>Explore</h1>
-        <p className={styles.subtitle}>Six layers of understanding</p>
+        <p className={styles.subtitle}>Seven layers of understanding</p>
       </header>
 
       <ExploreIllustration />
