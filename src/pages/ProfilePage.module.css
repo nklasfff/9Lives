@@ -125,249 +125,62 @@
   margin-bottom: var(--space-sm);
 }
 
-.deepBody {
-  font-size: 0.88rem;
-  color: var(--text-primary);
-  line-height: 1.8;
-}
-
-/* Element balance */
-.balanceSection {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-  margin-top: var(--space-md);
-  padding-top: var(--space-md);
-  border-top: 1px solid var(--glass-border);
-}
-
-.balanceLabel {
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  display: block;
-  margin-bottom: var(--space-xs);
-}
-
-.balanceText {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-}
-
-/* Spirit section */
-.spiritHeader {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  margin-bottom: var(--space-md);
-}
-
-.spiritSymbol {
-  font-size: 2.5rem;
-  font-weight: 300;
-  text-shadow: 0 0 25px currentColor;
-}
-
-.spiritTitle {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  font-style: italic;
-  display: block;
-  margin-top: 2px;
-}
-
-.qualitiesGrid {
+/* Launchpad — go deeper into each layer of you */
+.launchGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-md);
-  margin-top: var(--space-md);
-  padding-top: var(--space-md);
-  border-top: 1px solid var(--glass-border);
-}
-
-.qualityItem {
-  font-size: 0.78rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-top: 4px;
-}
-
-/* Phase section */
-.phaseHeader {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  margin-bottom: var(--space-sm);
-}
-
-.phaseNum {
-  font-family: var(--font-display);
-  font-size: 2.5rem;
-  font-weight: 300;
-  line-height: 1;
-  text-shadow: 0 0 20px currentColor;
-}
-
-.phaseMeta {
-  font-size: 0.78rem;
-  display: block;
-  margin-top: 2px;
-}
-
-.phaseQuote {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-style: italic;
-  color: var(--text-secondary);
-  margin-bottom: var(--space-sm);
-}
-
-.keywords {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  font-style: italic;
-  margin-top: var(--space-sm);
-  padding-top: var(--space-sm);
-  border-top: 1px solid var(--glass-border);
-}
-
-/* Zodiac section */
-.zodiacHeader {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  margin-bottom: var(--space-md);
-}
-
-.zodiacSymbol {
-  font-size: 2.5rem;
-  color: var(--text-secondary);
-  font-weight: 300;
-}
-
-.zodiacTrait {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  font-style: italic;
-  display: block;
-  margin-top: 2px;
-}
-
-.zodiacDetail {
-  margin-top: var(--space-md);
-  padding-top: var(--space-sm);
-  border-top: 1px solid var(--glass-border);
-}
-
-/* Organ Clock */
-.organClockList {
-  margin-top: var(--space-md);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-}
-
-.organClockItem {
-  padding-top: var(--space-sm);
-  padding-bottom: var(--space-sm);
-  border-top: 1px solid var(--glass-border);
-  transition: opacity var(--transition);
-}
-
-.organClockItem:first-child {
-  border-top: none;
-  padding-top: 0;
-}
-
-.organClockItem:active {
-  opacity: 0.7;
-}
-
-.organClockTapHint {
-  display: block;
-  margin-top: var(--space-xs);
-  font-size: 0.7rem;
-  font-style: italic;
-  font-family: var(--font-display);
-  letter-spacing: 0.04em;
-  opacity: 0.6;
-  text-align: right;
-}
-
-.organClockItem:hover .organClockTapHint {
-  opacity: 1;
-}
-
-.organClockHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-xs);
-}
-
-.organClockTime {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-.organClockName {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-style: italic;
-}
-
-.organClockQuality {
-  font-family: var(--font-display);
-  font-size: 0.88rem;
-  font-style: italic;
-  color: var(--text-secondary);
-  margin-bottom: var(--space-xs);
-}
-
-.organClockGuidance {
-  font-size: 0.82rem;
-  color: var(--text-primary);
-  line-height: 1.7;
-}
-
-/* Sheng Cycle */
-.cycleFlow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-sm);
   margin-top: var(--space-md);
 }
 
-.cycleItem {
+.launchTile {
+  background: rgba(17, 29, 43, 0.45);
+  border: 1px solid var(--glass-border);
+  border-left: 2px solid var(--tile-accent, var(--text-muted));
+  border-radius: 12px;
+  padding: var(--space-md);
+  cursor: pointer;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 2px;
+  gap: 4px;
+  text-align: left;
+  transition: opacity var(--transition), transform var(--transition);
+  min-height: 44px;
 }
 
-.cycleSymbol {
+.launchTile:active {
+  transform: scale(0.97);
+  opacity: 0.85;
+}
+
+.launchSymbol {
   font-size: 1.6rem;
   font-weight: 300;
+  line-height: 1;
+  text-shadow: 0 0 14px currentColor;
+  margin-bottom: 6px;
 }
 
-.cycleName {
-  font-size: 0.78rem;
-  color: var(--text-primary);
+.launchLabel {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
 }
 
-.cycleRole {
-  font-size: 0.65rem;
+.launchName {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  line-height: 1.2;
+}
+
+.launchTag {
+  font-size: 0.72rem;
   color: var(--text-muted);
   font-style: italic;
-}
-
-.cycleArrow {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  margin-top: -16px;
+  line-height: 1.4;
 }
 
 /* Settings row */
@@ -425,8 +238,8 @@
 }
 
 /* Card spacing */
-.page > :not(.header):not(.illustration):not(.resetBtn) {
-  margin-bottom: var(--space-md);
+.page > :not(.header):not(.illustration):not(.resetBtn):not(.settingsRow) {
+  margin-bottom: var(--space-2xl);
 }
 
 /* Your Constellation — relational field module */
