@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getOrgan, hasDepthContent } from '../engine/organs';
+import { getOrgan, hasDepthContent, ELEMENT_GROUP_ORDER } from '../engine/organs';
 import { getElementInfo } from '../engine/elements';
 import { getCurrentOrgan } from '../engine/organClock';
 import { SPIRITS } from '../engine/wuShen';
@@ -79,6 +79,14 @@ export default function OrganDeepPage() {
   const current = getCurrentOrgan();
   const isActive = current && current.key === organ.key;
   const hasDepth = hasDepthContent(organ);
+
+  const groupIdx = ELEMENT_GROUP_ORDER.indexOf(organ.key);
+  const prevKey = ELEMENT_GROUP_ORDER[(groupIdx - 1 + ELEMENT_GROUP_ORDER.length) % ELEMENT_GROUP_ORDER.length];
+  const nextKey = ELEMENT_GROUP_ORDER[(groupIdx + 1) % ELEMENT_GROUP_ORDER.length];
+  const prevOrgan = getOrgan(prevKey);
+  const nextOrgan = getOrgan(nextKey);
+  const prevEl = prevOrgan && getElementInfo(prevOrgan.element);
+  const nextEl = nextOrgan && getElementInfo(nextOrgan.element);
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -215,6 +223,31 @@ export default function OrganDeepPage() {
                 </GlassCard>
               )}
             </div>
+          </div>
+        )}
+
+        {prevOrgan && nextOrgan && (
+          <div className={styles.navRow}>
+            <button
+              className={styles.navBtn}
+              onClick={() => navigate(`/explore/organs/${prevOrgan.key}`)}
+            >
+              <span className={styles.navArrow} style={{ color: prevEl.hex }}>←</span>
+              <span className={styles.navLabel}>
+                <span className={styles.navChinese} style={{ color: prevEl.hex }}>{prevOrgan.chinese}</span>
+                <span className={styles.navName}>{prevOrgan.name}</span>
+              </span>
+            </button>
+            <button
+              className={`${styles.navBtn} ${styles.navBtnRight}`}
+              onClick={() => navigate(`/explore/organs/${nextOrgan.key}`)}
+            >
+              <span className={styles.navLabel}>
+                <span className={styles.navChinese} style={{ color: nextEl.hex }}>{nextOrgan.chinese}</span>
+                <span className={styles.navName}>{nextOrgan.name}</span>
+              </span>
+              <span className={styles.navArrow} style={{ color: nextEl.hex }}>→</span>
+            </button>
           </div>
         )}
 

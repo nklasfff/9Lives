@@ -314,7 +314,15 @@ export default function TimePage() {
                 const oEl = getElementInfo(organ.element);
                 const isNow = computed.isToday && organ.organ === computed.currentOrgan.organ;
                 return (
-                  <div key={organ.organ} className={`${styles.organItem} ${isNow ? styles.organActive : ''}`}>
+                  <div
+                    key={organ.organ}
+                    className={`${styles.organItem} ${isNow ? styles.organActive : ''}`}
+                    style={{ cursor: 'pointer' }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/explore/organs/${organ.key}`);
+                    }}
+                  >
                     <div className={styles.organItemHeader}>
                       <span className={styles.organTime}>{organ.time}</span>
                       <span className={styles.organName} style={{ color: isNow ? oEl.hex : oEl.hex + '88' }}>
