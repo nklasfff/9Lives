@@ -255,7 +255,44 @@ const ORGANS = {
     emotion: { balanced: 'Warmth', imbalanced: 'Defended distance' },
     domain: ['intimacy', 'protection', 'closeness'],
     essence:
-      'The membrane around the sovereign — the organ that mediates closeness and decides what is allowed near the heart.',
+      'The membrane around the Heart — deciding who comes close, and how close they\'re allowed to come.',
+    description:
+      'In classical Chinese medicine the Pericardium is the soft wall around the Heart — the Heart Master, the one who answers the door. The Sovereign cannot meet every visitor itself, so the Pericardium does the meeting for it: opening, listening, judging the temperature of what stands outside. Together with its yang partner the Triple Heater, it regulates the warmth that passes between you and another person — how much, how fast, how safely. When it\'s healthy you can be near someone without bracing, and let them be near you without disappearing. When it\'s depleted or walled-up, even the people you love seem to reach you through glass. Much of what we call intimacy lives here, in the quality of this membrane.',
+    balanced:
+      'Warmth that arrives without performance. Easy presence in close company. The chest stays soft when someone comes near. You can say no without slamming a door. Sleep settles in the late evening.',
+    blocked:
+      'A guarded distance, even with people you love. Quick recoil at touch or emotional closeness. Wired, restless evenings between 19:00 and 21:00. Old relational hurts that never quite finished. A sense of meeting the world from behind something.',
+    themes: [
+      {
+        title: 'The Membrane Around the Sovereign',
+        body: 'The Heart, in this system, is treated as a sovereign — too central to be exposed directly to every passing weather. The Pericardium is what stands between the Sovereign and the world. It absorbs the first impact of an argument, a slight, a piece of bad news, so that the Heart itself isn\'t struck. This is why a healthy Pericardium is supple rather than hard: it gives, returns, and gives again. When it stiffens, the Heart loses its protection in one direction and its access to the world in the other.',
+      },
+      {
+        title: 'The Gateway of Intimacy',
+        body: 'Intimacy isn\'t the absence of a boundary — it\'s a working one. The Pericardium is that working gate. It opens for the people who have earned closeness and stays closed to the ones who haven\'t, and it can tell the difference without you having to think about it. When the gate works, you can let someone in without bracing for what they might do once they\'re inside. When it stops working, you either lock everyone out or let everyone in, and both feel like the same exhaustion by the end of the week.',
+      },
+      {
+        title: 'Defended Closeness',
+        body: 'Some people are physically close to others all day and still untouched by any of it. They smile, they listen, they hold the room — and nothing actually lands. This is the signature of a defended Pericardium: closeness is performed, but not received. Often there\'s an older injury underneath, a moment when being open turned out to be unsafe, and the membrane thickened in response. The protection made sense once. It\'s the staying-thickened, long after the danger has passed, that becomes the problem.',
+      },
+      {
+        title: 'Letting People In Without Losing the Self',
+        body: 'A common fear, especially for those who love deeply, is that opening to another person will mean disappearing into them. So they oscillate — too close, then too far, then too close again. A well-functioning Pericardium makes a third option possible. You can be near someone and still feel where you end. Closeness stops being a choice between fortress and flood, and becomes something you can actually live inside.',
+      },
+      {
+        title: 'The Pericardium and the Triple Heater',
+        body: 'The Pericardium has a yang partner, the Triple Heater, and the two work as a single system of warmth. The Pericardium decides who is close; the Triple Heater regulates the temperature once they are. Together they answer a basic question of any relationship — how much heat is safe to share right now? When they\'re in tune, a room with people in it feels warm rather than hot or cold. When they\'re out of tune, you\'ll notice it as social fatigue: drained by company, chilled in your own home, or overheated by interactions that should have been ordinary.',
+      },
+      {
+        title: 'Evening Hours and Wind-Down',
+        body: 'On the organ clock the Pericardium holds the hours from 19:00 to 21:00 — the threshold between the working day and the night. This is when the gate is meant to close gently, the Heart to settle, the body to soften toward sleep. If this window is consistently wired — scrolling, arguing, performing, replaying the day — the Pericardium doesn\'t get to do its evening work. Over time, sleep onset suffers, and so does the next morning\'s capacity for closeness. Protect these two hours and you protect the whole system.',
+      },
+    ],
+    lifeQuestions: [
+      'Who am I able to let actually close to me right now?',
+      'What does my chest do when someone reaches for me?',
+      'What happens in my evenings between 19:00 and 21:00?',
+    ],
   },
 
   tripleHeater: {
@@ -271,7 +308,44 @@ const ORGANS = {
     emotion: { balanced: 'Warmth', imbalanced: 'Disconnection' },
     domain: ['communication', 'coordination', 'warmth between systems'],
     essence:
-      'The connector between cavities and systems — the organ of relational warmth, communication, and overall coherence.',
+      'The functional system that coordinates the body\'s three burning spaces and keeps warmth moving between them.',
+    description:
+      'The Triple Heater is the one organ in Chinese medicine with no physical body. It is a function rather than a thing — the coordination between the upper burner (chest and head), the middle burner (digestion), and the lower burner (elimination and reproduction). Its job is to keep warmth, fluid, and information moving between these three regions so the body works as one piece instead of three. Classical texts call it the Official in Charge of Sluices and Waterways, and the name fits: it opens and closes the small gates that let heat reach the hands, fluid reach the tissues, and signals reach the organs that need them. When it is working, you feel coordinated in your own body and warm with the people around you. When it is depleted, the parts of your life stop talking to each other — your body feels far away, evenings are hard to settle into, and the warmth you offer others does not quite land.',
+    balanced:
+      'Hands and feet warm without effort. The body feels like one piece, not a set of parts. Easy transitions between work, rest, and sleep. Warmth in conversation that the other person can actually feel. Sleep arrives when you lie down.',
+    blocked:
+      'Cold extremities while the chest runs hot. A sense of being disconnected from your own body. The evening will not wind down — you are tired but wired. Social warmth that you mean but cannot transmit. Temperature, hormones, and mood that swing without an obvious cause.',
+    themes: [
+      {
+        title: 'The Three Burning Spaces',
+        body: 'Chinese medicine divides the torso into three regions, each with its own work. The upper burner — chest, lungs, heart — handles breath and circulation. The middle burner — stomach, spleen, liver — handles digestion and the processing of food into usable energy. The lower burner — kidneys, bladder, intestines, reproductive organs — handles storage, elimination, and the deep reserves. The Triple Heater is what keeps these three regions in conversation. When the conversation breaks down, you can eat well and still feel cold, or think clearly and still feel ungrounded.',
+      },
+      {
+        title: 'Warmth Between Systems',
+        body: 'The Triple Heater is the body\'s thermostat, but a strange one. It does not just regulate temperature — it regulates how heat is distributed. A healthy Triple Heater sends warmth out to the surface when you need to meet the world, and pulls it inward when you need to digest, rest, or recover. A depleted one leaves heat trapped in the chest while the hands and feet go cold, or scatters it outward so you sweat at rest and shiver under a blanket. Hormonal swings, hot flashes, and night sweats often live here.',
+      },
+      {
+        title: 'Coordination and Connection',
+        body: 'Coordination is the quiet work of a healthy body — the way breath syncs with movement, digestion with rest, attention with what is in front of you. You only notice it when it stops. When the Triple Heater is strained, the parts of you stop arriving at the same time. You sit down to eat and your stomach is not ready. You go to bed and your mind is still in the meeting. You try to be present with someone and half of you is somewhere else. The work is not to push harder but to let the systems find each other again.',
+      },
+      {
+        title: 'The Pericardium and the Triple Heater',
+        body: 'These two are the yin and yang of relational fire. The Pericardium guards the heart from the inside — it decides who gets close. The Triple Heater carries the warmth outward — it decides how that closeness is felt. One without the other does not work. A Pericardium that opens without a Triple Heater to deliver warmth produces vulnerability that nobody can actually feel. A Triple Heater that broadcasts warmth without a Pericardium to anchor it produces charm without intimacy. Together, they are what people mean when they say someone is warm.',
+      },
+      {
+        title: 'Evening Hours and the Slow Descent',
+        body: 'The Triple Heater\'s peak hours are 21:00 to 23:00 — the window between the day and sleep. This is when the body is meant to lower its temperature, settle its hormones, and quiet the systems that have been running since morning. If the Triple Heater is strong, the descent happens almost on its own and sleep arrives soon after. If it is depleted, this is the hour you suddenly feel awake, scroll on your phone, eat something you did not need, or find a second wind that costs you the next day. The fix is not willpower. It is giving the body a darker, quieter, slower runway.',
+      },
+      {
+        title: 'The Functional Organ',
+        body: 'The Triple Heater has no anatomy — no organ a surgeon could remove, no tissue a scan could find. It exists only as relationship, as the working-together of everything else. This is worth sitting with. Some of the most important things in a life are like this: a marriage, a friendship, a sense of home. They are not objects you can point to. They are the quality of how the parts move together. When that quality is alive, you barely notice it. When it goes, you feel the absence everywhere and cannot say exactly what is missing.',
+      },
+    ],
+    lifeQuestions: [
+      'Where in your life have the parts stopped talking to each other?',
+      'What does your evening descent into sleep actually look like?',
+      'Whose warmth reaches you, and whose warmth do you mean but cannot send?',
+    ],
   },
 
   gallbladder: {
