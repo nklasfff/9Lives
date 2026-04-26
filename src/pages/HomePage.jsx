@@ -88,17 +88,20 @@ export default function HomePage() {
         {today.currentOrgan && (() => {
           const organElementInfo = getElementInfo(today.currentOrgan.element);
           return (
-            <GlassCard glowColor={`${organElementInfo.hex}15`} onClick={() => navigate('/time')} className={styles.tappable}>
+            <GlassCard glowColor={`${organElementInfo.hex}15`} onClick={() => navigate(`/explore/organs/${today.currentOrgan.key}`)} className={styles.tappable}>
               <div className={styles.cardHeader}>
                 <span className={styles.cardLabel}>Organ Clock</span>
                 <span className={styles.cardAccent} style={{ color: organElementInfo.hex }}>
                   {today.currentOrgan.organ}
                 </span>
               </div>
-              <OrganClockVisualization currentOrgan={today.currentOrgan} />
+              <OrganClockVisualization
+                currentOrgan={today.currentOrgan}
+                onSegmentClick={(key) => navigate(`/explore/organs/${key}`)}
+              />
               <p className={styles.cardQuote}>{today.currentOrgan.quality}</p>
               <p className={styles.cardBody}>{today.currentOrgan.guidance}</p>
-              <span className={styles.tapHint}>Time Travel →</span>
+              <span className={styles.tapHint}>Tap any organ to explore →</span>
             </GlassCard>
           );
         })()}
@@ -209,7 +212,7 @@ function SpiritsIllustration() {
   );
 }
 
-function OrganClockVisualization({ currentOrgan }) {
+function OrganClockVisualization({ currentOrgan, onSegmentClick }) {
   const cx = 140, cy = 140, outerR = 125, innerR = 60;
 
   function arcPath(startDeg, endDeg, radius) {
@@ -258,8 +261,18 @@ function OrganClockVisualization({ currentOrgan }) {
         const timeX = cx + timeR * Math.cos(midAngle);
         const timeY = cy + timeR * Math.sin(midAngle);
 
+        const handleSegmentClick = (e) => {
+          if (!onSegmentClick) return;
+          e.stopPropagation();
+          onSegmentClick(organ.key);
+        };
+
         return (
-          <g key={i}>
+          <g
+            key={i}
+            onClick={handleSegmentClick}
+            style={{ cursor: onSegmentClick ? 'pointer' : 'default' }}
+          >
             {/* Filled segment */}
             <path
               d={segmentPath(startDeg, endDeg)}
