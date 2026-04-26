@@ -214,6 +214,43 @@ const ORGANS = {
     domain: ['decision', 'courage', 'beginning'],
     essence:
       'Turns the Liver\'s plans into action — the organ of decision, courage, and the willingness to begin.',
+    description:
+      'The Gallbladder is the partner-yang of the Liver — and where the Liver makes plans, the Gallbladder makes decisions. Classical texts call it the Decisive Official because it is the organ that closes the gap between knowing and doing, between what is conceived and what is begun. It is also the organ of courage in the Chinese tradition: not the absence of fear, but the willingness to step across the threshold of a decision before all the evidence is in. The Gallbladder works most deeply at night, between 23:00 and 01:00, processing the day\'s choices and preparing the body for the regenerative work that follows. When the Gallbladder is well, you can hear what you actually want and act on it; when it is tired, the same person can know exactly what is needed and remain unable to begin.',
+    balanced:
+      'The capacity to decide without endless deliberation. The willingness to begin before all the evidence is in. A relationship to risk that is awake — neither reckless nor frozen. Sleep that descends easily around 23:00 and stays. The felt sense that your judgment is trustworthy, even when it is wrong, because at least it is yours.',
+    blocked:
+      'Decision paralysis — the same options reviewed again and again with no resolution. Wakefulness or restlessness around 23:00–01:00 when the Gallbladder is meant to be doing its quiet work. Indecisiveness that masquerades as thoroughness. A jaw that clenches at the threshold of choices. The reliance on others to decide for you so you can be relieved of the responsibility — and the resentment that follows.',
+    themes: [
+      {
+        title: 'The Threshold of Decision',
+        body: 'The Gallbladder lives at the threshold — the moment between knowing and doing. When it is healthy, the threshold is permeable: information becomes a decision, the decision becomes movement, the movement becomes life. When it is depleted, the threshold thickens, and you stand at it endlessly, gathering evidence for a choice that no amount of evidence will make for you. Decision, in the end, is not an outcome of analysis. It is a separate capacity, and the Gallbladder is its home.',
+      },
+      {
+        title: 'Courage as a Body State',
+        body: 'Classical Chinese medicine treats courage not as a trait but as a body state — and locates it in the Gallbladder. People with strong Gallbladder Qi can act in the face of uncertainty without the body collapsing in fear. People with depleted Gallbladder Qi may know perfectly well what they want and find their bodies unable to carry through. Courage, in this view, is not a quality you summon. It is a substance you have or do not have, and there are practices that build it.',
+      },
+      {
+        title: 'The Night Hours of Choice',
+        body: 'Between 23:00 and 01:00, the Gallbladder does its deepest work. The body sorts the day\'s decisions, releases what was inconsequential, and prepares the Liver to do its blood-storing work afterward. Waking consistently in these hours — wide-eyed, mind churning over choices made and unmade — is the Gallbladder asking you to settle something it cannot finish on its own. Going to sleep before 23:00 is one of the kindest things you can do for it.',
+      },
+      {
+        title: 'Beginning vs. Planning',
+        body: 'The Liver plans; the Gallbladder begins. A life that plans without beginning becomes paralysis dressed up as preparation. A life that begins without planning becomes chaos. The Gallbladder is what allows the plan to actually start — and a person whose Gallbladder is strong learns to recognize the moment when one more piece of information is no longer information but resistance.',
+      },
+      {
+        title: 'Risk and Right-Sizing',
+        body: 'Healthy Gallbladder is not recklessness. It is the capacity to take the right risk — the one that fits your life — without taking risks for the sake of feeling alive. When it is depleted in one direction, you become risk-averse and small; when it is depleted in another, you become risk-seeking and unstable. Both are the same exhaustion in different costumes, and both resolve when the Gallbladder is given the rest and food it needs.',
+      },
+      {
+        title: 'Anger That Will Not Decide',
+        body: 'Like the Liver, the Gallbladder is sensitive to anger — but its anger is the anger of indecision. The frustration of standing at a threshold and refusing to cross it. The irritability that builds in a person who knows what they need to do and will not do it. When the Gallbladder is finally permitted to choose, that anger usually disappears, because it was never about the world. It was about the threshold.',
+      },
+    ],
+    lifeQuestions: [
+      'What decision have you been making the same way every day by not making it — and what is the cost of letting it remain unmade?',
+      'Where in your life have you been waiting for one more piece of information that would not actually change what you would choose?',
+      'What did your body know it wanted to do before your thinking talked you out of it?',
+    ],
   },
 
   liver: {
@@ -230,6 +267,43 @@ const ORGANS = {
     domain: ['vision', 'planning', 'flow', 'storage of blood'],
     essence:
       'Plans, directs, and stores the blood that sustains vision — the organ of strategy, courage, and the impulse to grow.',
+    description:
+      'Classical texts call the Liver the General because it makes the strategic plans that organize a life — direction, purpose, and the long arc of becoming. Its role is to ensure the smooth flow of Qi through the body and through the day, and when that flow is unobstructed, you feel decisive, creative, and at ease in your own movement. The Liver also stores Blood, which means it stores the substance of memory, soul-rootedness, and the capacity to dream into the future without losing the ground beneath you. It houses the Hun — the wandering soul that carries vision and night-dreaming — and so it governs the relationship between imagination and action. When the Liver is healthy, plans turn into work and frustration moves through; when it is constrained, the same energy that makes for creativity becomes anger that finds no clean expression and leaks sideways into irritability, headache, and a body that feels like it cannot move.',
+    balanced:
+      'A natural sense of direction that does not require constant deliberation. Creativity that translates into work and shape rather than only ideas. Anger that arises cleanly when something matters and resolves when the matter is addressed. Flexibility in body and decision — the willingness to bend without breaking. Eyes that see clearly, both into the world and into a future that is genuinely yours.',
+    blocked:
+      'Tension that lives in the temples, neck, and shoulders. A frustration that has no clean object — the world simply feels in the way. Plans that never become action, or actions that never become plans. Sleep that breaks around 01–03 with thoughts about what was unfinished. Eyes that strain, decisions that exhaust, and a body that feels stuck in a position it has been trying to leave for years.',
+    themes: [
+      {
+        title: 'The General — Vision and Direction',
+        body: 'The Liver is the strategist of the body — the organ that asks where this life is going and how to get there. When healthy, it gives a long view and the patience to work in pieces toward something only you can see. When depleted, the strategist still tries to plan but cannot land — the mind generates options endlessly, exhausting itself on a future it cannot quite reach. A General without ground does not stop strategizing; it simply stops being able to act.',
+      },
+      {
+        title: 'Anger as Clean Force',
+        body: 'Anger is the emotion of Wood, and the Liver is where it lives in the body. Clean anger arises when something is being violated; it identifies the violation, gives the energy to address it, and recedes when the matter is resolved. Frustrated anger — anger with no permission to be anger — becomes irritability, sideways comments, a body that grinds its jaw at night. The Liver does not punish you for being angry. It punishes you for swallowing it.',
+      },
+      {
+        title: 'The Hun — Vision and Wandering',
+        body: 'The Liver houses the Hun, the soul that travels — through dreams at night, through imagination by day, through reaching toward what is not yet. The Hun gives meaning to the future and connects you to the people and places that pull you forward. When the Liver Blood that anchors it is depleted, the Hun wanders without landing — into other people\'s stories, into restlessness, into the inability to commit. Strong Liver Blood is what allows imagination to become work.',
+      },
+      {
+        title: 'Smooth Flow, Stuck Flow',
+        body: 'Above all, the Liver governs the smooth flow of Qi — through your body, through your day, through your relationships. Smooth flow looks like ease in transitions, in conversation, in beginning and ending. Stuck flow looks like the small daily frictions that accumulate: tension headaches, muscle tightness across the upper back, sighing, a feeling of not quite being able to exhale. Wood needs to move, and a life that gives it nowhere to go becomes a body that cannot relax.',
+      },
+      {
+        title: 'Storage of Blood, Storage of Self',
+        body: 'The Liver stores Blood at night while you sleep — replenishing the substance that nourishes muscle, vision, menstrual cycles, and the rooted continuity of who you are. Without enough Liver Blood, sleep becomes restless, eyes dry, hair thins, and the felt sense of self becomes harder to access. Lying down at night when the Liver does its work is not optional rest. It is the body\'s repair of the self that will go out into tomorrow.',
+      },
+      {
+        title: 'Spring in the Body',
+        body: 'The Liver is the organ of spring — of the year\'s first impulse to grow. It strengthens with what spring offers: green, sour-bitter foods, movement that has direction, and a willingness to begin things you cannot yet see the end of. It struggles in environments that never permit growth — chronic stagnation, suppressed expression, lives that have to be kept small. Wood that cannot grow turns inward and burns.',
+      },
+    ],
+    lifeQuestions: [
+      'Where in your life is the Wood in you trying to grow against something that is not actually you — and what would change if you let it move freely?',
+      'What anger have you been holding as irritation because it never seemed important enough to be anger — and what is it actually telling you?',
+      'What vision is your Hun reaching for, even quietly, that you have not yet given yourself permission to live?',
+    ],
   },
 };
 
