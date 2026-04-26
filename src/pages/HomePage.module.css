@@ -86,36 +86,44 @@
   line-height: 1.75;
 }
 
-.dateText {
-  font-size: 0.9rem;
-  color: var(--text-primary);
-  margin-bottom: 2px;
-}
-
-.pillarText {
-  font-size: 0.8rem;
+/* Today — disciplined typography, four visual layers */
+.todayMeta {
+  font-size: 0.78rem;
   color: var(--text-muted);
+  letter-spacing: 0.02em;
   margin-bottom: var(--space-sm);
 }
 
-.relationship {
-  border-top: 1px solid var(--glass-border);
+.todayMeeting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
   padding-top: var(--space-sm);
-  margin-top: var(--space-sm);
+  border-top: 1px solid var(--glass-border);
 }
 
-.relType {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-secondary);
+.todayMeetingPair {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 1.4rem;
+  font-weight: 300;
+  line-height: 1;
 }
 
-.relDesc {
-  font-size: 0.85rem;
-  color: var(--text-primary);
-  line-height: 1.7;
-  margin-top: 4px;
+.todayMeetingArrow {
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.todayMeetingType {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.95rem;
+  font-weight: 300;
 }
 
 .organClock {
@@ -180,14 +188,6 @@
   color: var(--text-secondary);
   line-height: 1.6;
   flex: 1;
-}
-
-/* Branch character for Day Pillar */
-.branchCharacter {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-  margin-top: var(--space-xs);
 }
 
 /* Your People Today — daily relations strip */

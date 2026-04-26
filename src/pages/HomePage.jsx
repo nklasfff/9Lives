@@ -78,19 +78,25 @@ export default function HomePage() {
           <div className={styles.cardHeader}>
             <span className={styles.cardLabel}>Today</span>
             <span className={styles.cardAccent} style={{ color: today.dayElementInfo.hex }}>
-              {today.dayElementInfo.name} {today.dayPillar.yinYang === 'yin' ? '(Yin)' : '(Yang)'}
+              {today.dayElementInfo.name} · {today.dayPillar.yinYang === 'yin' ? 'Yin' : 'Yang'}
             </span>
           </div>
-          <p className={styles.dateText}>{today.formatted}</p>
-          <p className={styles.pillarText}>
-            {today.dayPillar.chineseLabel} {today.dayPillar.label}
+          <p className={styles.todayMeta}>
+            {today.formatted} · {today.dayPillar.chineseLabel} {today.dayPillar.label}
           </p>
           <p className={styles.cardQuote}>{today.dayPillar.stemImage}</p>
-          <p className={styles.branchCharacter}>{today.dayPillar.branchCharacter}</p>
           {today.relationship && (
-            <div className={styles.relationship}>
-              <span className={styles.relType}>{today.relationship.name}</span>
-              <p className={styles.relDesc}>{today.relationship.description}</p>
+            <div className={styles.todayMeeting}>
+              <span className={styles.todayMeetingPair}>
+                <span style={{ color: elementInfo.hex }}>{elementInfo.chinese}</span>
+                <span className={styles.todayMeetingArrow}>
+                  {today.relationship.quality === 'Mirror' ? '⟷' : '→'}
+                </span>
+                <span style={{ color: today.dayElementInfo.hex }}>{today.dayElementInfo.chinese}</span>
+              </span>
+              <span className={styles.todayMeetingType} style={{ color: today.dayElementInfo.hex }}>
+                {today.relationship.name}
+              </span>
             </div>
           )}
           <span className={styles.tapHint}>Explore any date →</span>
@@ -154,7 +160,6 @@ export default function HomePage() {
                 onSegmentClick={(key) => navigate(`/explore/organs/${key}`)}
               />
               <p className={styles.cardQuote}>{today.currentOrgan.quality}</p>
-              <p className={styles.cardBody}>{today.currentOrgan.guidance}</p>
 
               {today.currentPractice && (
                 <div className={styles.hourPractice}>
