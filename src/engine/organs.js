@@ -69,7 +69,44 @@ const ORGANS = {
     emotion: { balanced: 'Acceptance', imbalanced: 'Grief' },
     domain: ['release', 'completion', 'discernment'],
     essence:
-      'Releases what is no longer needed — the organ of completion, of allowing the finished to actually be finished.',
+      'The organ of release — what finishes, leaves.',
+    description:
+      'The Large Intestine is the yang partner of the Lungs, and together they form the Metal element\'s rhythm of taking in and letting go. Where the Lungs release at the level of breath and identity, the Large Intestine releases at the level of residue — waste, attachment, the things that have already served their purpose. It governs completion: the capacity to put a thing down when it is finished, whether the thing is a meal, a relationship, a possession, or a grudge. Like the Lungs, it holds the Po, the somatic intelligence that knows what to keep and what to release. A life that flows through you cleanly depends on this organ as much as on what you take in. To live well is not only to receive — it is also to let the finished things go.',
+    balanced:
+      'Easy elimination in the morning hours. The ability to complete things — projects, conversations, eras. You can put down what is finished without dramatizing the ending. Possessions sit lightly. Grief, when it comes, moves through you and clears.',
+    blocked:
+      'Constipation, sluggishness, a body that holds what it should release. Hoarding — objects, resentments, old versions of yourself. An inability to finish things, or an inability to walk away from what has already ended. Grief that calcifies into bitterness. The drawer that won\'t close, the sentence that keeps returning.',
+    themes: [
+      {
+        title: 'The Drainer — Release and Completion',
+        body: 'Chinese medicine names the Large Intestine The Drainer — the organ that carries away what the body has finished with. The function is more than digestive. It is the principle of completion itself: the recognition that something has done its work, and the act of letting it go. Without this faculty, nothing in a life is ever quite over. The past accumulates inside you like undigested matter, taking up the room that should belong to what is arriving.',
+      },
+      {
+        title: 'Letting Go (with the Lungs)',
+        body: 'The Lungs and the Large Intestine are paired in the Metal element, and their work is the same work at two depths. The Lungs let go of breath, of grief, of the subtle identifications that make a self. The Large Intestine lets go of what is grosser — waste, clutter, the residue of meals and years. A balanced person does both with the same ease, breathing out and putting down without needing to be persuaded. When one side stiffens, the other usually does too.',
+      },
+      {
+        title: 'The Morning Hours of Elimination',
+        body: 'The Large Intestine\'s peak time is 05:00 to 07:00 — the hour the body naturally clears itself before the day begins. A clean morning elimination is one of the oldest signs of health in Chinese medicine, and one of the most practical. The body wants to start the day emptied of yesterday. When the morning hour passes without release, the day inherits a small weight that compounds. Sleep, hydration, the time you rise — all of it feeds this window.',
+      },
+      {
+        title: 'What You Can\'t Put Down',
+        body: 'Every life has a few things it cannot quite let go of. An old slight, a lost version of a relationship, a future you were promised and never got. The Large Intestine governs the faculty that, in a healthy state, simply puts these down when they are finished. What\'s hardest to let go of is rarely what was bad — it is what was almost good, what nearly worked, what should have ended cleanly and did not. These are the things that lodge.',
+      },
+      {
+        title: 'Grief and Residue',
+        body: 'The emotion of the Metal element is grief, and the Large Intestine carries its physical signature. Grief that moves through you clears the body the way good elimination does — fully, and then it is gone. Grief that cannot move turns into residue: a heaviness in the lower belly, a chronic holding, a flatness that outlasts its cause. The work is not to refuse grief but to let it complete. What is mourned and released becomes part of you. What is held becomes weight.',
+      },
+      {
+        title: 'Hoarding and Holding On',
+        body: 'Hoarding is the Large Intestine\'s imbalance made visible. The drawers that won\'t close, the inbox that never empties, the friendships kept on life support long after their season. Underneath the clutter is usually a quieter fear — that letting go is loss, that what leaves cannot be replaced. But the Metal element teaches the opposite. Only what is released makes room for what is real, and a life that holds everything ends up holding nothing well.',
+      },
+    ],
+    lifeQuestions: [
+      'What in your life has already ended that you have not yet put down?',
+      'Where does grief live in your body, and is it moving or held?',
+      'What would you have to release to make room for what is actually arriving?',
+    ],
   },
 
   stomach: {
@@ -297,7 +334,44 @@ const ORGANS = {
     emotion: { balanced: 'Trust', imbalanced: 'Fear' },
     domain: ['release', 'flow', 'fear\'s passage'],
     essence:
-      'Receives and clears the body\'s waters — the organ of fear\'s release and the willingness to let things pass through.',
+      'The yang face of Water — what holds fluid, and what lets it go.',
+    description:
+      'The Bladder is the Kidneys\' yang partner, the outer movement of Water in the body. It stores fluid and releases it, and in the same gesture it stores and releases what fear leaves behind. Its meridian is the longest in the body — it begins at the inner corner of the eye, climbs the skull, runs the length of the spine, and ends at the small toe. This is why so much of what you carry sits along your back. When the Bladder is doing its work, fear can pass through you and clear; when it isn\'t, fear settles into the tissue and stays there as tension you can no longer locate.',
+    balanced:
+      'Fluid release without strain. A back that bends and recovers. Fear arrives, moves through you, and leaves. The body\'s yes returns after the flight response has cleared. You keep walking.',
+    blocked:
+      'Urinary urgency or hesitation. A lower back that has forgotten how to soften. The nervous system stuck on watch — half in flight, never landing. Fear that no longer feels like fear, only like the shape of your shoulders. Persistence turned into grim endurance.',
+    themes: [
+      {
+        title: 'The Storage of Fluids',
+        body: 'The Bladder\'s first job is plain — it holds what the Kidneys have filtered, and it lets it go on time. Nothing about this is glamorous, and nothing about it is optional. A body that cannot store cannot rest; a body that cannot release cannot continue. The same is true at the level of feeling. What you take in has to be held long enough to be useful, and let go before it turns stagnant.',
+      },
+      {
+        title: 'Fear and Its Passage',
+        body: 'Fear is meant to move. It rises, sharpens you, sends you toward safety, and then leaves. The Bladder is part of how it leaves. When the channel is open, fear is information — a passage, not a residence. When it isn\'t, fear stops being an event and becomes a climate, a low background hum you stop being able to tell apart from yourself.',
+      },
+      {
+        title: 'The Back-Running Meridian',
+        body: 'The Bladder meridian runs the entire back of the body, from the inner eye over the crown and down the spine to the small toe. This is the surface that meets the world from behind — what you cannot see, what you brace against, what carries you. Most chronic holding lives along this line. When you finally let your back down, you are letting down the longest channel in the body, and a great deal travels with it.',
+      },
+      {
+        title: 'Persistence and the Long Walk',
+        body: 'With the Kidneys, the Bladder stores Zhi — Will — but its share is the outward kind. Not the deep root, but the next step. Perseverance. The willingness to keep moving through terrain that has stopped being kind. Healthy Bladder Zhi is not grit for its own sake; it is the quiet capacity to continue, to take the long way when the long way is the only way through.',
+      },
+      {
+        title: 'The Bladder and the Kidneys',
+        body: 'Kidney and Bladder are one Water, two motions. The Kidneys are depth, reserve, the still pool; the Bladder is movement, release, the stream leaving the pool. One stores essence, the other stores and clears the fluids of daily life. When the pair is in conversation, fear has somewhere to go and trust has somewhere to root. When they fall out of step, you feel it as exhaustion underneath restlessness — tired and wired at once.',
+      },
+      {
+        title: 'Late Afternoon and Clearing',
+        body: 'The Bladder\'s peak hour is 15:00 to 17:00 — the body\'s drinking and clearing time. This is the hour to take in water, to walk, to let the day\'s residue begin to leave. A flat or anxious late afternoon is often a Bladder signal: fluids low, nervous system held too long on alert. Treated kindly, this window becomes a small daily clearing — the moment the body remembers how to release.',
+      },
+    ],
+    lifeQuestions: [
+      'What fear has settled into your back instead of passing through you?',
+      'Where in your life are you persisting, and where have you mistaken endurance for will?',
+      'What would it mean to trust that your body can clear what it needs to clear?',
+    ],
   },
 
   kidney: {
@@ -313,7 +387,44 @@ const ORGANS = {
     emotion: { balanced: 'Trust', imbalanced: 'Fear' },
     domain: ['Jing', 'will', 'inheritance', 'depth'],
     essence:
-      'Stores Jing — your essential life force — and houses Will. The organ of depth, ancestral inheritance, and the long thread of a life.',
+      'The deep reserve beneath every other organ — the root from which a life draws.',
+    description:
+      'The Kidneys sit at the bottom of the body and at the bottom of the system. They store Jing — the essence handed down to you at conception, the constitutional inheritance that sets the trajectory of your aging and the ceiling of what you can spend. They house the Zhi, the spirit of will: not the willpower of a single afternoon, but the long thread that holds a life together across decades. Every other organ borrows from them. When the Kidneys are full, you have a substrate to draw on — courage that comes from somewhere deeper than mood, patience that outlasts the day. When they run thin, the whole system runs thin with them, and you start to feel it everywhere at once.',
+    balanced:
+      'Bone-deep stamina. Trust that doesn\'t need to be argued for. A long view that survives bad weeks. Fear that informs without ruling. Sleep that restores instead of merely passing.',
+    blocked:
+      'Exhaustion that sleep doesn\'t touch. Fear out of proportion to the actual situation. Lower back that aches before the body has earned it. Hair thinning early, ringing in the ears, a sense of having lost the thread. Pushing on adrenaline in place of reserve.',
+    themes: [
+      {
+        title: 'The Root — Jing and Inheritance',
+        body: 'Jing is what your parents gave you at the moment of your conception, and what their parents gave them. It is finite. You can preserve it or you can spend it, but you cannot manufacture more. Some of what you carry — the strength, the susceptibilities, the timing of your aging — was decided before you arrived. The work is not to resent the hand you were dealt but to learn what you actually have, and to stop spending it carelessly.',
+      },
+      {
+        title: 'The Zhi — Will and the Long Thread',
+        body: 'The Zhi is not the will that forces a single morning out of bed. It is the deeper will — the one that holds a vocation together for thirty years, that keeps you faithful to something past the point where enthusiasm has worn off. When the Kidneys are strong, the Zhi is steady, and you can feel the long thread of your life as a continuous line. When they are depleted, the thread frays. You lose the sense of where you were going, and every day starts from nowhere.',
+      },
+      {
+        title: 'Fear as Signal, Fear as Lens',
+        body: 'Fear is the emotion of the Water element, and in its proper place it is intelligence — the body recognizing what it should not walk into. Trust is its balanced expression: not naivety, but the settled knowledge that you have a foundation to stand on. When the Kidneys weaken, fear stops being a signal and becomes a lens. Everything is filtered through it. The work is to listen to fear without letting it narrate the whole of your life.',
+      },
+      {
+        title: 'Bones, Brain, Hearing',
+        body: 'The Kidneys govern the deep structures — bones, marrow, the brain, the inner ear, the teeth, the hair on your head. These are the slow tissues, the ones that record the long arc rather than the day. When Kidney essence is strong, the structure holds: the back is steady, the mind is clear, hearing is sharp. When it thins, the deep places are the first to show it — aching low back, brain fog, ringing ears, hair that whitens or falls before its time.',
+      },
+      {
+        title: 'The Evening Hours of Gathering',
+        body: 'Between five and seven in the evening, the Kidneys take their turn. This is the body\'s descent — the hour when the day\'s outward push gives way to gathering, when the system begins to draw inward toward rest. It is not a time for new projects or hard exertion. It is the time for the meal, for warmth, for letting the day settle. Cultures that honor this hour with quiet and food are protecting something the Kidneys need.',
+      },
+      {
+        title: 'Saving and Spending Yourself',
+        body: 'Because Jing is finite, every life involves a question of pace. You can burn through your reserves chasing things — overwork, chronic stress, sleep stolen from yourself, stimulants used in place of rest — or you can spend at a rate the body can sustain. The Kidneys are not impressed by ambition. They keep the books in years and decades, not in quarters. Learning to save yourself, in the literal sense, is one of the quiet disciplines of a long life.',
+      },
+    ],
+    lifeQuestions: [
+      'Where in your life are you spending reserve you don\'t have, and calling it commitment?',
+      'What is the long thread of your life — the thing that has held across every version of you?',
+      'When fear speaks to you, can you tell whether it is signal or lens?',
+    ],
   },
 
   pericardium: {
