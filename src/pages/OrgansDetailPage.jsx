@@ -98,42 +98,78 @@ export default function OrgansDetailPage() {
 /* === Illustrations === */
 
 function BodyOrgansIllustration() {
-  // Stylized vertical body silhouette with 12 lights pulsing in clock order.
-  // Lights are placed roughly along the torso/head/legs to suggest a body without literalism.
-  const lights = [
-    { x: 100, y: 40, c: '#a8b8c8' },   // lung — upper chest
-    { x: 100, y: 95, c: '#a8b8c8' },   // large intestine — lower belly
-    { x: 100, y: 70, c: '#c9a84c' },   // stomach — mid
-    { x: 90,  y: 65, c: '#c9a84c' },   // spleen — left mid
-    { x: 100, y: 50, c: '#c75a3a' },   // heart — chest
-    { x: 100, y: 80, c: '#c75a3a' },   // small intestine — abdomen
-    { x: 110, y: 90, c: '#3a6fa0' },   // bladder — pelvis
-    { x: 90,  y: 75, c: '#3a6fa0' },   // kidney — back
-    { x: 105, y: 50, c: '#c75a3a' },   // pericardium — near heart
-    { x: 95,  y: 55, c: '#c75a3a' },   // triple heater — torso
-    { x: 105, y: 70, c: '#4a9e6e' },   // gallbladder — right
-    { x: 95,  y: 70, c: '#4a9e6e' },   // liver — right
+  // Three burning spaces (San Jiao) — Upper, Middle, Lower —
+  // each containing the organs that live there in classical anatomy.
+  // The Triple Heater is the vertical channel running through all three.
+  const upper = [
+    { x: 100, y: 44, c: '#c75a3a', delay: 0 },    // Heart
+    { x: 87,  y: 56, c: '#a8b8c8', delay: 0.6 },  // Lung
+    { x: 113, y: 56, c: '#c75a3a', delay: 1.2 },  // Pericardium
   ];
+  const middle = [
+    { x: 88,  y: 88,  c: '#c9a84c', delay: 0 },    // Spleen
+    { x: 112, y: 88,  c: '#4a9e6e', delay: 0.5 },  // Liver
+    { x: 92,  y: 102, c: '#c9a84c', delay: 1.0 },  // Stomach
+    { x: 108, y: 102, c: '#4a9e6e', delay: 1.5 },  // Gallbladder
+  ];
+  const lower = [
+    { x: 88,  y: 134, c: '#3a6fa0', delay: 0 },    // Kidney left
+    { x: 112, y: 134, c: '#3a6fa0', delay: 0.4 },  // Kidney right
+    { x: 88,  y: 148, c: '#a8b8c8', delay: 0.8 },  // Large Intestine
+    { x: 112, y: 148, c: '#c75a3a', delay: 1.2 },  // Small Intestine
+    { x: 100, y: 154, c: '#3a6fa0', delay: 1.6 },  // Bladder
+  ];
+
   return (
-    <svg viewBox="0 0 200 130" className={styles.heroIllustration}>
+    <svg viewBox="0 0 200 180" className={styles.heroIllustration}>
       <style>{`
-        @keyframes organBreath { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.65; } }
-        @keyframes silhouettePulse { 0%, 100% { opacity: 0.18; } 50% { opacity: 0.32; } }
+        @keyframes burnerBreath { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.45; } }
+        @keyframes organPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+        @keyframes silhouetteBreath { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.32; } }
+        @keyframes thFlow { 0% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -20; } }
       `}</style>
-      {/* Body silhouette — soft outline */}
-      <ellipse cx="100" cy="22" rx="11" ry="13" fill="none"
-        style={{ stroke: 'var(--line-subtle)', animation: 'silhouettePulse 9s ease-in-out infinite' }}
+
+      {/* Body silhouette — head, shoulders, torso, hips */}
+      <ellipse cx="100" cy="18" rx="9" ry="11" fill="none"
+        style={{ stroke: 'var(--line-subtle)', animation: 'silhouetteBreath 10s ease-in-out infinite' }}
         strokeWidth="0.6" />
-      <path d="M 100 35 Q 80 50 80 85 Q 80 110 95 115 L 95 122
-              M 100 35 Q 120 50 120 85 Q 120 110 105 115 L 105 122"
-        fill="none" stroke="var(--line-subtle)" strokeWidth="0.6"
-        style={{ animation: 'silhouettePulse 9s ease-in-out infinite' }} />
-      {/* Twelve organ lights */}
-      {lights.map((p, i) => (
+      <path
+        d="M 100 30 L 78 34 Q 76 48 76 70 Q 74 100 76 130 Q 78 155 88 168 L 92 175
+           M 100 30 L 122 34 Q 124 48 124 70 Q 126 100 124 130 Q 122 155 112 168 L 108 175"
+        fill="none" strokeWidth="0.6"
+        style={{ stroke: 'var(--line-subtle)', animation: 'silhouetteBreath 10s ease-in-out infinite' }} />
+
+      {/* Triple Heater — the vertical channel through all three burners */}
+      <line x1="100" y1="32" x2="100" y2="170"
+        stroke="#c75a3a" strokeWidth="0.5" opacity="0.28" strokeDasharray="2 4"
+        style={{ animation: 'thFlow 8s linear infinite' }} />
+
+      {/* Three burning spaces — outer rings */}
+      {[
+        { cy: 52, r: 22, label: '上' },   // upper burner (Shang)
+        { cy: 95, r: 24, label: '中' },   // middle burner (Zhong)
+        { cy: 142, r: 24, label: '下' },  // lower burner (Xia)
+      ].map((b, i) => (
         <g key={i}>
-          <circle cx={p.x} cy={p.y} r="6" fill={p.c} opacity="0.08" />
-          <circle cx={p.x} cy={p.y} r="2.5" fill={p.c} opacity="0.4"
-            style={{ animation: `organBreath ${4 + i * 0.4}s ease-in-out ${i * 0.35}s infinite` }} />
+          <circle cx="100" cy={b.cy} r={b.r} fill="none"
+            stroke="var(--line-faint)" strokeWidth="0.5" strokeDasharray="3 4"
+            opacity="0.5"
+            style={{ animation: `burnerBreath ${10 + i * 1.5}s ease-in-out ${i * 1.2}s infinite` }} />
+          <text x={100 + b.r + 8} y={b.cy + 1}
+            textAnchor="start" dominantBaseline="central"
+            style={{ fill: 'var(--text-illustration-dim)' }}
+            fontSize="6" fontFamily="var(--font-display)" fontStyle="italic" opacity="0.45">
+            {b.label}
+          </text>
+        </g>
+      ))}
+
+      {/* Organ lights — each burner's inhabitants */}
+      {[...upper, ...middle, ...lower].map((p, i) => (
+        <g key={i}>
+          <circle cx={p.x} cy={p.y} r="5.5" fill={p.c} opacity="0.1" />
+          <circle cx={p.x} cy={p.y} r="2.4" fill={p.c} opacity="0.45"
+            style={{ animation: `organPulse ${4 + (i % 4) * 0.6}s ease-in-out ${p.delay}s infinite` }} />
         </g>
       ))}
     </svg>
