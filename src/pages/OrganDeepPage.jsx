@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getOrgan, hasDepthContent } from '../engine/organs';
 import { getElementInfo } from '../engine/elements';
@@ -5,6 +6,55 @@ import { getCurrentOrgan } from '../engine/organClock';
 import { SPIRITS } from '../engine/wuShen';
 import GlassCard from '../components/common/GlassCard';
 import styles from './OrganDeepPage.module.css';
+
+function previewSentences(text, count = 2) {
+  if (!text) return '';
+  const parts = text.split(/(?<=[.!?])\s+/);
+  if (parts.length <= count) return text;
+  return parts.slice(0, count).join(' ');
+}
+
+function CollapsibleDescription({ text, color }) {
+  const [open, setOpen] = useState(false);
+  const preview = previewSentences(text, 2);
+  const isTruncated = preview !== text;
+  return (
+    <GlassCard
+      glowColor={`${color}0a`}
+      onClick={isTruncated ? () => setOpen(!open) : undefined}
+      className={isTruncated ? styles.collapsibleCard : ''}
+    >
+      <p className={styles.description}>{open ? text : preview}</p>
+      {isTruncated && (
+        <span className={styles.readMore} style={{ color }}>
+          {open ? '↑ Show less' : 'Read more →'}
+        </span>
+      )}
+    </GlassCard>
+  );
+}
+
+function CollapsibleTheme({ num, title, body, color }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <GlassCard
+      glowColor={`${color}0d`}
+      onClick={() => setOpen(!open)}
+      className={styles.collapsibleCard}
+    >
+      <div className={styles.themeHeader}>
+        <span className={styles.themeNum}>{num}</span>
+        <h3 className={styles.themeTitle}>{title}</h3>
+        <span className={styles.expandIcon} style={{ color }}>{open ? '−' : '+'}</span>
+      </div>
+      {open ? (
+        <p className={styles.themeBody}>{body}</p>
+      ) : (
+        <span className={styles.readMore} style={{ color }}>Read more →</span>
+      )}
+    </GlassCard>
+  );
+}
 
 export default function OrganDeepPage() {
   const { organKey } = useParams();
@@ -84,9 +134,7 @@ export default function OrganDeepPage() {
 
         {hasDepth && (
           <>
-            <GlassCard>
-              <p className={styles.description}>{organ.description}</p>
-            </GlassCard>
+            <CollapsibleDescription text={organ.description} color={el.hex} />
 
             <GlassCard>
               <div className={styles.balanceGrid}>
@@ -105,13 +153,13 @@ export default function OrganDeepPage() {
 
             <h2 className={styles.themesTitle}>Six Themes</h2>
             {organ.themes.map((theme, i) => (
-              <GlassCard key={i} className={styles.themeCard} glowColor={`${el.hex}0d`}>
-                <div className={styles.themeHeader}>
-                  <span className={styles.themeNum}>{String(i + 1).padStart(2, '0')}</span>
-                  <h3 className={styles.themeTitle}>{theme.title}</h3>
-                </div>
-                <p className={styles.themeBody}>{theme.body}</p>
-              </GlassCard>
+              <CollapsibleTheme
+                key={i}
+                num={String(i + 1).padStart(2, '0')}
+                title={theme.title}
+                body={theme.body}
+                color={el.hex}
+              />
             ))}
 
             <GlassCard
