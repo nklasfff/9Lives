@@ -429,6 +429,133 @@
   margin-bottom: var(--space-md);
 }
 
+/* Your Constellation — relational field module */
+.fieldCard {
+  animation: fadeUp 0.8s var(--ease-out) 0.3s both;
+}
+
+.fieldSubtitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: -4px;
+  margin-bottom: var(--space-sm);
+}
+
+.fieldIllustration {
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  margin: var(--space-sm) auto;
+  display: block;
+  opacity: 0.95;
+}
+
+.fieldList {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--space-sm);
+}
+
+.fieldRow {
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--glass-border);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+  text-align: left;
+  cursor: pointer;
+  transition: opacity var(--transition);
+  min-height: 44px;
+}
+
+.fieldRow:first-child {
+  border-top: none;
+}
+
+.fieldRow:hover .fieldRowArrow {
+  opacity: 0.9;
+  transform: translateX(2px);
+}
+
+.fieldRow:active {
+  opacity: 0.7;
+}
+
+.fieldRowSymbol {
+  font-size: 1.6rem;
+  font-weight: 300;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+  text-shadow: 0 0 12px currentColor;
+}
+
+.fieldRowText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.fieldRowName {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  line-height: 1.2;
+}
+
+.fieldRowMeta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fieldRowArrow {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  opacity: 0.45;
+  flex-shrink: 0;
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.fieldMore {
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--glass-border);
+  width: 100%;
+  text-align: center;
+  padding: var(--space-sm) 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  cursor: pointer;
+  transition: color var(--transition);
+}
+
+.fieldMore:hover {
+  color: var(--text-bright);
+}
+
+.fieldEmpty {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.6;
+  margin-top: var(--space-sm);
+  padding: 0 var(--space-sm);
+}
+
 /* Saved Constellations (on Profile) */
 .constellationList {
   display: flex;

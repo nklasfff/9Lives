@@ -4,9 +4,11 @@ import { useUser } from '../context/UserContext';
 import { getElementInfo } from '../engine/elements';
 import { getZodiacAnimal } from '../engine/zodiac';
 import { getSpiritByElement } from '../engine/wuShen';
-import { getShengParent, getShengChild } from '../engine/cycles';
+import { getShengParent, getShengChild, getRelationship } from '../engine/cycles';
+import { getLifePhase } from '../engine/lifePhase';
 import { ORGAN_CLOCK } from '../engine/organClock';
-import { loadConstellations, saveConstellations } from '../utils/localStorage';
+import { calculateAge } from '../utils/dateUtils';
+import { loadConstellations, saveConstellations, loadFriends } from '../utils/localStorage';
 import GlassCard from '../components/common/GlassCard';
 import styles from './ProfilePage.module.css';
 
@@ -15,6 +17,7 @@ export default function ProfilePage() {
   const { getDerivedData, resetProfile, theme, toggleTheme } = useUser();
   const data = getDerivedData();
   const [constellations, setConstellations] = useState(() => loadConstellations());
+  const [friends] = useState(() => loadFriends());
 
   const deleteConstellation = (id) => {
     const updated = constellations.filter(c => c.id !== id);
@@ -64,6 +67,64 @@ export default function ProfilePage() {
       </GlassCard>
 
       <ElementWheelIllustration userElement={data.element} />
+
+      {/* Your Constellation — the relational field around you */}
+      <GlassCard
+        glowColor={`${el.hex}10`}
+        className={friends.length === 0 ? `${styles.fieldCard} ${styles.tappable}` : styles.fieldCard}
+        onClick={friends.length === 0 ? () => navigate('/relations') : undefined}
+      >
+        <span className={styles.deepLabel}>Relations · Your Field</span>
+        <h2 className={styles.deepTitle}>Your Constellation</h2>
+        {friends.length > 0 && (
+          <p className={styles.fieldSubtitle}>
+            {friends.length} {friends.length === 1 ? 'person' : 'people'} in your field
+          </p>
+        )}
+
+        <ConstellationIllustration friends={friends} userElement={data.element} />
+
+        {friends.length === 0 ? (
+          <>
+            <p className={styles.fieldEmpty}>
+              Add the people who shape your life — see how their elements move with yours.
+            </p>
+            <span className={styles.tapHint}>Add someone in Relations →</span>
+          </>
+        ) : (
+          <div className={styles.fieldList}>
+            {friends.slice(0, 6).map((friend) => {
+              const fEl = getElementInfo(friend.element);
+              const rel = getRelationship(data.element, friend.element);
+              const fAge = calculateAge(friend.birthYear, 6, 15);
+              const fPhase = getLifePhase(Math.max(0, fAge), friend.gender);
+              return (
+                <button
+                  key={friend.id}
+                  className={styles.fieldRow}
+                  onClick={() => navigate(`/relations/${friend.id}`)}
+                >
+                  <span className={styles.fieldRowSymbol} style={{ color: fEl.hex }}>
+                    {fEl.chinese}
+                  </span>
+                  <div className={styles.fieldRowText}>
+                    <span className={styles.fieldRowName}>{friend.name}</span>
+                    <span className={styles.fieldRowMeta}>
+                      {fEl.name} · {rel.name} · {fPhase.title}
+                    </span>
+                  </div>
+                  <span className={styles.fieldRowArrow}>→</span>
+                </button>
+              );
+            })}
+            {friends.length > 6 && (
+              <button className={styles.fieldMore} onClick={() => navigate('/relations')}>
+                + {friends.length - 6} more in Relations →
+              </button>
+            )}
+          </div>
+        )}
+      </GlassCard>
 
       {/* Deep dive: Your Element */}
       <GlassCard glowColor={`${el.hex}15`} onClick={() => navigate('/explore/element')} className={styles.tappable}>
@@ -405,6 +466,93 @@ function CorrespondenceIllustration({ element }) {
         fill={el.hex} fontSize="14" fontWeight="300" opacity="0.9">
         {el.chinese}
       </text>
+    </svg>
+  );
+}
+
+function ConstellationIllustration({ friends, userElement }) {
+  const userEl = getElementInfo(userElement);
+  const cx = 120, cy = 110, orbit = 78;
+  const visible = friends.slice(0, 6);
+  const count = visible.length;
+
+  const positions = visible.map((friend, i) => {
+    const angle = -Math.PI / 2 + (i * 2 * Math.PI) / count;
+    return {
+      x: cx + orbit * Math.cos(angle),
+      y: cy + orbit * Math.sin(angle),
+      friend,
+    };
+  });
+
+  return (
+    <svg viewBox="0 0 240 220" className={styles.fieldIllustration}>
+      <style>{`
+        @keyframes fieldOrbDrift1 {
+          0%, 100% { transform: translate(0, 1.5px); }
+          50% { transform: translate(0, -1.5px); }
+        }
+        @keyframes fieldOrbDrift2 {
+          0%, 100% { transform: translate(1.5px, 0); }
+          50% { transform: translate(-1.5px, 0); }
+        }
+      `}</style>
+
+      {/* Outer rings */}
+      <circle cx={cx} cy={cy} r={orbit + 20} fill="none"
+        style={{ stroke: 'var(--line-faint)' }} strokeWidth="0.5" strokeDasharray="1 5" />
+      <circle cx={cx} cy={cy} r={orbit} fill="none"
+        style={{ stroke: 'var(--line-subtle)' }} strokeWidth="0.5" />
+
+      {/* Empty-state ghost orbs (when no friends) */}
+      {count === 0 && [0, 1, 2, 3].map((i) => {
+        const angle = -Math.PI / 2 + (i * Math.PI / 2);
+        const x = cx + orbit * Math.cos(angle);
+        const y = cy + orbit * Math.sin(angle);
+        return (
+          <circle key={`ghost-${i}`} cx={x} cy={y} r="14" fill="none"
+            style={{ stroke: 'var(--line-faint)' }} strokeWidth="0.5" strokeDasharray="2 4" />
+        );
+      })}
+
+      {/* Connection lines from user to each friend */}
+      {positions.map(({ x, y, friend }) => {
+        const fEl = getElementInfo(friend.element);
+        return (
+          <line key={`l-${friend.id}`} x1={cx} y1={cy} x2={x} y2={y}
+            stroke={fEl.hex} strokeWidth="0.6" opacity="0.25" />
+        );
+      })}
+
+      {/* User center: breathing glow + element symbol */}
+      <circle cx={cx} cy={cy} r="28" fill={userEl.hex} opacity="0.22">
+        <animate attributeName="r" values="26;34;26" dur="6s" repeatCount="indefinite"
+          calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+        <animate attributeName="opacity" values="0.22;0.05;0.22" dur="6s" repeatCount="indefinite"
+          calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+      </circle>
+      <circle cx={cx} cy={cy} r="22" fill={`${userEl.hex}20`}
+        stroke={userEl.hex} strokeWidth="1" opacity="0.85" />
+      <text x={cx} y={cy + 1} textAnchor="middle" dominantBaseline="central"
+        fill={userEl.hex} fontSize="18" fontWeight="300">
+        {userEl.chinese}
+      </text>
+
+      {/* Friend orbs with subtle drift */}
+      {positions.map(({ x, y, friend }, i) => {
+        const fEl = getElementInfo(friend.element);
+        const animName = i % 2 === 0 ? 'fieldOrbDrift1' : 'fieldOrbDrift2';
+        return (
+          <g key={`orb-${friend.id}`} style={{ animation: `${animName} ${10 + i * 1.5}s ease-in-out infinite` }}>
+            <circle cx={x} cy={y} r="16" fill={`${fEl.hex}18`}
+              stroke={fEl.hex} strokeWidth="0.8" opacity="0.7" />
+            <text x={x} y={y + 1} textAnchor="middle" dominantBaseline="central"
+              fill={fEl.hex} fontSize="11" fontWeight="300" opacity="0.95">
+              {fEl.chinese}
+            </text>
+          </g>
+        );
+      })}
     </svg>
   );
 }
