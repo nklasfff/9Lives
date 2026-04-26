@@ -16,43 +16,43 @@ const ORGANS = {
     emotion: { balanced: 'Acceptance', imbalanced: 'Grief' },
     domain: ['breath', 'boundary', 'release', 'instinct', 'dignity'],
     essence:
-      'Where the body meets the world — the first organ to receive what is outside, and the first to release what is finished.',
+      'The body\'s first point of contact with the outside world — they take in what\'s needed and release what\'s finished.',
     description:
-      'The Lungs are where the body meets the world — the first organ to receive what is outside, and the first to release what is finished. They govern the rhythm of taking in and letting go that runs beneath every other rhythm of a life. Classical texts call them the Delicate Organ because they sit at the surface, exposed to whatever climate, season, or grief moves through; they draw in the pure Qi of the air and combine it with what nourishes you to make the energy of a life that can meet what arrives. They also house the Po — the embodied soul — and so they govern instinct, sensation, and the immediate intelligence of skin and breath. When the Lungs are well, you can be in the world without being eroded by it; you can take in what is offered and release what is over without ceremony. When they are tired, the world feels too close and not close enough at the same time, and a held breath becomes the shape of an entire life.',
+      'The Lungs sit close to the surface of the body, which makes them especially vulnerable to whatever enters through the air — cold, dryness, smoke, infection, and unprocessed grief. Classical Chinese medicine calls them the Delicate Organ for this reason. The Lungs draw fresh Qi from the air and combine it with food Qi from the Spleen to produce the energy that powers the body\'s daily work. They are also the home of the Po, the body-soul that arrives with the first breath and departs with the last, which is why the Lungs govern instinct, the senses, and the intelligence of the skin. When the Lungs are strong, breathing is easy, the skin meets the world without bracing, and you can release things once they are finished. When the Lungs are weak, breathing is shallow, the chest stays tight, and grief stays lodged in the body.',
     balanced:
-      'A breath that is full and unhurried, moving all the way to the lower belly. Skin that meets weather without bracing against it. The capacity to grieve cleanly and be done. A quiet dignity that does not need to be defended. The ability to inhale what is offered and release what is over without negotiation.',
+      'Easy, full breathing that reaches the belly. Skin that meets the weather without bracing. The capacity to grieve and move on. A quiet dignity — nothing to prove, nothing to protect.',
     blocked:
-      'Shallow, guarded breathing that lives high in the chest. Skin that is reactive, dry, or armored. A grief that has become structural — not actively painful but always present. Holding on to relationships, roles, or possessions long after they have ended. The feeling of standing slightly behind glass, not quite arriving in your own life.',
+      'Shallow breathing that stays high in the chest. Skin that\'s reactive, dry, or armored. Grief that has settled in and stopped moving — not painful, exactly, but always present. Holding on to people, roles, and old versions of yourself long after they should have ended. A sense of standing slightly behind glass — in the room, but not fully in it.',
     themes: [
       {
         title: 'Breath as Meeting Place',
-        body: 'Every inhale is a small acceptance, every exhale a small release. When the Lungs are easy, breath moves all the way to the lower belly and the body trusts that the next breath will arrive. When they are guarded, breath stays high and shallow — the chest held, the shoulders quietly raised, the body braced against an arrival it has stopped expecting to be safe. A held chest is often a held breath that has been held for years; the body remembers what the mind has decided to forget. Releasing the chest is rarely about stretching. It is about allowing the breath that has been waiting.',
+        body: 'Every breath you take is a small act of trust — trust that the air will be there, trust that your body will know what to do with it. When the Lungs are at ease, the breath drops into the belly without you having to think about it. When the Lungs are guarded, the breath stays high and shallow, the chest stays clenched, and the body stays braced against something it no longer expects to be safe. Releasing the chest isn\'t really about stretching. It\'s about letting yourself breathe again.',
       },
       {
         title: 'The Skin Boundary',
-        body: 'The Lungs govern the skin and the defensive Wei Qi that runs just beneath it — the boundary between self and world. A healthy boundary is porous enough to receive, firm enough to remain yourself. People with strong Lung Qi can be in difficult environments without absorbing them; they meet what is in the room without becoming it. When this boundary frays, the world feels invasive even when nothing is wrong. Skin becomes reactive, mood becomes weather-sensitive, and being around other people starts to cost more than it gives.',
+        body: 'The Lungs govern the skin and the Wei Qi just beneath it — the layer that decides what gets in and what stays out. When this layer is healthy, you can spend time in difficult places without absorbing them. When it weakens, the skin becomes reactive, the mood becomes weather-sensitive, and being around other people begins to cost more than it gives back.',
       },
       {
         title: 'Grief That Has Found Its Way',
-        body: 'Grief is the emotion of Metal, and the Lungs are where it lives in the body. Grief that is allowed to move through becomes refinement — a deepened capacity for what matters, and a quieter relationship to what does not. Grief that cannot be felt becomes weight in the chest, a held breath, a flatness that is not depression exactly but a dimming. Tears, when they finally come, are how the Lungs begin to breathe again. The body does not forget what was never grieved; it simply finds another shape to carry it in.',
+        body: 'Grief is the emotion of Metal, and it lives in the Lungs. Grief that\'s allowed to move through you becomes refinement — a clearer sense of what really matters. Grief that can\'t move turns into something else: tightness in the chest, a held breath, a flat greyness that isn\'t quite depression but isn\'t quite life either. When the tears finally come, that\'s the Lungs starting to breathe again.',
       },
       {
         title: 'The Po — The Body That Knows',
-        body: 'The Lungs house the Po, the soul that arrives with the first breath and dissolves with the last. The Po is precise, instinctive, and never lies — it knows before thought what is safe and what is not, what to draw close and what to set down. When honored, it gives extraordinary somatic intelligence: clear boundaries that need no explanation, a body that reads a room before words are spoken. When ignored long enough, the Po stops speaking, and you find yourself unable to tell the difference between what you want and what you are supposed to want.',
+        body: 'The Lungs are the home of the Po, the body-soul that arrives with the first breath and leaves with the last. The Po is precise and instinctive — it knows, before you think, what\'s safe and what isn\'t, what to draw closer and what to set down. When you listen to it, you get clean boundaries that don\'t need explaining. When you ignore it long enough, it goes quiet, and you stop being able to tell the difference between what you actually want and what you think you should want.',
       },
       {
         title: 'Letting Go',
-        body: 'Whatever the Large Intestine releases physically, the Lungs release at the level of breath, identity, and attachment. A finished relationship. A role you have outgrown. A version of yourself that no longer fits. The Lungs are the organ of completion, and life keeps presenting the same lesson — gently at first, then less gently — until completion actually happens. The hardest letting go is rarely of what was bad. It is of what was good and is now over.',
+        body: 'Whatever the Large Intestine releases physically, the Lungs release at the level of breath, identity, and attachment. A relationship that\'s over. A role you\'ve outgrown. A version of yourself that no longer fits. The Lungs are the organ of completion, and what\'s hardest to let go of is rarely what was bad — it\'s what was good and is now over.',
       },
       {
         title: 'Voice and Autumn',
-        body: 'The voice rides on the breath. Lung Qi that is strong gives a voice that lands without effort; Lung Qi that is depleted gives a voice that is thin, that runs out before the sentence does, that hesitates before speaking at all. The capacity to say what is true is partly a Lung capacity. The Lungs grow stronger when met with autumn\'s qualities — cooler air, slower mornings, attention to what the year has been. They struggle in environments that never allow descent: endless brightness, chronic urgency, no permission to be quiet.',
+        body: 'The voice rides on the breath. Strong Lungs give you a voice that lands easily; weak Lungs give you a voice that thins out, runs dry, or hesitates before it starts. The Lungs grow stronger in autumn — cooler air, slower mornings, time to look back over what the year has been. They struggle in places that never let anything slow down: constant brightness, constant urgency, no room to be quiet.',
       },
     ],
     lifeQuestions: [
-      'What in your life has been finished for some time — and what would change if you allowed it to actually be over?',
-      'Where does your breath go when you are afraid, and what is your body trying to keep from arriving?',
-      'What grief has been waiting, quietly, for permission — not to be solved, but simply to be felt?',
+      'What\'s over in your life that you still haven\'t let go of?',
+      'Where does your breath go when you\'re afraid?',
+      'What grief have you been trying to solve instead of feel?',
     ],
   },
 
@@ -215,40 +215,40 @@ const ORGANS = {
     essence:
       'Turns the Liver\'s plans into action — the organ of decision, courage, and the willingness to begin.',
     description:
-      'The Gallbladder is the partner-yang of the Liver — and where the Liver makes plans, the Gallbladder makes decisions. Classical texts call it the Decisive Official because it is the organ that closes the gap between knowing and doing, between what is conceived and what is begun. It is also the organ of courage in the Chinese tradition: not the absence of fear, but the willingness to step across the threshold of a decision before all the evidence is in. The Gallbladder works most deeply at night, between 23:00 and 01:00, processing the day\'s choices and preparing the body for the regenerative work that follows. When the Gallbladder is well, you can hear what you actually want and act on it; when it is tired, the same person can know exactly what is needed and remain unable to begin.',
+      'The Gallbladder is the yang partner of the Liver — and where the Liver makes plans, the Gallbladder makes decisions. The classical texts call it the Decisive Official because it is the organ that closes the gap between knowing and doing, between what is conceived and what is begun. It is also the organ of courage in the Chinese tradition: not the absence of fear, but the willingness to step across the threshold of a decision before all the evidence is in. The Gallbladder works most deeply at night, between 23:00 and 01:00, processing the day\'s choices and preparing the body for the regenerative work that follows. When the Gallbladder is well, you can hear what you actually want and act on it; when it is tired, you can know exactly what is needed and still be unable to begin.',
     balanced:
-      'The capacity to decide without endless deliberation. The willingness to begin before all the evidence is in. A relationship to risk that is awake — neither reckless nor frozen. Sleep that descends easily around 23:00 and stays. The felt sense that your judgment is trustworthy, even when it is wrong, because at least it is yours.',
+      'The capacity to decide without endless deliberation. The willingness to begin before all the evidence is in. A relationship to risk that is awake — neither reckless nor frozen. Sleep that comes easily around 23:00 and holds. The felt sense that your judgment is trustworthy, even when it turns out to be wrong, because at least it is yours.',
     blocked:
-      'Decision paralysis — the same options reviewed again and again with no resolution. Wakefulness or restlessness around 23:00–01:00 when the Gallbladder is meant to be doing its quiet work. Indecisiveness that masquerades as thoroughness. A jaw that clenches at the threshold of choices. The reliance on others to decide for you so you can be relieved of the responsibility — and the resentment that follows.',
+      'Decision paralysis — the same options reviewed again and again with no resolution. Wakefulness or restlessness around 23:00–01:00, when the Gallbladder is meant to be doing its quiet work. Indecisiveness that masquerades as thoroughness. A jaw that clenches at the threshold of a choice. The habit of leaning on others to decide for you so you can be relieved of the responsibility — and the resentment that follows.',
     themes: [
       {
         title: 'The Threshold of Decision',
-        body: 'The Gallbladder lives at the threshold — the moment between knowing and doing. When it is healthy, the threshold is permeable: information becomes a decision, the decision becomes movement, the movement becomes life. When it is depleted, the threshold thickens, and you stand at it endlessly, gathering evidence for a choice that no amount of evidence will make for you. Decision, in the end, is not an outcome of analysis. It is a separate capacity, and the Gallbladder is its home.',
+        body: 'The Gallbladder lives at the threshold — the moment between knowing and doing. When it is healthy, the threshold is permeable: information becomes a decision, the decision becomes movement, the movement becomes a life. When it is depleted, the threshold thickens, and you stand at it endlessly, gathering evidence for a choice that no amount of evidence will ever make for you. A decision, in the end, is not the outcome of analysis. It is a separate capacity, and the Gallbladder is its home.',
       },
       {
         title: 'Courage as a Body State',
-        body: 'Classical Chinese medicine treats courage not as a trait but as a body state — and locates it in the Gallbladder. People with strong Gallbladder Qi can act in the face of uncertainty without the body collapsing in fear. People with depleted Gallbladder Qi may know perfectly well what they want and find their bodies unable to carry through. Courage, in this view, is not a quality you summon. It is a substance you have or do not have, and there are practices that build it.',
+        body: 'Classical Chinese medicine treats courage not as a trait but as a body state — and locates it in the Gallbladder. People with strong Gallbladder Qi can act in the face of uncertainty without the body collapsing into fear. People with depleted Gallbladder Qi may know perfectly well what they want and find that their body cannot carry it through. Courage, in this view, is not a quality you summon. It is a substance you either have or do not have, and there are practices that build it.',
       },
       {
         title: 'The Night Hours of Choice',
-        body: 'Between 23:00 and 01:00, the Gallbladder does its deepest work. The body sorts the day\'s decisions, releases what was inconsequential, and prepares the Liver to do its blood-storing work afterward. Waking consistently in these hours — wide-eyed, mind churning over choices made and unmade — is the Gallbladder asking you to settle something it cannot finish on its own. Going to sleep before 23:00 is one of the kindest things you can do for it.',
+        body: 'Between 23:00 and 01:00, the Gallbladder does its deepest work. The body sorts through the day\'s decisions, lets go of what was inconsequential, and prepares the Liver to do its blood-storing work afterward. Waking consistently in these hours — wide-eyed, mind churning over choices made and unmade — is the Gallbladder asking you to settle something it cannot finish on its own. Going to sleep before 23:00 is one of the kindest things you can do for it.',
       },
       {
         title: 'Beginning vs. Planning',
-        body: 'The Liver plans; the Gallbladder begins. A life that plans without beginning becomes paralysis dressed up as preparation. A life that begins without planning becomes chaos. The Gallbladder is what allows the plan to actually start — and a person whose Gallbladder is strong learns to recognize the moment when one more piece of information is no longer information but resistance.',
+        body: 'The Liver plans; the Gallbladder begins. A life that plans without beginning becomes paralysis dressed up as preparation. A life that begins without planning becomes chaos. The Gallbladder is what allows the plan to actually start — and a person with a strong Gallbladder learns to recognize the moment when one more piece of information is no longer information but resistance.',
       },
       {
         title: 'Risk and Right-Sizing',
-        body: 'Healthy Gallbladder is not recklessness. It is the capacity to take the right risk — the one that fits your life — without taking risks for the sake of feeling alive. When it is depleted in one direction, you become risk-averse and small; when it is depleted in another, you become risk-seeking and unstable. Both are the same exhaustion in different costumes, and both resolve when the Gallbladder is given the rest and food it needs.',
+        body: 'A healthy Gallbladder is not recklessness. It is the capacity to take the right risk — the one that fits your life — without taking risks for the sake of feeling alive. Depleted in one direction, you become risk-averse and small; depleted in the other, you become risk-seeking and unstable. Both are the same exhaustion wearing different clothes, and both resolve when the Gallbladder is given the rest and the food it needs.',
       },
       {
         title: 'Anger That Will Not Decide',
-        body: 'Like the Liver, the Gallbladder is sensitive to anger — but its anger is the anger of indecision. The frustration of standing at a threshold and refusing to cross it. The irritability that builds in a person who knows what they need to do and will not do it. When the Gallbladder is finally permitted to choose, that anger usually disappears, because it was never about the world. It was about the threshold.',
+        body: 'Like the Liver, the Gallbladder is sensitive to anger — but its anger is the anger of indecision. The frustration of standing at a threshold and refusing to cross it. The irritability that builds in a person who knows what they need to do and will not do it. When the Gallbladder is finally allowed to choose, that anger usually disappears, because it was never about the world. It was about the threshold.',
       },
     ],
     lifeQuestions: [
-      'What decision have you been making the same way every day by not making it — and what is the cost of letting it remain unmade?',
-      'Where in your life have you been waiting for one more piece of information that would not actually change what you would choose?',
+      'What decision have you been making the same way every day by not making it — and what is it costing you to leave it unmade?',
+      'Where in your life have you been waiting for one more piece of information that wouldn\'t actually change what you would choose?',
       'What did your body know it wanted to do before your thinking talked you out of it?',
     ],
   },
@@ -266,42 +266,42 @@ const ORGANS = {
     emotion: { balanced: 'Creativity', imbalanced: 'Anger' },
     domain: ['vision', 'planning', 'flow', 'storage of blood'],
     essence:
-      'Plans, directs, and stores the blood that sustains vision — the organ of strategy, courage, and the impulse to grow.',
+      'Plans, directs, and stores the blood that sustains vision — the organ of strategy, courage, and the urge to grow.',
     description:
-      'Classical texts call the Liver the General because it makes the strategic plans that organize a life — direction, purpose, and the long arc of becoming. Its role is to ensure the smooth flow of Qi through the body and through the day, and when that flow is unobstructed, you feel decisive, creative, and at ease in your own movement. The Liver also stores Blood, which means it stores the substance of memory, soul-rootedness, and the capacity to dream into the future without losing the ground beneath you. It houses the Hun — the wandering soul that carries vision and night-dreaming — and so it governs the relationship between imagination and action. When the Liver is healthy, plans turn into work and frustration moves through; when it is constrained, the same energy that makes for creativity becomes anger that finds no clean expression and leaks sideways into irritability, headache, and a body that feels like it cannot move.',
+      'The classical texts call the Liver the General because it draws up the strategic plans that organize a life — direction, purpose, and the long arc of becoming who you are. Its job is to keep Qi moving smoothly through the body and through the day, and when that movement is unobstructed, you feel decisive, creative, and at ease in your own body. The Liver also stores Blood, which means it stores the substance of memory, of being rooted in yourself, and of the capacity to dream forward without losing the ground under your feet. It houses the Hun — the wandering soul that carries vision and night-dreams — and so it governs the relationship between imagination and action. When the Liver is healthy, plans turn into work and frustration moves through you; when it is constrained, the same energy that fuels creativity turns into anger that finds no clean outlet and seeps out as irritability, headaches, and a body that feels as though it cannot move.',
     balanced:
-      'A natural sense of direction that does not require constant deliberation. Creativity that translates into work and shape rather than only ideas. Anger that arises cleanly when something matters and resolves when the matter is addressed. Flexibility in body and decision — the willingness to bend without breaking. Eyes that see clearly, both into the world and into a future that is genuinely yours.',
+      'A natural sense of direction that does not require constant deliberation. Creativity that turns into work and form rather than staying as ideas. Anger that arises cleanly when something matters and resolves once the matter is addressed. Flexibility in body and in decision — the willingness to bend without breaking. Eyes that see clearly, both into the world and into a future that is genuinely your own.',
     blocked:
-      'Tension that lives in the temples, neck, and shoulders. A frustration that has no clean object — the world simply feels in the way. Plans that never become action, or actions that never become plans. Sleep that breaks around 01–03 with thoughts about what was unfinished. Eyes that strain, decisions that exhaust, and a body that feels stuck in a position it has been trying to leave for years.',
+      'Tension that lodges in the temples, neck, and shoulders. Frustration with no clear object — the world simply feels as though it\'s in the way. Plans that never become action, or actions that never become plans. Sleep that breaks between 1 and 3 a.m. with thoughts of what was left unfinished. Eyes that strain, decisions that exhaust, and a body that feels stuck in a position it has been trying to leave for years.',
     themes: [
       {
         title: 'The General — Vision and Direction',
-        body: 'The Liver is the strategist of the body — the organ that asks where this life is going and how to get there. When healthy, it gives a long view and the patience to work in pieces toward something only you can see. When depleted, the strategist still tries to plan but cannot land — the mind generates options endlessly, exhausting itself on a future it cannot quite reach. A General without ground does not stop strategizing; it simply stops being able to act.',
+        body: 'The Liver is the strategist of the body — the organ that asks where this life is going and how to get there. When it is healthy, it gives you the long view and the patience to work in pieces toward something only you can see. When it is depleted, the strategist keeps trying to plan but cannot land — the mind generates options endlessly, exhausting itself on a future it cannot quite reach. A General without ground does not stop strategizing; it simply stops being able to act.',
       },
       {
         title: 'Anger as Clean Force',
-        body: 'Anger is the emotion of Wood, and the Liver is where it lives in the body. Clean anger arises when something is being violated; it identifies the violation, gives the energy to address it, and recedes when the matter is resolved. Frustrated anger — anger with no permission to be anger — becomes irritability, sideways comments, a body that grinds its jaw at night. The Liver does not punish you for being angry. It punishes you for swallowing it.',
+        body: 'Anger is the emotion of Wood, and the Liver is where it lives in the body. Clean anger arises when something is being violated; it names the violation, gives you the energy to address it, and subsides once the matter is resolved. Frustrated anger — anger that has no permission to be anger — becomes irritability, sideways remarks, a jaw that grinds at night. The Liver does not punish you for being angry. It punishes you for swallowing it.',
       },
       {
         title: 'The Hun — Vision and Wandering',
-        body: 'The Liver houses the Hun, the soul that travels — through dreams at night, through imagination by day, through reaching toward what is not yet. The Hun gives meaning to the future and connects you to the people and places that pull you forward. When the Liver Blood that anchors it is depleted, the Hun wanders without landing — into other people\'s stories, into restlessness, into the inability to commit. Strong Liver Blood is what allows imagination to become work.',
+        body: 'The Liver houses the Hun, the soul that travels — through dreams at night, through imagination by day, through reaching toward what is not yet. The Hun gives meaning to the future and connects you to the people and places that pull you forward. When the Liver Blood that anchors it is depleted, the Hun wanders without ever landing — into other people\'s stories, into restlessness, into the inability to commit. Strong Liver Blood is what allows imagination to become work.',
       },
       {
         title: 'Smooth Flow, Stuck Flow',
-        body: 'Above all, the Liver governs the smooth flow of Qi — through your body, through your day, through your relationships. Smooth flow looks like ease in transitions, in conversation, in beginning and ending. Stuck flow looks like the small daily frictions that accumulate: tension headaches, muscle tightness across the upper back, sighing, a feeling of not quite being able to exhale. Wood needs to move, and a life that gives it nowhere to go becomes a body that cannot relax.',
+        body: 'Above all, the Liver governs the smooth flow of Qi — through your body, through your day, through your relationships. Smooth flow looks like ease in transitions, in conversation, in beginnings and endings. Stuck flow looks like the small daily frictions that accumulate: tension headaches, tightness across the upper back, sighing, the sense that you cannot quite exhale. Wood needs to move, and a life that gives it nowhere to go becomes a body that cannot relax.',
       },
       {
         title: 'Storage of Blood, Storage of Self',
-        body: 'The Liver stores Blood at night while you sleep — replenishing the substance that nourishes muscle, vision, menstrual cycles, and the rooted continuity of who you are. Without enough Liver Blood, sleep becomes restless, eyes dry, hair thins, and the felt sense of self becomes harder to access. Lying down at night when the Liver does its work is not optional rest. It is the body\'s repair of the self that will go out into tomorrow.',
+        body: 'The Liver stores Blood at night while you sleep — replenishing the substance that nourishes muscle, vision, the menstrual cycle, and the rooted continuity of who you are. Without enough Liver Blood, sleep becomes restless, the eyes dry, the hair thins, and the felt sense of self becomes harder to reach. Lying down at night while the Liver does its work is not optional rest. It is the body repairing the self that will go out into tomorrow.',
       },
       {
         title: 'Spring in the Body',
-        body: 'The Liver is the organ of spring — of the year\'s first impulse to grow. It strengthens with what spring offers: green, sour-bitter foods, movement that has direction, and a willingness to begin things you cannot yet see the end of. It struggles in environments that never permit growth — chronic stagnation, suppressed expression, lives that have to be kept small. Wood that cannot grow turns inward and burns.',
+        body: 'The Liver is the organ of spring — of the year\'s first impulse to grow. It is strengthened by what spring offers: green, sour-bitter foods, movement that has a direction, and the willingness to begin things whose ending you cannot yet see. It struggles in environments that never permit growth — chronic stagnation, suppressed expression, lives that have to be kept small. Wood that cannot grow turns inward and burns.',
       },
     ],
     lifeQuestions: [
       'Where in your life is the Wood in you trying to grow against something that is not actually you — and what would change if you let it move freely?',
-      'What anger have you been holding as irritation because it never seemed important enough to be anger — and what is it actually telling you?',
+      'What anger have you been carrying as irritation because it never seemed important enough to count as anger — and what is it actually telling you?',
       'What vision is your Hun reaching for, even quietly, that you have not yet given yourself permission to live?',
     ],
   },
