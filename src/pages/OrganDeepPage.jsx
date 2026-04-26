@@ -4,8 +4,74 @@ import { getOrgan, hasDepthContent, ELEMENT_GROUP_ORDER } from '../engine/organs
 import { getElementInfo } from '../engine/elements';
 import { getCurrentOrgan } from '../engine/organClock';
 import { SPIRITS } from '../engine/wuShen';
+import { saveOrganReflection, getLatestOrganReflectionForQuestion } from '../utils/reflectionStore';
 import GlassCard from '../components/common/GlassCard';
 import styles from './OrganDeepPage.module.css';
+
+function LifeQuestion({ organKey, questionIndex, question, color }) {
+  const existing = getLatestOrganReflectionForQuestion(organKey, questionIndex);
+  const [open, setOpen] = useState(false);
+  const [text, setText] = useState(existing ? existing.text : '');
+  const [savedReflection, setSavedReflection] = useState(existing);
+  const [justSaved, setJustSaved] = useState(false);
+
+  const handleSave = () => {
+    const trimmed = text.trim();
+    if (!trimmed) return;
+    saveOrganReflection(organKey, questionIndex, question, trimmed);
+    setSavedReflection({ text: trimmed, date: new Date().toISOString() });
+    setJustSaved(true);
+    setOpen(false);
+    setTimeout(() => setJustSaved(false), 2000);
+  };
+
+  return (
+    <div className={styles.questionBlock}>
+      <p className={styles.question}>{question}</p>
+      {savedReflection && !open && (
+        <div className={styles.savedReflection} style={{ borderLeftColor: `${color}55` }}>
+          <span className={styles.savedDate}>
+            {new Date(savedReflection.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+          </span>
+          <p className={styles.savedText}>{savedReflection.text}</p>
+        </div>
+      )}
+      {!open ? (
+        <button
+          className={styles.reflectBtn}
+          style={{ color }}
+          onClick={() => setOpen(true)}
+        >
+          {savedReflection ? 'Edit your reflection' : 'Reflect →'}
+          {justSaved && <span className={styles.savedFlash}> · saved</span>}
+        </button>
+      ) : (
+        <div className={styles.reflectArea}>
+          <textarea
+            className={styles.reflectTextarea}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Write what comes up. Nothing has to be polished."
+            rows={5}
+            autoFocus
+          />
+          <div className={styles.reflectActions}>
+            <button
+              className={styles.reflectCancel}
+              onClick={() => { setOpen(false); setText(savedReflection ? savedReflection.text : ''); }}
+            >Cancel</button>
+            <button
+              className={styles.reflectSave}
+              style={{ background: `${color}25`, color }}
+              disabled={!text.trim()}
+              onClick={handleSave}
+            >Save</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 function previewSentences(text, count = 2) {
   if (!text) return '';
@@ -177,7 +243,13 @@ export default function OrganDeepPage() {
             >
               <span className={styles.questionsTitle}>Life Questions</span>
               {organ.lifeQuestions.map((q, i) => (
-                <p key={i} className={styles.question}>{q}</p>
+                <LifeQuestion
+                  key={i}
+                  organKey={organ.key}
+                  questionIndex={i}
+                  question={q}
+                  color={el.hex}
+                />
               ))}
             </GlassCard>
           </>

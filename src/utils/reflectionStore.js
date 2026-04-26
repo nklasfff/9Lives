@@ -1,5 +1,6 @@
 const REFLECTIONS_KEY = '9lives_reflections';
 const JOURNAL_KEY = '9lives_journal';
+const ORGAN_REFLECTIONS_KEY = '9lives_organ_reflections';
 
 // --- Reflections (interactive choices on PhaseDeepPage) ---
 
@@ -65,12 +66,44 @@ export function getJournalForPhase(phaseId) {
   return loadJournalEntries().filter(e => e.phaseId === phaseId);
 }
 
+// --- Organ reflections (life questions on OrganDeepPage) ---
+
+export function loadOrganReflections() {
+  try {
+    const data = localStorage.getItem(ORGAN_REFLECTIONS_KEY);
+    return data ? JSON.parse(data) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveOrganReflection(organKey, questionIndex, question, text) {
+  const reflections = loadOrganReflections();
+  reflections.push({
+    id: Date.now(),
+    organKey,
+    questionIndex,
+    question,
+    text,
+    date: new Date().toISOString(),
+  });
+  localStorage.setItem(ORGAN_REFLECTIONS_KEY, JSON.stringify(reflections));
+  return reflections;
+}
+
+export function getLatestOrganReflectionForQuestion(organKey, questionIndex) {
+  const all = loadOrganReflections()
+    .filter(r => r.organKey === organKey && r.questionIndex === questionIndex);
+  return all.length > 0 ? all[all.length - 1] : null;
+}
+
 // --- Timeline helpers ---
 
 export function getTimeline() {
   const reflections = loadReflections().map(r => ({ ...r, type: 'reflection' }));
   const journal = loadJournalEntries().map(j => ({ ...j, type: 'journal' }));
-  return [...reflections, ...journal].sort((a, b) => new Date(a.date) - new Date(b.date));
+  const organ = loadOrganReflections().map(o => ({ ...o, type: 'organ' }));
+  return [...reflections, ...journal, ...organ].sort((a, b) => new Date(a.date) - new Date(b.date));
 }
 
 export function getTimelineGroupedByWeek() {
