@@ -1,5 +1,6 @@
 const ORGAN_CLOCK = [
   {
+    key: 'lung',
     time: '03:00–05:00',
     startHour: 3,
     endHour: 5,
@@ -10,6 +11,7 @@ const ORGAN_CLOCK = [
     quality: 'Release & renewal',
   },
   {
+    key: 'largeIntestine',
     time: '05:00–07:00',
     startHour: 5,
     endHour: 7,
@@ -20,6 +22,7 @@ const ORGAN_CLOCK = [
     quality: 'Letting go',
   },
   {
+    key: 'stomach',
     time: '07:00–09:00',
     startHour: 7,
     endHour: 9,
@@ -30,6 +33,7 @@ const ORGAN_CLOCK = [
     quality: 'Receiving nourishment',
   },
   {
+    key: 'spleen',
     time: '09:00–11:00',
     startHour: 9,
     endHour: 11,
@@ -40,6 +44,7 @@ const ORGAN_CLOCK = [
     quality: 'Clarity & focus',
   },
   {
+    key: 'heart',
     time: '11:00–13:00',
     startHour: 11,
     endHour: 13,
@@ -50,6 +55,7 @@ const ORGAN_CLOCK = [
     quality: 'Connection & presence',
   },
   {
+    key: 'smallIntestine',
     time: '13:00–15:00',
     startHour: 13,
     endHour: 15,
@@ -60,6 +66,7 @@ const ORGAN_CLOCK = [
     quality: 'Sorting & discerning',
   },
   {
+    key: 'bladder',
     time: '15:00–17:00',
     startHour: 15,
     endHour: 17,
@@ -70,6 +77,7 @@ const ORGAN_CLOCK = [
     quality: 'Cleansing & flow',
   },
   {
+    key: 'kidney',
     time: '17:00–19:00',
     startHour: 17,
     endHour: 19,
@@ -80,6 +88,7 @@ const ORGAN_CLOCK = [
     quality: 'Restoration & will',
   },
   {
+    key: 'pericardium',
     time: '19:00–21:00',
     startHour: 19,
     endHour: 21,
@@ -90,6 +99,7 @@ const ORGAN_CLOCK = [
     quality: 'Warmth & protection',
   },
   {
+    key: 'tripleHeater',
     time: '21:00–23:00',
     startHour: 21,
     endHour: 23,
@@ -100,6 +110,7 @@ const ORGAN_CLOCK = [
     quality: 'Hormonal balance',
   },
   {
+    key: 'gallbladder',
     time: '23:00–01:00',
     startHour: 23,
     endHour: 1,
@@ -110,6 +121,7 @@ const ORGAN_CLOCK = [
     quality: 'Regeneration & courage',
   },
   {
+    key: 'liver',
     time: '01:00–03:00',
     startHour: 1,
     endHour: 3,

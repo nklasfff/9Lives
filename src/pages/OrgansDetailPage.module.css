@@ -1,0 +1,206 @@
+.page {
+  padding: var(--space-lg) var(--space-md);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.backBtn {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  padding: var(--space-sm) 0;
+  cursor: pointer;
+  transition: color var(--transition);
+}
+
+.backBtn:hover {
+  color: var(--text-secondary);
+}
+
+.header {
+  text-align: center;
+  padding: var(--space-md) 0 var(--space-lg);
+  animation: fadeDown 0.8s var(--ease-out) both;
+}
+
+.label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  margin-top: var(--space-xs);
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-top: var(--space-xs);
+}
+
+.intro {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.75;
+}
+
+.group {
+  margin-top: var(--space-lg);
+  animation: fadeUp 0.8s var(--ease-out) both;
+}
+
+.groupHeader {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.groupChinese {
+  font-size: 1.4rem;
+  font-weight: 300;
+  font-family: var(--font-display);
+  line-height: 1;
+}
+
+.groupName {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.groupSeason {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  margin-left: auto;
+  text-transform: uppercase;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.organCard {
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.organCard:active {
+  transform: scale(0.985);
+}
+
+.organHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.organChinese {
+  font-size: 2.2rem;
+  font-weight: 300;
+  line-height: 1;
+  text-shadow: 0 0 30px currentColor;
+}
+
+.organMain {
+  flex: 1;
+  min-width: 0;
+}
+
+.organName {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  line-height: 1.2;
+}
+
+.organEnglishName {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--text-muted);
+  display: block;
+  margin-top: 2px;
+}
+
+.activeBadge {
+  font-size: 0.6rem;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.pillRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: var(--space-sm);
+}
+
+.pill {
+  font-size: 0.7rem;
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+}
+
+.essence {
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  line-height: 1.7;
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+.tapHint {
+  display: block;
+  margin-top: var(--space-sm);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-align: right;
+  opacity: 0.5;
+}
+
+.organCard:hover .tapHint {
+  opacity: 0.85;
+}
+
+.heroIllustration {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  margin: var(--space-md) auto;
+}
+
+.illustration {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  margin: var(--space-lg) auto var(--space-md);
+}
