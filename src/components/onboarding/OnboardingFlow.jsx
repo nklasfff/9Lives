@@ -9,7 +9,7 @@ import GrainOverlay from '../common/GrainOverlay';
 import GlowOrb from '../common/GlowOrb';
 import styles from './OnboardingFlow.module.css';
 
-const STEPS = ['welcome', 'birthdate', 'zodiac', 'element', 'gender', 'phase', 'ready'];
+const STEPS = ['welcome', 'birthdate', 'zodiac', 'element', 'gender', 'phase', 'horizons', 'ready'];
 
 export default function OnboardingFlow() {
   const navigate = useNavigate();
@@ -60,8 +60,8 @@ export default function OnboardingFlow() {
           <div className={animClass}>
             <WelcomeIllustration className={styles.welcomeIllustration} />
             <h1 className={styles.title}>9 Lives</h1>
-            <p className={styles.subtitle}>Discover who you are through the ancient wisdom of the Five Elements</p>
-            <p className={styles.body}>Nine phases. Five elements. One lifetime unfolding.</p>
+            <p className={styles.subtitle}>Five elements. Nine phases. The people who shape your life — across any moment in time.</p>
+            <p className={styles.body}>An ancient map for you, your circle, and the days you walk through.</p>
             <div className={styles.actions}>
               <button className={styles.btn} onClick={next}>Begin</button>
             </div>
@@ -176,6 +176,23 @@ export default function OnboardingFlow() {
             <p className={styles.body}>{phase.description}</p>
             <div className={styles.actions}>
               <button className={styles.btnGhost} onClick={back}>Back</button>
+              <button className={styles.btn} onClick={next}>Continue</button>
+            </div>
+          </div>
+        )}
+
+        {step === 'horizons' && (
+          <div className={animClass}>
+            <HorizonsIllustration userColor={elementInfo.hex} className={styles.welcomeIllustration} />
+            <h2 className={styles.title}>Your circle, across time</h2>
+            <p className={styles.subtitle}>
+              You are not the only point on this map.
+            </p>
+            <p className={styles.body}>
+              Add the people who shape your life — your mother, your partner, your child, your friend — and see how their elements move with yours. Step into any moment, past or future, and read the same wisdom for that day.
+            </p>
+            <div className={styles.actions}>
+              <button className={styles.btnGhost} onClick={back}>Back</button>
               <button className={styles.btn} onClick={next}>See Your Dashboard</button>
             </div>
           </div>
@@ -209,6 +226,71 @@ export default function OnboardingFlow() {
         )}
       </div>
     </div>
+  );
+}
+
+function HorizonsIllustration({ userColor, className }) {
+  // A small constellation (you + 3 satellites) drifting across a subtle vertical time axis,
+  // with a horizontal "now" line. Suggests both Relations (the orbs) and Time (the axes).
+  const u = userColor || '#7a9ab5';
+  const friendColors = ['#4a9e6e', '#c9a84c', '#a8b8c8']; // wood, earth, metal
+  const cx = 120, cy = 100, r = 55;
+
+  // Three friend orbs at radial positions
+  const friends = [0, 1, 2].map((i) => {
+    const angle = (-90 + (i * 360) / 3 + 30) * (Math.PI / 180);
+    return { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle), color: friendColors[i] };
+  });
+
+  return (
+    <svg viewBox="0 0 240 200" className={className}>
+      <style>{`
+        @keyframes horizonOrbDrift1 { 0%, 100% { transform: translate(0, 1.5px); } 50% { transform: translate(0, -1.5px); } }
+        @keyframes horizonOrbDrift2 { 0%, 100% { transform: translate(1.5px, 0); } 50% { transform: translate(-1.5px, 0); } }
+        @keyframes horizonOrbDrift3 { 0%, 100% { transform: translate(-1px, 1px); } 50% { transform: translate(1px, -1px); } }
+        @keyframes horizonNowPulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.55; } }
+      `}</style>
+
+      {/* Vertical time axis — past below, future above */}
+      <line x1={cx} y1="10" x2={cx} y2="190" style={{ stroke: 'var(--line-faint)' }} strokeWidth="0.5" strokeDasharray="1 5" />
+      <text x={cx} y="8" textAnchor="middle" style={{ fill: 'var(--text-illustration-dim)' }} fontSize="6.5" fontFamily="var(--font-display)" fontStyle="italic">future</text>
+      <text x={cx} y="196" textAnchor="middle" style={{ fill: 'var(--text-illustration-dim)' }} fontSize="6.5" fontFamily="var(--font-display)" fontStyle="italic">past</text>
+
+      {/* Horizontal now line */}
+      <line x1="20" y1={cy} x2="220" y2={cy}
+        style={{ stroke: 'var(--line-subtle)', animation: 'horizonNowPulse 6s ease-in-out infinite' }}
+        strokeWidth="0.6" strokeDasharray="2 4" />
+      <text x="220" y={cy - 4} textAnchor="end" style={{ fill: 'var(--text-illustration-dim)' }} fontSize="6.5" fontFamily="var(--font-display)" fontStyle="italic">now</text>
+
+      {/* Outer constellation ring */}
+      <circle cx={cx} cy={cy} r={r + 14} fill="none" style={{ stroke: 'var(--line-faint)' }} strokeWidth="0.5" strokeDasharray="1 5" />
+      <circle cx={cx} cy={cy} r={r} fill="none" style={{ stroke: 'var(--line-subtle)' }} strokeWidth="0.5" />
+
+      {/* Connection lines from user to each friend */}
+      {friends.map((f, i) => (
+        <line key={`l-${i}`} x1={cx} y1={cy} x2={f.x} y2={f.y}
+          stroke={f.color} strokeWidth="0.5" opacity="0.3" />
+      ))}
+
+      {/* User at center */}
+      <circle cx={cx} cy={cy} r="20" fill={u} opacity="0.18">
+        <animate attributeName="r" values="18;26;18" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+        <animate attributeName="opacity" values="0.18;0.04;0.18" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+      </circle>
+      <circle cx={cx} cy={cy} r="14" fill={`${u}25`} stroke={u} strokeWidth="0.9" opacity="0.85" />
+      <circle cx={cx} cy={cy} r="3" fill={u} opacity="0.7" />
+
+      {/* Friend orbs with subtle drift */}
+      {friends.map((f, i) => {
+        const animName = ['horizonOrbDrift1', 'horizonOrbDrift2', 'horizonOrbDrift3'][i];
+        return (
+          <g key={`orb-${i}`} style={{ animation: `${animName} ${10 + i * 1.5}s ease-in-out infinite` }}>
+            <circle cx={f.x} cy={f.y} r="11" fill={`${f.color}18`} stroke={f.color} strokeWidth="0.7" opacity="0.7" />
+            <circle cx={f.x} cy={f.y} r="2" fill={f.color} opacity="0.5" />
+          </g>
+        );
+      })}
+    </svg>
   );
 }
 
