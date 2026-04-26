@@ -167,13 +167,19 @@ export default function ProfilePage() {
         </p>
         <div className={styles.organClockList}>
           {userOrgans.map((organ) => (
-            <div key={organ.organ} className={styles.organClockItem}>
+            <div
+              key={organ.organ}
+              className={styles.organClockItem}
+              style={{ cursor: 'pointer' }}
+              onClick={() => navigate(`/explore/organs/${organ.key}`)}
+            >
               <div className={styles.organClockHeader}>
                 <span className={styles.organClockTime}>{organ.time}</span>
                 <span className={styles.organClockName} style={{ color: el.hex }}>{organ.organ}</span>
               </div>
               <p className={styles.organClockQuality}>{organ.quality}</p>
               <p className={styles.organClockGuidance}>{organ.guidance}</p>
+              <span className={styles.organClockTapHint} style={{ color: el.hex }}>Read more →</span>
             </div>
           ))}
         </div>
