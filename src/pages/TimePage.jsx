@@ -5,9 +5,6 @@ import { getDayPillar } from '../engine/calendar';
 import { getElementInfo } from '../engine/elements';
 import { getLifePhase } from '../engine/lifePhase';
 import { getRelationship } from '../engine/cycles';
-import { getCurrentOrgan, getOrganByHour, ORGAN_CLOCK } from '../engine/organClock';
-import { getPracticeForOrgan } from '../engine/practices';
-import { getDailySpirits, getSpiritBetween } from '../engine/wuShen';
 import { loadFriends } from '../utils/localStorage';
 import { calculateAge } from '../utils/dateUtils';
 import GlassCard from '../components/common/GlassCard';
@@ -18,8 +15,6 @@ export default function TimePage() {
   const { getDerivedData } = useUser();
   const data = getDerivedData();
   const today = new Date();
-  const [expandedOrgan, setExpandedOrgan] = useState(false);
-  const [expandedSpirit, setExpandedSpirit] = useState(null);
 
   const [selectedDate, setSelectedDate] = useState({
     year: today.getFullYear(),
@@ -44,52 +39,46 @@ export default function TimePage() {
     const isToday = selectedDate.year === today.getFullYear() &&
       selectedDate.month === today.getMonth() + 1 &&
       selectedDate.day === today.getDate();
-    const currentOrgan = getCurrentOrgan();
-
-    // Wu Shen spirits for this day
-    const spirits = getDailySpirits(pillar.element, data.element);
-    const activeSpirit = spirits.find(s => s.isActive);
-    const personalSpirit = spirits.find(s => s.isPersonal);
-
-    // Spirit between user element and day element
-    const spiritBetween = getSpiritBetween(data.element, pillar.element);
-
-    // Day context text
     const isPast = yearDiff < 0 || (yearDiff === 0 && monthDiff < 0) || (yearDiff === 0 && monthDiff === 0 && dayDiff < 0);
-    const isFuture = yearDiff > 0 || (yearDiff === 0 && monthDiff > 0) || (yearDiff === 0 && monthDiff === 0 && dayDiff > 0);
 
-    return {
-      pillar, pillarEl, userEl, rel, ageAtSelected, phaseAtDate,
-      isToday, yearDiff, currentOrgan, spirits, activeSpirit,
-      personalSpirit, spiritBetween, isPast, isFuture, dateObj,
-    };
+    return { pillar, pillarEl, userEl, rel, ageAtSelected, phaseAtDate, isToday, yearDiff, isPast, dateObj };
   }, [data, selectedDate]);
 
   if (!data || !computed) return null;
 
   const phaseEl = getElementInfo(computed.phaseAtDate.element);
-  const organEl = getElementInfo(computed.currentOrgan.element);
 
   const resetToday = () => {
     setSelectedDate({ year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() });
   };
 
-  // Format the selected date nicely
   const dateLabel = computed.dateObj.toLocaleDateString('en-US', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
   });
+
+  const dayHeaderLabel = computed.isToday
+    ? "Today's Energy"
+    : computed.isPast
+      ? 'The Energy of That Day'
+      : 'The Energy Ahead';
+
+  const phaseHeaderContext = computed.isToday
+    ? 'today'
+    : computed.yearDiff < 0
+      ? `${Math.abs(computed.yearDiff)} years ago`
+      : `in ${computed.yearDiff} years`;
 
   return (
     <div className={styles.page}>
       <header className={styles.header}>
         <h1>Time Travel</h1>
-        <p className={styles.subtitle}>Journey through the elemental landscape of any moment</p>
+        <p className={styles.subtitle}>Read any day through the elemental landscape</p>
       </header>
 
       <SpiralIllustration />
 
       <div className={styles.content}>
-        {/* Date picker */}
+        {/* Date picker — choose the moment */}
         <GlassCard>
           <div className={styles.pickerHeader}>
             <span className={styles.cardLabel}>Choose a date</span>
@@ -123,131 +112,40 @@ export default function TimePage() {
               </select>
             </div>
           </div>
-          {!computed.isToday && (
-            <p className={styles.dateContext}>{dateLabel}</p>
-          )}
         </GlassCard>
 
-        {/* ─── Day Energy — the main synthesis card ─── */}
-        <GlassCard glowColor={`${computed.pillarEl.hex}20`}>
-          <div className={styles.dayEnergyHeader}>
-            <span className={styles.dayEnergyChinese} style={{ color: computed.pillarEl.hex }}>
-              {computed.pillarEl.chinese}
+        {/* Day Energy — what kind of day this is, and how it meets you */}
+        <GlassCard glowColor={`${computed.pillarEl.hex}20`} onClick={() => navigate('/explore/element')} className={styles.tappable}>
+          <div className={styles.cardHeader}>
+            <span className={styles.cardLabel}>{dayHeaderLabel}</span>
+            <span className={styles.cardAccent} style={{ color: computed.pillarEl.hex }}>
+              {computed.pillarEl.name} · {computed.pillar.yinYang === 'yang' ? 'Yang' : 'Yin'}
             </span>
-            <div>
-              <h2 className={styles.dayEnergyTitle}>
-                {computed.isToday ? 'Today\'s Energy' : computed.isPast ? 'The Energy of That Day' : 'The Energy Ahead'}
-              </h2>
-              <span className={styles.dayEnergyElement} style={{ color: computed.pillarEl.hex }}>
-                {computed.pillarEl.name} · {computed.pillar.yinYang === 'yang' ? 'Yang' : 'Yin'} · {computed.pillarEl.season}
-              </span>
-            </div>
           </div>
-
-          <p className={styles.dayEnergyDesc}>{computed.pillar.stemImage}</p>
-
-          <div className={styles.dayEnergyGrid}>
-            <div className={styles.dayEnergyItem}>
-              <span className={styles.dayEnergyLabel}>Emotion</span>
-              <span className={styles.dayEnergyValue} style={{ color: computed.pillarEl.hex }}>
-                {computed.pillarEl.emotion.balanced}
-              </span>
-            </div>
-            <div className={styles.dayEnergyItem}>
-              <span className={styles.dayEnergyLabel}>Organs</span>
-              <span className={styles.dayEnergyValue}>
-                {computed.pillarEl.organs.yin} · {computed.pillarEl.organs.yang}
-              </span>
-            </div>
-            <div className={styles.dayEnergyItem}>
-              <span className={styles.dayEnergyLabel}>Sense</span>
-              <span className={styles.dayEnergyValue}>{computed.pillarEl.sense}</span>
-            </div>
-            <div className={styles.dayEnergyItem}>
-              <span className={styles.dayEnergyLabel}>Quality</span>
-              <span className={styles.dayEnergyValue}>{computed.pillarEl.quality}</span>
-            </div>
-          </div>
-
-          {/* Relationship between user and day */}
-          <div className={styles.meetingSection}>
-            <div className={styles.meetingElements}>
-              <span className={styles.meetingEl} style={{ color: computed.userEl.hex }}>
-                {computed.userEl.chinese} {computed.userEl.name}
-              </span>
-              <span className={styles.meetingArrow}>
+          <p className={styles.dayMeta}>
+            {dateLabel} · {computed.pillar.chineseLabel} {computed.pillar.label}
+          </p>
+          <p className={styles.dayQuote}>{computed.pillar.stemImage}</p>
+          <div className={styles.dayMeeting}>
+            <span className={styles.dayMeetingPair}>
+              <span style={{ color: computed.userEl.hex }}>{computed.userEl.chinese}</span>
+              <span className={styles.dayMeetingArrow}>
                 {computed.rel.quality === 'Mirror' ? '⟷' : '→'}
               </span>
-              <span className={styles.meetingEl} style={{ color: computed.pillarEl.hex }}>
-                {computed.pillarEl.chinese} {computed.pillarEl.name}
-              </span>
-            </div>
-            <span className={styles.meetingType}>{computed.rel.name}</span>
-            <p className={styles.meetingDesc}>{computed.rel.description}</p>
+              <span style={{ color: computed.pillarEl.hex }}>{computed.pillarEl.chinese}</span>
+            </span>
+            <span className={styles.dayMeetingType} style={{ color: computed.pillarEl.hex }}>
+              {computed.rel.name}
+            </span>
           </div>
         </GlassCard>
 
-        {/* ─── Day Pillar ─── */}
-        <GlassCard glowColor={`${computed.pillarEl.hex}15`}>
-          <div className={styles.cardHeader}>
-            <span className={styles.cardLabel}>Day Pillar · 日柱</span>
-            <span className={styles.cardAccent} style={{ color: computed.pillarEl.hex }}>
-              {computed.pillarEl.name} ({computed.pillar.yinYang})
-            </span>
-          </div>
-          <div className={styles.pillarDisplay}>
-            <span className={styles.pillarChinese} style={{ color: computed.pillarEl.hex }}>
-              {computed.pillar.chineseLabel}
-            </span>
-            <span className={styles.pillarName}>{computed.pillar.label}</span>
-          </div>
-          <p className={styles.pillarImage}>{computed.pillar.stemImage}</p>
-          <p className={styles.branchCharacter}>{computed.pillar.branchCharacter}</p>
-          {computed.pillar.branchSeason && (
-            <span className={styles.branchSeason}>{computed.pillar.branchSeason}</span>
-          )}
-        </GlassCard>
-
-        {/* ─── Active Spirit — Wu Shen for this day ─── */}
-        {computed.activeSpirit && (
-          <GlassCard glowColor={`${getElementInfo(computed.activeSpirit.element).hex}15`}>
-            <div className={styles.cardHeader}>
-              <span className={styles.cardLabel}>
-                Spirit of the Day · {computed.activeSpirit.chinese}
-              </span>
-              <span className={styles.cardAccent} style={{ color: getElementInfo(computed.activeSpirit.element).hex }}>
-                {computed.activeSpirit.name}
-              </span>
-            </div>
-            <h3 className={styles.spiritTitle}>{computed.activeSpirit.title}</h3>
-            <p className={styles.spiritDesc}>{computed.activeSpirit.description}</p>
-
-            <div className={styles.reflectionBox}>
-              <span className={styles.reflectionLabel}>A question for {computed.isToday ? 'today' : 'this day'}</span>
-              <p className={styles.reflectionText}>{computed.activeSpirit.todayReflection}</p>
-            </div>
-
-            {computed.activeSpirit.key !== computed.personalSpirit?.key && computed.personalSpirit && (
-              <div className={styles.spiritMeeting}>
-                <span className={styles.spiritMeetingLabel}>
-                  Your spirit ({computed.personalSpirit.chinese} {computed.personalSpirit.name}) meets {computed.activeSpirit.chinese} {computed.activeSpirit.name}
-                </span>
-                <p className={styles.spiritMeetingText}>{computed.spiritBetween.reason}</p>
-              </div>
-            )}
-          </GlassCard>
-        )}
-
-        {/* ─── Life Phase at date ─── */}
+        {/* Your phase at this date */}
         <GlassCard glowColor={`${phaseEl.hex}15`} onClick={() => navigate('/explore/phases')} className={styles.tappable}>
           <div className={styles.cardHeader}>
-            <span className={styles.cardLabel}>
-              {computed.isToday ? 'Your current phase' :
-                computed.yearDiff < 0 ? `${Math.abs(computed.yearDiff)} years ago` :
-                  `In ${computed.yearDiff} years`}
-            </span>
+            <span className={styles.cardLabel}>Your phase</span>
             <span className={styles.cardAccent} style={{ color: phaseEl.hex }}>
-              Age {Math.max(0, computed.ageAtSelected)}
+              {phaseHeaderContext}
             </span>
           </div>
           <div className={styles.phaseDisplay}>
@@ -255,16 +153,14 @@ export default function TimePage() {
             <div>
               <h3 className={styles.phaseTitle}>{computed.phaseAtDate.title}</h3>
               <span className={styles.phaseMeta}>
-                {phaseEl.chinese} {phaseEl.name} · {computed.phaseAtDate.season}
+                Age {Math.max(0, computed.ageAtSelected)} · {phaseEl.chinese} {phaseEl.name} · {computed.phaseAtDate.season}
               </span>
             </div>
           </div>
           <p className={styles.phaseQuote}>{computed.phaseAtDate.subtitle}</p>
-          <p className={styles.bodyText}>{computed.phaseAtDate.description}</p>
-          <span className={styles.tapHint}>Explore all phases →</span>
         </GlassCard>
 
-        {/* ─── Your circle on this date ─── prominent kryds-funktion */}
+        {/* Your circle on this date — kryds-funktion */}
         {friends.length > 0 && (() => {
           const userEl = getElementInfo(data.element);
           const dateParam = `${selectedDate.year}-${String(selectedDate.month).padStart(2, '0')}-${String(selectedDate.day).padStart(2, '0')}`;
@@ -278,13 +174,6 @@ export default function TimePage() {
                   {friends.length} {friends.length === 1 ? 'person' : 'people'}
                 </span>
               </div>
-              <p className={styles.peopleSubtitle}>
-                {computed.isToday
-                  ? 'Where each person stands today.'
-                  : computed.isPast
-                    ? 'Where each person stood on this date.'
-                    : 'Where each person will stand on this date.'}
-              </p>
               <div className={styles.peopleGrid}>
                 {friends.map((friend) => {
                   const fAgeAt = calculateAge(friend.birthYear, 6, 15) + computed.yearDiff;
@@ -322,233 +211,6 @@ export default function TimePage() {
             </GlassCard>
           );
         })()}
-
-        {/* ─── Organ Clock — always visible ─── */}
-        <GlassCard
-          glowColor={computed.isToday ? `${organEl.hex}15` : undefined}
-          onClick={() => setExpandedOrgan(!expandedOrgan)}
-          className={styles.tappable}
-        >
-          <div className={styles.cardHeader}>
-            <span className={styles.cardLabel}>
-              {computed.isToday ? `Organ Clock · ${computed.currentOrgan.time}` : 'Organ Clock · 時辰'}
-            </span>
-            {computed.isToday && (
-              <span className={styles.cardAccent} style={{ color: organEl.hex }}>
-                {computed.currentOrgan.organ}
-              </span>
-            )}
-          </div>
-
-          {computed.isToday ? (
-            <>
-              <p className={styles.phaseQuote}>{computed.currentOrgan.quality}</p>
-              <p className={styles.bodyText}>{computed.currentOrgan.guidance}</p>
-              {(() => {
-                const practice = getPracticeForOrgan(computed.currentOrgan.organ);
-                if (!practice) return null;
-                return (
-                  <div className={styles.organPractice}>
-                    <div className={styles.organPracticeRow}>
-                      <span className={styles.organPracticeLabel}>移 Movement</span>
-                      <p className={styles.organPracticeText}>{practice.movement}</p>
-                    </div>
-                    <div className={styles.organPracticeRow}>
-                      <span className={styles.organPracticeLabel}>食 Nourishment</span>
-                      <p className={styles.organPracticeText}>{practice.dietary}</p>
-                    </div>
-                  </div>
-                );
-              })()}
-            </>
-          ) : (
-            <p className={styles.bodyText}>
-              The organ clock maps the body's energy as it moves through twelve organs across the day. Each two-hour window carries its own quality.
-            </p>
-          )}
-
-          {expandedOrgan && (
-            <div className={styles.organList}>
-              {ORGAN_CLOCK.map((organ) => {
-                const oEl = getElementInfo(organ.element);
-                const isNow = computed.isToday && organ.organ === computed.currentOrgan.organ;
-                return (
-                  <div
-                    key={organ.organ}
-                    className={`${styles.organItem} ${isNow ? styles.organActive : ''}`}
-                    style={{ cursor: 'pointer' }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/explore/organs/${organ.key}`);
-                    }}
-                  >
-                    <div className={styles.organItemHeader}>
-                      <span className={styles.organTime}>{organ.time}</span>
-                      <span className={styles.organName} style={{ color: isNow ? oEl.hex : oEl.hex + '88' }}>
-                        {organ.organ}
-                      </span>
-                    </div>
-                    <p className={styles.organQuality}>{organ.quality}</p>
-                    {isNow && <p className={styles.organGuidance}>{organ.guidance}</p>}
-                    {isNow && (() => {
-                      const p = getPracticeForOrgan(organ.organ);
-                      if (!p) return null;
-                      return (
-                        <div className={styles.organPractice}>
-                          <div className={styles.organPracticeRow}>
-                            <span className={styles.organPracticeLabel}>移 {p.movement}</span>
-                          </div>
-                          <div className={styles.organPracticeRow}>
-                            <span className={styles.organPracticeLabel}>食 {p.dietary}</span>
-                          </div>
-                        </div>
-                      );
-                    })()}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-          <span className={styles.tapHint}>{expandedOrgan ? 'Tap to collapse' : 'See all 12 organs →'}</span>
-        </GlassCard>
-
-        {/* ─── Element Imbalance awareness ─── */}
-        <GlassCard glowColor={`${computed.pillarEl.hex}10`}>
-          <div className={styles.cardHeader}>
-            <span className={styles.cardLabel}>Body & Balance · {computed.pillarEl.chinese}</span>
-            <span className={styles.cardAccent} style={{ color: computed.pillarEl.hex }}>
-              {computed.pillarEl.name} day
-            </span>
-          </div>
-          <p className={styles.bodyText}>
-            {computed.pillarEl.description}
-          </p>
-          <div className={styles.balanceGrid}>
-            <div className={styles.balanceItem}>
-              <span className={styles.balanceLabel}>Watch for</span>
-              <span className={styles.balanceValue}>{computed.pillarEl.emotion.imbalanced}</span>
-            </div>
-            <div className={styles.balanceItem}>
-              <span className={styles.balanceLabel}>Taste</span>
-              <span className={styles.balanceValue}>{computed.pillarEl.taste}</span>
-            </div>
-            <div className={styles.balanceItem}>
-              <span className={styles.balanceLabel}>Tissue</span>
-              <span className={styles.balanceValue}>{computed.pillarEl.tissue}</span>
-            </div>
-            <div className={styles.balanceItem}>
-              <span className={styles.balanceLabel}>Sense</span>
-              <span className={styles.balanceValue}>{computed.pillarEl.senseOrgan}</span>
-            </div>
-          </div>
-          <p className={styles.imbalanceNote}>{computed.pillarEl.imbalancedDescription}</p>
-        </GlassCard>
-
-      </div>
-
-      <DailyCycleIllustration />
-
-      {/* ─── Deeper layer cards ─── */}
-      <div className={styles.deeperCards}>
-        <GlassCard>
-          <span className={styles.deepLabel}>Gan Zhi · Calendar Layer</span>
-          <h3 className={styles.deepTitle}>Temporal Signatures</h3>
-          <p className={styles.bodyText}>
-            Each day carries a unique energetic signature — a Heavenly Stem paired with an Earthly Branch.
-          </p>
-          <div className={styles.signatureDetail}>
-            <div className={styles.signatureRow}>
-              <span className={styles.signatureLabel}>Heavenly Stem</span>
-              <span className={styles.signatureValue} style={{ color: computed.pillarEl.hex }}>
-                {computed.pillar.stemChinese} {computed.pillar.stem}
-              </span>
-            </div>
-            <p className={styles.signatureDesc}>{computed.pillar.stemImage}</p>
-            <div className={styles.signatureRow}>
-              <span className={styles.signatureLabel}>Earthly Branch</span>
-              <span className={styles.signatureValue} style={{ color: computed.pillarEl.hex }}>
-                {computed.pillar.branchChinese} {computed.pillar.branch}
-              </span>
-            </div>
-            <p className={styles.signatureDesc}>{computed.pillar.branchCharacter}</p>
-          </div>
-        </GlassCard>
-
-        <GlassCard>
-          <span className={styles.deepLabel}>Life Phases · Transition Layer</span>
-          <h3 className={styles.deepTitle}>Phase Transitions</h3>
-          {(() => {
-            const cycleLength = data.gender === 'female' ? 7 : 8;
-            const currentAge = calculateAge(data.birthDate.year, data.birthDate.month, data.birthDate.day);
-            const currentPhaseIdx = Math.min(Math.floor(currentAge / cycleLength), 8);
-            if (currentPhaseIdx >= 8) {
-              return (
-                <p className={styles.bodyText}>
-                  You have entered the final season — Second Spring. No more transitions ahead, only deepening.
-                </p>
-              );
-            }
-            const nextTransitionAge = (currentPhaseIdx + 1) * cycleLength;
-            const yearsUntil = nextTransitionAge - currentAge;
-            const nextPhase = getLifePhase(nextTransitionAge, data.gender);
-            const nextEl = getElementInfo(nextPhase.element);
-            return (
-              <>
-                <div className={styles.transitionInfo}>
-                  <span className={styles.transitionYears}>
-                    {yearsUntil <= 1 ? 'This year' : `In ~${yearsUntil} years`}
-                  </span>
-                  <span className={styles.transitionArrow}>→</span>
-                  <span className={styles.transitionPhase} style={{ color: nextEl.hex }}>
-                    Phase {nextPhase.phase} · {nextPhase.title}
-                  </span>
-                </div>
-                <p className={styles.transitionSeason}>
-                  From {computed.phaseAtDate.season} into {nextPhase.season} — {nextEl.chinese} {nextEl.name}
-                </p>
-                <p className={styles.transitionQuote}>{nextPhase.subtitle}</p>
-              </>
-            );
-          })()}
-        </GlassCard>
-
-        {/* Five Spirits overview for this day */}
-        <GlassCard>
-          <span className={styles.deepLabel}>Wu Shen · Five Spirits</span>
-          <h3 className={styles.deepTitle}>The Spirits on This Day</h3>
-          <div className={styles.spiritsGrid}>
-            {computed.spirits.map((spirit) => {
-              const sEl = getElementInfo(spirit.element);
-              const isExpanded = expandedSpirit === spirit.key;
-              return (
-                <div
-                  key={spirit.key}
-                  className={`${styles.spiritItem} ${spirit.isActive ? styles.spiritActive : ''} ${spirit.isPersonal ? styles.spiritPersonal : ''}`}
-                  onClick={() => setExpandedSpirit(isExpanded ? null : spirit.key)}
-                >
-                  <div className={styles.spiritItemHeader}>
-                    <span className={styles.spiritChinese} style={{ color: sEl.hex }}>{spirit.chinese}</span>
-                    <div>
-                      <span className={styles.spiritName}>{spirit.name}</span>
-                      <span className={styles.spiritSubtitle}>{spirit.title}</span>
-                    </div>
-                    {spirit.isActive && <span className={styles.spiritBadge} style={{ background: sEl.hex }}>active</span>}
-                    {spirit.isPersonal && !spirit.isActive && <span className={styles.spiritBadge} style={{ borderColor: sEl.hex, color: sEl.hex }}>yours</span>}
-                  </div>
-                  {isExpanded && (
-                    <div className={styles.spiritExpanded}>
-                      <p className={styles.spiritExpandedDesc}>{spirit.description}</p>
-                      <div className={styles.reflectionBox}>
-                        <span className={styles.reflectionLabel}>Reflection</span>
-                        <p className={styles.reflectionText}>{spirit.todayReflection}</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </GlassCard>
       </div>
     </div>
   );
@@ -614,37 +276,3 @@ function SpiralIllustration() {
   );
 }
 
-function DailyCycleIllustration() {
-  const orgColors = ORGAN_CLOCK.map(o => getElementInfo(o.element).hex);
-  return (
-    <svg viewBox="0 0 200 200" className={styles.cycleIllustration}>
-      <style>{`
-        @keyframes segGlow {
-          0%, 6% { opacity: 0.12; }
-          8%, 14% { opacity: 0.45; }
-          16%, 100% { opacity: 0.12; }
-        }
-      `}</style>
-
-      {orgColors.map((color, i) => {
-        const startA = (-90 + i * 30) * (Math.PI / 180);
-        const endA = (-90 + (i + 1) * 30) * (Math.PI / 180);
-        const r = 72, ir = 42;
-        const ox1 = 100 + r * Math.cos(startA), oy1 = 100 + r * Math.sin(startA);
-        const ox2 = 100 + r * Math.cos(endA), oy2 = 100 + r * Math.sin(endA);
-        const ix1 = 100 + ir * Math.cos(endA), iy1 = 100 + ir * Math.sin(endA);
-        const ix2 = 100 + ir * Math.cos(startA), iy2 = 100 + ir * Math.sin(startA);
-        return (
-          <path key={i}
-            d={`M ${ox1} ${oy1} A ${r} ${r} 0 0 1 ${ox2} ${oy2} L ${ix1} ${iy1} A ${ir} ${ir} 0 0 0 ${ix2} ${iy2} Z`}
-            fill={color} style={{ stroke: 'var(--clock-border)' }} strokeWidth="1.2"
-            style={{ animation: `segGlow ${12 * 2.5}s ease-in-out ${i * 2.5}s infinite` }}
-          />
-        );
-      })}
-
-      <circle cx="100" cy="100" r={41} fill="var(--bg)" />
-      <circle cx="100" cy="100" r="3" style={{ fill: 'var(--dot-illustration)' }} />
-    </svg>
-  );
-}

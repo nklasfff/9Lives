@@ -31,18 +31,12 @@
   display: block;
 }
 
-.cycleIllustration {
-  width: 170px;
-  height: auto;
-  margin: var(--space-xl) auto var(--space-md);
-  display: block;
-}
-
 /* Content */
 .content {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-2xl);
+  padding-bottom: var(--space-2xl);
   animation: fadeUp 0.8s var(--ease-out) 0.2s both;
 }
 
@@ -108,225 +102,52 @@
   color: var(--text-muted);
 }
 
-.dateContext {
-  font-family: var(--font-display);
-  font-size: 0.82rem;
-  font-style: italic;
+/* Day Energy — disciplined typography, four visual layers */
+.dayMeta {
+  font-size: 0.78rem;
   color: var(--text-muted);
-  text-align: center;
-  margin-top: var(--space-sm);
-}
-
-/* ─── Day Energy (main synthesis card) ─── */
-.dayEnergyHeader {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  margin-bottom: var(--space-md);
-}
-
-.dayEnergyChinese {
-  font-size: 3rem;
-  font-weight: 300;
-  line-height: 1;
-  text-shadow: 0 0 30px currentColor;
-}
-
-.dayEnergyTitle {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 300;
-  color: var(--text-bright);
-}
-
-.dayEnergyElement {
-  font-size: 0.75rem;
-  font-style: italic;
-  display: block;
-  margin-top: 2px;
-}
-
-.dayEnergyDesc {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-style: italic;
-  color: var(--text-secondary);
-  line-height: 1.7;
-  margin-bottom: var(--space-md);
-}
-
-.dayEnergyGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-md);
-}
-
-.dayEnergyItem {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.dayEnergyLabel {
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-}
-
-.dayEnergyValue {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  font-weight: 300;
-  color: var(--text-secondary);
-}
-
-/* Meeting section (user element meets day element) */
-.meetingSection {
-  padding-top: var(--space-sm);
-  border-top: 1px solid var(--glass-border);
-}
-
-.meetingElements {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-xs);
-}
-
-.meetingEl {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 300;
-}
-
-.meetingArrow {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
-
-.meetingType {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-secondary);
-  display: block;
-  margin-bottom: 4px;
-}
-
-.meetingDesc {
-  font-size: 0.82rem;
-  color: var(--text-primary);
-  line-height: 1.7;
-}
-
-/* Pillar */
-.pillarDisplay {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-sm);
+  letter-spacing: 0.02em;
   margin-bottom: var(--space-sm);
 }
 
-.pillarChinese {
-  font-size: 2.2rem;
-  font-weight: 300;
-  text-shadow: 0 0 25px currentColor;
-}
-
-.pillarName {
+.dayQuote {
   font-family: var(--font-display);
   font-size: 1.1rem;
-  color: var(--text-secondary);
-}
-
-.pillarImage {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  font-style: italic;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-.relSection {
-  margin-top: var(--space-sm);
-  padding-top: var(--space-sm);
-  border-top: 1px solid var(--glass-border);
-}
-
-.relName {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-secondary);
-}
-
-.relDesc {
-  font-size: 0.82rem;
-  color: var(--text-primary);
-  line-height: 1.7;
-  margin-top: 4px;
-}
-
-/* Spirit card */
-.spiritTitle {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 300;
-  color: var(--text-bright);
-  margin-bottom: var(--space-sm);
-}
-
-.spiritDesc {
-  font-size: 0.82rem;
-  color: var(--text-primary);
-  line-height: 1.75;
-  margin-bottom: var(--space-md);
-}
-
-.reflectionBox {
-  background: rgba(255, 255, 255, 0.03);
-  border-left: 2px solid rgba(255, 255, 255, 0.12);
-  padding: var(--space-sm) var(--space-md);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-}
-
-.reflectionLabel {
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  display: block;
-  margin-bottom: var(--space-xs);
-}
-
-.reflectionText {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
   font-style: italic;
   color: var(--text-secondary);
   line-height: 1.7;
 }
 
-.spiritMeeting {
+.dayMeeting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
   margin-top: var(--space-md);
   padding-top: var(--space-sm);
   border-top: 1px solid var(--glass-border);
 }
 
-.spiritMeetingLabel {
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  display: block;
-  margin-bottom: 4px;
+.dayMeetingPair {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 1.4rem;
+  font-weight: 300;
+  line-height: 1;
 }
 
-.spiritMeetingText {
-  font-size: 0.82rem;
-  color: var(--text-secondary);
+.dayMeetingArrow {
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.dayMeetingType {
+  font-family: var(--font-display);
   font-style: italic;
-  line-height: 1.7;
+  font-size: 0.95rem;
+  font-weight: 300;
 }
 
 /* Phase */
@@ -366,57 +187,7 @@
   color: var(--text-secondary);
 }
 
-.bodyText {
-  font-size: 0.85rem;
-  color: var(--text-primary);
-  line-height: 1.75;
-  margin-top: var(--space-xs);
-}
-
-/* Balance / Element details */
-.balanceGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-sm);
-  margin: var(--space-md) 0;
-}
-
-.balanceItem {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.balanceLabel {
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-}
-
-.balanceValue {
-  font-family: var(--font-display);
-  font-size: 0.88rem;
-  font-weight: 300;
-  color: var(--text-secondary);
-}
-
-.imbalanceNote {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  font-style: italic;
-  line-height: 1.7;
-}
-
 /* Your circle on this date — kryds-funktion */
-.peopleSubtitle {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  font-style: italic;
-  margin-top: var(--space-xs);
-  margin-bottom: var(--space-sm);
-}
-
 .peopleGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -503,31 +274,6 @@
   transform: scale(0.985);
 }
 
-/* Deeper cards */
-.deeperCards {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-  margin-bottom: var(--space-lg);
-}
-
-.deepLabel {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  display: block;
-  margin-bottom: var(--space-xs);
-}
-
-.deepTitle {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 300;
-  color: var(--text-bright);
-  margin-bottom: var(--space-sm);
-}
-
 /* Tappable cards */
 .tappable {
   cursor: pointer;
@@ -552,261 +298,3 @@
   opacity: 0.8;
 }
 
-/* Branch character */
-.branchCharacter {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-  margin-top: var(--space-xs);
-}
-
-.branchSeason {
-  font-family: var(--font-display);
-  font-size: 0.78rem;
-  font-style: italic;
-  color: var(--text-muted);
-  display: block;
-  margin-top: var(--space-xs);
-}
-
-/* Organ Clock expanded */
-.organList {
-  margin-top: var(--space-md);
-  padding-top: var(--space-sm);
-  border-top: 1px solid var(--glass-border);
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.organItem {
-  padding: var(--space-xs) 0;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-}
-
-.organItem:last-child {
-  border-bottom: none;
-}
-
-.organActive {
-  padding: var(--space-sm) 0;
-}
-
-.organItemHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.organTime {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  font-family: var(--font-body);
-}
-
-.organName {
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  font-style: italic;
-}
-
-.organQuality {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  font-style: italic;
-  margin-top: 2px;
-}
-
-.organGuidance {
-  font-size: 0.82rem;
-  color: var(--text-primary);
-  line-height: 1.7;
-  margin-top: var(--space-xs);
-}
-
-/* Temporal Signatures */
-.signatureDetail {
-  margin-top: var(--space-md);
-  padding-top: var(--space-sm);
-  border-top: 1px solid var(--glass-border);
-}
-
-.signatureRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-xs);
-}
-
-.signatureLabel {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-}
-
-.signatureValue {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 300;
-}
-
-.signatureDesc {
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-  font-style: italic;
-  line-height: 1.7;
-  margin-bottom: var(--space-md);
-}
-
-.signatureDesc:last-child {
-  margin-bottom: 0;
-}
-
-/* Phase Transitions */
-.transitionInfo {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-sm);
-}
-
-.transitionYears {
-  font-size: 0.85rem;
-  color: var(--text-primary);
-}
-
-.transitionArrow {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-.transitionPhase {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 300;
-}
-
-.transitionSeason {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  font-style: italic;
-  margin-bottom: var(--space-xs);
-}
-
-.transitionQuote {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  font-style: italic;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-/* ─── Five Spirits Grid ─── */
-.spiritsGrid {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.spiritItem {
-  padding: var(--space-sm) 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  cursor: pointer;
-  transition: background var(--transition);
-}
-
-.spiritItem:last-child {
-  border-bottom: none;
-}
-
-.spiritItem:hover {
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.spiritActive {
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.spiritItemHeader {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-}
-
-.spiritChinese {
-  font-size: 1.6rem;
-  font-weight: 300;
-  line-height: 1;
-  text-shadow: 0 0 15px currentColor;
-}
-
-.spiritName {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  color: var(--text-bright);
-  display: block;
-}
-
-.spiritSubtitle {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-.spiritBadge {
-  margin-left: auto;
-  font-size: 0.55rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  padding: 2px 8px;
-  border-radius: var(--radius-full);
-  color: var(--bg);
-  font-weight: 600;
-}
-
-.spiritBadge:not([style*="background"]) {
-  background: transparent;
-  border: 1px solid;
-}
-
-.spiritExpanded {
-  margin-top: var(--space-sm);
-  padding-left: calc(1.6rem + var(--space-sm));
-}
-
-.spiritExpandedDesc {
-  font-size: 0.8rem;
-  color: var(--text-primary);
-  line-height: 1.75;
-  margin-bottom: var(--space-sm);
-}
-
-/* Organ clock practice section */
-.organPractice {
-  margin-top: var(--space-sm);
-  padding-top: var(--space-sm);
-  border-top: 1px solid var(--glass-border);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-}
-
-.organPracticeRow {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.organPracticeLabel {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  line-height: 1.6;
-}
-
-.organPracticeText {
-  font-size: 0.85rem;
-  color: var(--text-primary);
-  line-height: 1.7;
-}
