@@ -4,9 +4,7 @@ import { useUser } from '../context/UserContext';
 import { getElementInfo } from '../engine/elements';
 import { getDayPillar } from '../engine/calendar';
 import { getRelationship } from '../engine/cycles';
-import { getDailySpirits } from '../engine/wuShen';
 import { getCurrentOrgan, ORGAN_CLOCK } from '../engine/organClock';
-import { getOrgan, hasDepthContent } from '../engine/organs';
 import { getPracticeForOrgan } from '../engine/practices';
 import { getLifePhase } from '../engine/lifePhase';
 import { getGreeting, formatDate, calculateAge } from '../utils/dateUtils';
@@ -25,16 +23,9 @@ export default function HomePage() {
     const dayPillar = getDayPillar(now);
     const dayElementInfo = getElementInfo(dayPillar.element);
     const relationship = data ? getRelationship(data.element, dayPillar.element) : null;
-    const spirits = data ? getDailySpirits(dayPillar.element, data.element) : [];
     const currentOrgan = getCurrentOrgan();
     const currentPractice = getPracticeForOrgan(currentOrgan.organ);
-    const organProfile = getOrgan(currentOrgan.key);
-    let organQuestion = null;
-    if (organProfile && hasDepthContent(organProfile)) {
-      const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
-      organQuestion = organProfile.lifeQuestions[dayOfYear % organProfile.lifeQuestions.length];
-    }
-    return { now, dayPillar, dayElementInfo, relationship, spirits, currentOrgan, currentPractice, organProfile, organQuestion, formatted: formatDate(now) };
+    return { now, dayPillar, dayElementInfo, relationship, currentOrgan, currentPractice, formatted: formatDate(now) };
   }, [data]);
 
   const friendsToday = useMemo(() => {
@@ -147,9 +138,13 @@ export default function HomePage() {
         {today.currentOrgan && (() => {
           const organElementInfo = getElementInfo(today.currentOrgan.element);
           return (
-            <GlassCard glowColor={`${organElementInfo.hex}15`} onClick={() => navigate(`/explore/organs/${today.currentOrgan.key}`)} className={styles.tappable}>
+            <GlassCard
+              glowColor={`${organElementInfo.hex}15`}
+              onClick={() => navigate(`/explore/organs/${today.currentOrgan.key}`)}
+              className={styles.tappable}
+            >
               <div className={styles.cardHeader}>
-                <span className={styles.cardLabel}>Organ Clock</span>
+                <span className={styles.cardLabel}>This hour · {today.currentOrgan.time}</span>
                 <span className={styles.cardAccent} style={{ color: organElementInfo.hex }}>
                   {today.currentOrgan.organ}
                 </span>
@@ -160,135 +155,26 @@ export default function HomePage() {
               />
               <p className={styles.cardQuote}>{today.currentOrgan.quality}</p>
               <p className={styles.cardBody}>{today.currentOrgan.guidance}</p>
-              <span className={styles.tapHint}>Tap any organ to explore →</span>
-            </GlassCard>
-          );
-        })()}
 
-        {today.currentPractice && (() => {
-          const organElementInfo = getElementInfo(today.currentOrgan.element);
-          return (
-            <GlassCard glowColor={`${organElementInfo.hex}12`}>
-              <div className={styles.cardHeader}>
-                <span className={styles.cardLabel}>Practice of the Moment</span>
-                <span className={styles.cardAccent} style={{ color: organElementInfo.hex }}>
-                  {today.currentOrgan.organ} time
-                </span>
-              </div>
-              <PracticeIllustration element={today.currentOrgan.element} />
-              <div className={styles.practiceBlock}>
-                <span className={styles.practiceLabel}>移 Movement</span>
-                <p className={styles.practiceText}>{today.currentPractice.movement}</p>
-              </div>
-              <div className={styles.practiceBlock}>
-                <span className={styles.practiceLabel}>食 Nourishment</span>
-                <p className={styles.practiceText}>{today.currentPractice.dietary}</p>
-              </div>
-              <p className={styles.practiceIntention}>{today.currentPractice.intention}</p>
-            </GlassCard>
-          );
-        })()}
+              {today.currentPractice && (
+                <div className={styles.hourPractice}>
+                  <div className={styles.hourPracticeRow}>
+                    <span className={styles.hourPracticeLabel} style={{ color: organElementInfo.hex }}>移 Move</span>
+                    <p className={styles.hourPracticeText}>{today.currentPractice.movement}</p>
+                  </div>
+                  <div className={styles.hourPracticeRow}>
+                    <span className={styles.hourPracticeLabel} style={{ color: organElementInfo.hex }}>食 Nourish</span>
+                    <p className={styles.hourPracticeText}>{today.currentPractice.dietary}</p>
+                  </div>
+                </div>
+              )}
 
-        {today.organQuestion && (() => {
-          const organElementInfo = getElementInfo(today.currentOrgan.element);
-          return (
-            <GlassCard
-              glowColor={`${organElementInfo.hex}18`}
-              onClick={() => navigate(`/explore/organs/${today.currentOrgan.key}`)}
-              className={styles.tappable}
-              style={{ borderLeft: `2px solid ${organElementInfo.hex}55` }}
-            >
-              <div className={styles.cardHeader}>
-                <span className={styles.cardLabel}>A question from {today.organProfile.name}</span>
-                <span className={styles.cardAccent} style={{ color: organElementInfo.hex }}>
-                  {today.organProfile.chinese}
-                </span>
-              </div>
-              <p className={styles.organQuestion}>{today.organQuestion}</p>
               <span className={styles.tapHint}>Read more →</span>
             </GlassCard>
           );
         })()}
-
-        <div className={styles.spiritsSection}>
-          <h2 className={styles.sectionTitle}>The Five Spirits</h2>
-          <p className={styles.sectionSubtitle}>Today's reflections for your inner landscape</p>
-          <SpiritsIllustration />
-
-          {today.spirits.map((spirit) => {
-            const spiritElementInfo = getElementInfo(spirit.element);
-            return (
-              <GlassCard
-                key={spirit.key}
-                className={`${spirit.isActive ? styles.spiritActive : ''} ${styles.tappable}`}
-                glowColor={spirit.isActive ? `${spiritElementInfo.hex}25` : undefined}
-                onClick={() => navigate('/explore/spirits')}
-              >
-                <div className={styles.spiritHeader}>
-                  <div>
-                    <span className={styles.spiritName} style={{ color: spiritElementInfo.hex }}>
-                      {spirit.name}
-                    </span>
-                    <span className={styles.spiritTitle}>{spirit.title}</span>
-                  </div>
-                  {spirit.isActive && (
-                    <span className={styles.activeBadge} style={{ background: `${spiritElementInfo.hex}30`, color: spiritElementInfo.hex }}>
-                      Active today
-                    </span>
-                  )}
-                </div>
-                <p className={styles.spiritReflection}>{spirit.todayReflection}</p>
-                <span className={styles.tapHint}>Read more →</span>
-              </GlassCard>
-            );
-          })}
-        </div>
       </section>
     </div>
-  );
-}
-
-function SpiritsIllustration() {
-  const spirits = [
-    { color: '#c75a3a', char: '神' },
-    { color: '#4a9e6e', char: '魂' },
-    { color: '#a8b8c8', char: '魄' },
-    { color: '#c9a84c', char: '意' },
-    { color: '#3a6fa0', char: '志' },
-  ];
-  return (
-    <svg viewBox="0 0 260 70" className={styles.spiritsIllustration}>
-      {spirits.map(({ color, char }, i) => {
-        const x = 30 + i * 50;
-        const y = 32;
-        return (
-          <g key={i}>
-            {i < 4 && (
-              <line x1={x + 12} y1={y} x2={x + 38} y2={y}
-                style={{ stroke: 'var(--line-subtle)' }} strokeWidth="0.5" strokeDasharray="2 3">
-                <animate attributeName="stroke-dashoffset" values="0;-10" dur={`${2.5 + i * 0.3}s`} repeatCount="indefinite" />
-              </line>
-            )}
-            {/* Breathing outer ring */}
-            <circle cx={x} cy={y} r="14" fill="none" stroke={color} strokeWidth="0.7" opacity="0.35">
-              <animate attributeName="r" values="14;20;14" dur={`${6 + i * 0.8}s`} begin={`${i * 1.2}s`} repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
-              <animate attributeName="opacity" values="0.35;0.06;0.35" dur={`${6 + i * 0.8}s`} begin={`${i * 1.2}s`} repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
-            </circle>
-            {/* Static inner ring */}
-            <circle cx={x} cy={y} r="10" fill="none" stroke={color} strokeWidth="0.4" opacity="0.2" />
-            {/* Core dot */}
-            <circle cx={x} cy={y} r="3" fill={color}>
-              <animate attributeName="r" values="2;4.5;2" dur={`${5 + i * 0.5}s`} begin={`${i * 0.8}s`} repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
-              <animate attributeName="opacity" values="0.5;0.9;0.5" dur={`${5 + i * 0.5}s`} begin={`${i * 0.8}s`} repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
-            </circle>
-            <text x={x} y={y + 1} textAnchor="middle" dominantBaseline="central"
-              fill={color} fontSize="9" fontWeight="300" opacity="0.65">
-              {char}
-            </text>
-          </g>
-        );
-      })}
-    </svg>
   );
 }
 
@@ -442,38 +328,3 @@ function OrganClockVisualization({ currentOrgan, onSegmentClick }) {
   );
 }
 
-function PracticeIllustration({ element }) {
-  const ELEMENT_COLORS = {
-    wood: '#4a9e6e', fire: '#c75a3a', earth: '#c9a84c', metal: '#a8b8c8', water: '#3a6fa0',
-  };
-  const color = ELEMENT_COLORS[element] || '#a8b8c8';
-  // Movement lines radiating from center + a breathing circle
-  const rays = [0, 45, 90, 135, 180, 225, 270, 315];
-  return (
-    <svg viewBox="0 0 200 80" className={styles.practiceIllustration}>
-      {/* Outer breathing ring */}
-      <circle cx="100" cy="40" r="28" fill="none" stroke={color} strokeWidth="0.6" opacity="0.25">
-        <animate attributeName="r" values="28;36;28" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
-        <animate attributeName="opacity" values="0.25;0.05;0.25" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
-      </circle>
-      {/* Rays */}
-      {rays.map((deg, i) => {
-        const rad = (deg - 90) * (Math.PI / 180);
-        const x2 = 100 + 22 * Math.cos(rad);
-        const y2 = 40 + 22 * Math.sin(rad);
-        return (
-          <line key={i} x1="100" y1="40" x2={x2} y2={y2}
-            stroke={color} strokeWidth="0.5" opacity="0.3">
-            <animate attributeName="opacity" values="0.3;0.6;0.3"
-              dur={`${4 + i * 0.25}s`} begin={`${i * 0.5}s`} repeatCount="indefinite" />
-          </line>
-        );
-      })}
-      {/* Inner circle */}
-      <circle cx="100" cy="40" r="8" fill={color} opacity="0.2">
-        <animate attributeName="r" values="8;11;8" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
-      </circle>
-      <circle cx="100" cy="40" r="3.5" fill={color} opacity="0.7" />
-    </svg>
-  );
-}

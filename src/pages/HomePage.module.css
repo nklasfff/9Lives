@@ -118,82 +118,11 @@
   margin-top: 4px;
 }
 
-/* Spirits */
-.spiritsSection {
-  margin-top: var(--space-lg);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-}
-
 .organClock {
   width: 240px;
   height: auto;
   margin: var(--space-sm) auto var(--space-md);
   display: block;
-}
-
-.spiritsIllustration {
-  width: 240px;
-  height: auto;
-  margin: 0 auto;
-  display: block;
-  opacity: 0.8;
-}
-
-.sectionTitle {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 300;
-  color: var(--text-bright);
-  text-align: center;
-}
-
-.sectionSubtitle {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  text-align: center;
-  font-style: italic;
-  margin-top: -8px;
-}
-
-.spiritHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: var(--space-sm);
-}
-
-.spiritName {
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  font-weight: 400;
-  margin-right: var(--space-sm);
-}
-
-.spiritTitle {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-}
-
-.spiritReflection {
-  font-size: 0.9rem;
-  color: var(--text-primary);
-  font-style: italic;
-  line-height: 1.7;
-}
-
-.activeBadge {
-  font-size: 0.65rem;
-  padding: 3px 10px;
-  border-radius: var(--radius-full);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
-}
-
-.spiritActive {
-  border-color: var(--glass-border);
 }
 
 /* Tappable cards */
@@ -220,52 +149,37 @@
   opacity: 0.8;
 }
 
-/* Practice of the Moment */
-.practiceIllustration {
-  width: 180px;
-  height: auto;
-  margin: var(--space-xs) auto var(--space-sm);
-  display: block;
-  opacity: 0.85;
-}
-
-.practiceBlock {
-  margin-bottom: var(--space-sm);
-}
-
-.practiceLabel {
-  display: block;
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  margin-bottom: 4px;
-}
-
-.practiceText {
-  font-size: 0.88rem;
-  color: var(--text-primary);
-  line-height: 1.75;
-}
-
-.practiceIntention {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-style: italic;
-  color: var(--text-secondary);
-  text-align: center;
-  margin-top: var(--space-sm);
+/* This hour — compact practice strip inside the consolidated card */
+.hourPractice {
+  margin-top: var(--space-md);
   padding-top: var(--space-sm);
   border-top: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
 }
 
-.organQuestion {
+.hourPracticeRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+}
+
+.hourPracticeLabel {
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 0.78rem;
   font-style: italic;
-  color: var(--text-bright);
-  line-height: 1.65;
-  padding: var(--space-sm) 0;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+  min-width: 70px;
+}
+
+.hourPracticeText {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  flex: 1;
 }
 
 /* Branch character for Day Pillar */
