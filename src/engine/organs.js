@@ -85,7 +85,44 @@ const ORGANS = {
     emotion: { balanced: 'Care', imbalanced: 'Worry' },
     domain: ['reception', 'appetite', 'breaking down'],
     essence:
-      'Receives and breaks down what arrives — the organ of appetite, hospitality, and the body\'s relationship to what is offered.',
+      'The first room where the world is taken in and broken down.',
+    description:
+      'The Stomach is where reception begins. Food arrives, and so does everything else you take in over the course of a day — conversations, news, the weather of other people. The Stomach\'s work is to rot and ripen what comes in, softening it enough that the Spleen can lift out what is useful. Yang to the Spleen\'s yin, it is the active half of the pair: appetite, intake, the readiness to meet what is offered. When it is healthy, you are hungry for the day in the simplest sense — for breakfast, for company, for the work in front of you. When it is depleted, the appetite goes first, and then the flavor goes out of things.',
+    balanced:
+      'Hunger that arrives on time. Food tastes like food. You can sit down to a meal without bracing. Care and compliments land instead of bouncing off. An honest appetite for the day ahead.',
+    blocked:
+      'No hunger, or hunger that won\'t stop. Nausea before things that should be ordinary. Eating without tasting. Compliments slide off; help is hard to accept. The sense that nothing actually nourishes, no matter how much arrives.',
+    themes: [
+      {
+        title: 'The Receiver — What Comes In',
+        body: 'The Stomach is the first room. Food enters here, but so does everything else — what you read, what you overhear, what someone says across the table. Before the Spleen can sort and lift, the Stomach has to take it in and break it down. A strong Stomach can meet what arrives without recoiling. A depleted one starts refusing at the door, and the refusal is rarely only about food.',
+      },
+      {
+        title: 'Appetite for Life',
+        body: 'Appetite in Chinese medicine is not only about meals. It is the underlying hunger that draws you toward work, people, and the next day. When the Stomach is well, that hunger is steady and unforced. When it falters, the meal is the first thing to lose its flavor — and then, slowly, the rest of life follows. Loss of appetite for food is often the body announcing a loss of appetite for something larger.',
+      },
+      {
+        title: 'Breakfast Hour',
+        body: 'Between seven and nine in the morning, the Stomach is at its peak. This is the hour the body is most ready to receive — warm food, simple food, food that asks little of you. Skipping breakfast trains the Stomach to go quiet at the very hour it is meant to be loudest. Over years, that quiet becomes a habit the body has trouble breaking. A warm breakfast is one of the smallest, most underrated forms of self-care in the whole tradition.',
+      },
+      {
+        title: 'Receiving What Is Offered',
+        body: 'Reception is a skill, not a reflex. Some people can take in food but not praise; others accept help but cannot sit down to a meal. The Stomach governs all of it — the willingness to let something cross the threshold and become part of you. When it is depleted, even good things bounce off. Learning to receive a compliment without deflecting it is, in this tradition, a digestive act.',
+      },
+      {
+        title: 'The Stomach and the Spleen',
+        body: 'The Stomach receives and breaks down; the Spleen extracts and transforms. One is yang and active, the other yin and quiet, and they only work as a pair. If the Stomach refuses intake, the Spleen has nothing to work with. If the Spleen is exhausted, the Stomach\'s effort is wasted. Caring for one always means caring for the other — warm food, regular hours, and a pace the body can actually keep up with.',
+      },
+      {
+        title: 'Digesting What Is Hard to Take In',
+        body: 'Some experiences are difficult to swallow in the literal sense. Bad news, an argument at the table, work eaten in front of a screen — the Stomach registers all of it. Nausea, a closed throat, a meal that sits like a stone are often the body telling you something arrived that it could not break down. The remedy is rarely more food. It is slower meals, fewer inputs, and the willingness to stop taking in what you cannot actually digest.',
+      },
+    ],
+    lifeQuestions: [
+      'What are you hungry for right now — and what have you stopped being hungry for?',
+      'What do you find hardest to receive: food, care, or praise?',
+      'What are you trying to digest that your body keeps refusing?',
+    ],
   },
 
   spleen: {
@@ -101,7 +138,44 @@ const ORGANS = {
     emotion: { balanced: 'Care', imbalanced: 'Worry' },
     domain: ['transformation', 'thought', 'nourishment'],
     essence:
-      'Transforms food and experience into useable substance — the organ of nourishment, thought, and the capacity to digest a life.',
+      'The Spleen takes what comes in — food, experience, encounter — and turns it into you.',
+    description:
+      'In Chinese medicine the Spleen is the centre of transformation. It works with its partner the Stomach in the middle burner: the Stomach receives and breaks down, the Spleen extracts what is useful and sends it upward to become flesh, blood, and clear thought. It also houses the Yi — the spirit of focused attention, intention, and meaning-making, the part of you that takes a raw situation and makes sense of it. When the Spleen is strong, you eat without heaviness, think without spinning, and absorb what life hands you. When it weakens, both food and experience sit undigested, and you feel it as fog, fatigue, and the soft anxiety of not quite landing in your own life.',
+    balanced:
+      'Steady energy after meals. Thought that arrives at conclusions. Care for others that doesn\'t empty you. Firm muscles, clear taste, a settled middle. The sense that what happens to you is becoming part of who you are.',
+    blocked:
+      'Heavy after eating. Mental loops that go nowhere. Worry dressed up as planning. Sweet cravings, loose stools, weak limbs. The feeling that experience passes through you without ever quite being absorbed.',
+    themes: [
+      {
+        title: 'The Granary — Transformation',
+        body: 'The Spleen is the storehouse and the mill. Its work is to take in what is raw and turn it into something the body can actually use. This is true of the breakfast you ate this morning and equally true of the conversation that unsettled you last week. Both arrive as raw material; both have to be broken down, sorted, and integrated. When the Spleen does its job, you are quietly fed by your own life.',
+      },
+      {
+        title: 'The Yi — Thought That Lands',
+        body: 'The Yi is the spirit of the Spleen — the steady, ground-level intelligence that holds an idea long enough to make something of it. It is not inspiration, which belongs to the Heart, nor will, which belongs to the Kidneys. The Yi is the part of you that can sit with a problem and stay with it until it yields. When the Yi is strong, your thinking has weight and direction. When it is weak, thoughts start everywhere and finish nowhere.',
+      },
+      {
+        title: 'Worry as Stuck Thinking',
+        body: 'Worry is what the Yi does when it cannot complete its work. The same thought circles back, picks up the same details, and arrives at no resting place. It feels like care, but it produces nothing — no decision, no action, no peace. Genuine thinking moves; worry only revolves. The first sign that the Spleen is tiring is often this: the mind running, but not going anywhere.',
+      },
+      {
+        title: 'Digesting Food, Digesting Experience',
+        body: 'In Chinese medicine the same organ does both. What you cannot break down in your stomach and what you cannot break down in your life draw on the same reserves. A grief you have not metabolised sits in the body the way a heavy meal does — dulling, weighting, slowing. This is why the Spleen suffers most in periods of overthinking and unprocessed loss. Tending to one usually helps the other.',
+      },
+      {
+        title: 'Care Without Self-Depletion',
+        body: 'The Spleen\'s balanced emotion is care — the steady, nourishing kind that holds a household, a friendship, a piece of work. Its shadow is the care that forgets to feed itself. When you give from a full granary, attention flows easily and returns to you. When you give from an empty one, care becomes worry, and worry becomes exhaustion. Looking after others well begins with being someone worth looking after.',
+      },
+      {
+        title: 'Morning Hours and Focused Work',
+        body: 'Between nine and eleven in the morning, the Spleen is at its peak. This is the body\'s natural window for clear, sustained thought — the hours when the Yi is most available. Whatever in your life requires concentration, judgement, or careful making is best placed here. Spent on email and small reactions, this window quietly drains. Spent on real work, it pays you back for the rest of the day.',
+      },
+    ],
+    lifeQuestions: [
+      'What in your life are you taking in but not digesting?',
+      'Where does your care nourish you, and where does it empty you?',
+      'What would you do with the morning hours if you treated them as the best of the day?',
+    ],
   },
 
   heart: {
