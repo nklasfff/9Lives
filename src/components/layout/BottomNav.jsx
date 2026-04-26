@@ -1,20 +1,30 @@
-import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import { getElementInfo } from '../../engine/elements';
+import { loadFriends } from '../../utils/localStorage';
 import styles from './BottomNav.module.css';
-
-const tabs = [
-  { path: '/home', label: 'Home', icon: HomeIcon },
-  { path: '/explore', label: 'Explore', icon: ExploreIcon },
-  { path: '/relations', label: 'Relations', icon: RelationsIcon },
-  { path: '/time', label: 'Time', icon: TimeIcon },
-  { path: '/profile', label: 'Profile', icon: ProfileIcon },
-];
 
 export default function BottomNav() {
   const { profile } = useUser();
+  const location = useLocation();
   const elementInfo = profile ? getElementInfo(profile.element) : null;
   const accentColor = elementInfo?.hex || '#7a9ab5';
+
+  // Re-check friends on every navigation so the presence dot stays in sync
+  // after the user adds someone in Relations.
+  const [hasField, setHasField] = useState(() => loadFriends().length > 0);
+  useEffect(() => {
+    setHasField(loadFriends().length > 0);
+  }, [location.pathname]);
+
+  const tabs = [
+    { path: '/home', label: 'Home', icon: HomeIcon },
+    { path: '/explore', label: 'Explore', icon: ExploreIcon },
+    { path: '/relations', label: 'Relations', icon: () => <RelationsIcon hasField={hasField} /> },
+    { path: '/time', label: 'Time', icon: TimeIcon },
+    { path: '/profile', label: 'Profile', icon: ProfileIcon },
+  ];
 
   return (
     <nav className={styles.nav} style={{ '--accent': accentColor }}>
@@ -58,11 +68,22 @@ function ExploreIcon() {
   );
 }
 
-function RelationsIcon() {
+function RelationsIcon({ hasField = false }) {
+  // Three orbs in a triangle — the field, not just two people.
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <circle cx="8" cy="12" r="4" />
-      <circle cx="16" cy="12" r="4" />
+      <circle cx="12" cy="6" r="3" />
+      <circle cx="6" cy="17" r="3" />
+      <circle cx="18" cy="17" r="3" />
+      <line x1="11" y1="9" x2="7.5" y2="14.5" strokeOpacity="0.55" />
+      <line x1="13" y1="9" x2="16.5" y2="14.5" strokeOpacity="0.55" />
+      <line x1="9" y1="17" x2="15" y2="17" strokeOpacity="0.55" />
+      {hasField && (
+        <circle cx="20.5" cy="5" r="1.7" fill="currentColor" stroke="none">
+          <animate attributeName="opacity" values="0.5;1;0.5" dur="3s" repeatCount="indefinite"
+            calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
+        </circle>
+      )}
     </svg>
   );
 }
