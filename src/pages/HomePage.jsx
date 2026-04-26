@@ -6,6 +6,7 @@ import { getDayPillar } from '../engine/calendar';
 import { getRelationship } from '../engine/cycles';
 import { getDailySpirits } from '../engine/wuShen';
 import { getCurrentOrgan, ORGAN_CLOCK } from '../engine/organClock';
+import { getOrgan, hasDepthContent } from '../engine/organs';
 import { getPracticeForOrgan } from '../engine/practices';
 import { getGreeting, formatDate } from '../utils/dateUtils';
 import LifeArcVisualization from '../components/hero/LifeArcVisualization';
@@ -25,7 +26,13 @@ export default function HomePage() {
     const spirits = data ? getDailySpirits(dayPillar.element, data.element) : [];
     const currentOrgan = getCurrentOrgan();
     const currentPractice = getPracticeForOrgan(currentOrgan.organ);
-    return { now, dayPillar, dayElementInfo, relationship, spirits, currentOrgan, currentPractice, formatted: formatDate(now) };
+    const organProfile = getOrgan(currentOrgan.key);
+    let organQuestion = null;
+    if (organProfile && hasDepthContent(organProfile)) {
+      const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+      organQuestion = organProfile.lifeQuestions[dayOfYear % organProfile.lifeQuestions.length];
+    }
+    return { now, dayPillar, dayElementInfo, relationship, spirits, currentOrgan, currentPractice, organProfile, organQuestion, formatted: formatDate(now) };
   }, [data]);
 
   if (!data) return null;
@@ -126,6 +133,27 @@ export default function HomePage() {
                 <p className={styles.practiceText}>{today.currentPractice.dietary}</p>
               </div>
               <p className={styles.practiceIntention}>{today.currentPractice.intention}</p>
+            </GlassCard>
+          );
+        })()}
+
+        {today.organQuestion && (() => {
+          const organElementInfo = getElementInfo(today.currentOrgan.element);
+          return (
+            <GlassCard
+              glowColor={`${organElementInfo.hex}18`}
+              onClick={() => navigate(`/explore/organs/${today.currentOrgan.key}`)}
+              className={styles.tappable}
+              style={{ borderLeft: `2px solid ${organElementInfo.hex}55` }}
+            >
+              <div className={styles.cardHeader}>
+                <span className={styles.cardLabel}>A question from {today.organProfile.name}</span>
+                <span className={styles.cardAccent} style={{ color: organElementInfo.hex }}>
+                  {today.organProfile.chinese}
+                </span>
+              </div>
+              <p className={styles.organQuestion}>{today.organQuestion}</p>
+              <span className={styles.tapHint}>Read more →</span>
             </GlassCard>
           );
         })()}

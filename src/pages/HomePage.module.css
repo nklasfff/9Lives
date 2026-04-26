@@ -259,6 +259,15 @@
   border-top: 1px solid var(--glass-border);
 }
 
+.organQuestion {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--text-bright);
+  line-height: 1.65;
+  padding: var(--space-sm) 0;
+}
+
 /* Branch character for Day Pillar */
 .branchCharacter {
   font-size: 0.85rem;
