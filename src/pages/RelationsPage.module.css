@@ -33,80 +33,44 @@
 }
 
 /* Intro */
-.introText {
+/* Empty state — book seed quote + invitation */
+.seedQuote {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--text-bright);
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: var(--space-md);
+}
+
+.seedBody {
   font-size: 0.88rem;
-  color: var(--text-primary);
+  color: var(--text-secondary);
   line-height: 1.75;
   text-align: center;
-  font-style: italic;
+  margin-bottom: var(--space-lg);
 }
 
-/* Feature cards */
-.featureCards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-sm);
-}
-
-.featureCard {
-  text-align: center;
-  padding: var(--space-md) var(--space-sm) !important;
-}
-
-.featureIcon {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  letter-spacing: 0.1em;
+.addPersonBtnPrimary {
   display: block;
-  margin-bottom: var(--space-xs);
-}
-
-.featureTitle {
+  margin: 0 auto;
+  background: transparent;
+  border: 1px solid var(--text-secondary);
+  color: var(--text-bright);
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: 999px;
   font-family: var(--font-display);
   font-size: 0.95rem;
+  font-style: italic;
   font-weight: 300;
-  color: var(--text-bright);
-  margin-bottom: 4px;
+  cursor: pointer;
+  transition: all var(--transition);
+  min-height: 44px;
 }
 
-.featureDesc {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-
-/* You card */
-.youCard {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-}
-
-.youSymbol {
-  font-size: 2.2rem;
-  font-weight: 300;
-  text-shadow: 0 0 25px currentColor;
-  line-height: 1;
-}
-
-.youLabel {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  display: block;
-}
-
-.youElement {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 300;
-  margin: 2px 0;
-}
-
-.youMeta {
-  font-size: 0.75rem;
-  color: var(--text-muted);
+.addPersonBtnPrimary:hover {
+  border-color: var(--text-bright);
 }
 
 /* Section title */
@@ -249,39 +213,12 @@
   color: var(--text-secondary);
 }
 
-/* Phase comparison */
-.phaseComparison {
-  margin-top: var(--space-sm);
-  padding-top: var(--space-sm);
-  border-top: 1px solid var(--glass-border);
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.phaseItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.phaseLabel {
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.phaseValue {
-  font-size: 0.8rem;
-  color: var(--text-primary);
-}
-
 /* Content area */
 .content {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-2xl);
+  padding-bottom: var(--space-2xl);
   animation: fadeUp 0.8s var(--ease-out) 0.2s both;
 }
 
@@ -338,46 +275,74 @@
   color: var(--element-fire);
 }
 
-/* Relation type visual */
-.relationType {
+/* Friend name row with optional partner badge */
+.friendNameRow {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  margin: var(--space-sm) 0;
-  padding: var(--space-sm) 0;
+}
+
+.partnerBadge {
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border: 1px solid;
+  border-radius: 999px;
+  line-height: 1;
+}
+
+/* Two meetings: constitutional element + phase season */
+.meetingRow {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) 0;
   border-top: 1px solid var(--glass-border);
 }
 
-.relDots {
-  display: flex;
+.meetingLabel {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.meetingPair {
+  display: inline-flex;
   align-items: center;
-  gap: 4px;
-}
-
-.relDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  opacity: 0.6;
-}
-
-.relLine {
-  width: 20px;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.relName {
+  gap: var(--space-xs);
   font-family: var(--font-display);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  font-weight: 300;
+}
+
+.meetingArrow {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.meetingName {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-style: italic;
+  text-align: right;
+}
+
+/* Partner-specific cycle insight (book quote in spirit) */
+.partnerInsight {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
   font-style: italic;
   color: var(--text-secondary);
-}
-
-.relDesc {
-  font-size: 0.85rem;
-  color: var(--text-primary);
   line-height: 1.7;
+  margin-top: var(--space-sm);
+  padding: var(--space-sm) 0;
+  border-top: 1px solid var(--glass-border);
 }
 
 .exploreBtn {
@@ -490,6 +455,43 @@
   color: var(--text-bright);
 }
 
+/* Partner toggle in the add-person form */
+.partnerToggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-style: italic;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all var(--transition);
+  margin: var(--space-md) 0;
+  width: 100%;
+  justify-content: center;
+  min-height: 44px;
+}
+
+.partnerToggle:hover {
+  border-color: var(--text-secondary);
+  color: var(--text-bright);
+}
+
+.partnerToggleActive {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.partnerToggleCheck {
+  font-size: 0.85rem;
+  font-style: normal;
+  letter-spacing: 0;
+}
+
 .formActions {
   display: flex;
   justify-content: center;
@@ -537,93 +539,6 @@
   opacity: 0.7;
 }
 
-/* Deeper layer cards */
-.deeperCards {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-  padding: 0 var(--space-md);
-  margin-bottom: var(--space-lg);
-}
-
-.deepCard {
-  /* inherits GlassCard */
-}
-
-.deepLabel {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  display: block;
-  margin-bottom: var(--space-xs);
-}
-
-.deepTitle {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 300;
-  color: var(--text-bright);
-  margin-bottom: var(--space-sm);
-}
-
-.deepBody {
-  font-size: 0.85rem;
-  color: var(--text-primary);
-  line-height: 1.75;
-  margin-bottom: var(--space-xs);
-}
-
-.deepHint {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  font-style: italic;
-  margin-top: var(--space-sm);
-}
-
-/* Vessel list */
-.vesselList {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  margin-top: var(--space-md);
-}
-
-.vesselItem {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-sm);
-  padding: var(--space-sm) 0;
-  border-bottom: 1px solid var(--glass-border);
-}
-
-.vesselItem:last-child {
-  border-bottom: none;
-}
-
-.vesselChinese {
-  font-size: 1.3rem;
-  color: var(--text-secondary);
-  font-weight: 300;
-  line-height: 1;
-  min-width: 36px;
-}
-
-.vesselName {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  color: var(--text-bright);
-  display: block;
-}
-
-.vesselRole {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  font-style: italic;
-  display: block;
-  margin-top: 2px;
-}
-
 /* Tappable deep cards */
 .tappable {
   cursor: pointer;
@@ -648,23 +563,17 @@
   opacity: 0.8;
 }
 
-/* Group preview dots */
-.groupPreview {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  margin: var(--space-sm) 0;
+/* Group constellation card (single elevated CTA) */
+.groupCardKicker {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-sm);
 }
 
-.groupDot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  opacity: 0.6;
-}
-
-/* Group constellation card (inline in friends list) */
 .groupCard {
   cursor: pointer;
   transition: transform var(--transition);
@@ -695,15 +604,6 @@
   opacity: 0.7;
 }
 
-.groupCardLabel {
-  display: block;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  margin-bottom: 4px;
-}
-
 .groupCardTitle {
   font-family: var(--font-display);
   font-size: 1.15rem;
@@ -718,111 +618,3 @@
   margin: 0;
 }
 
-/* Spirit Between */
-.spiritBetweenList {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-}
-
-.spiritBetweenItem {
-  padding-top: var(--space-sm);
-  border-top: 1px solid var(--glass-border);
-}
-
-.spiritBetweenItem:first-child {
-  border-top: none;
-  padding-top: 0;
-}
-
-.spiritBetweenHeader {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-xs);
-}
-
-.spiritBetweenChinese {
-  font-size: 1.4rem;
-  font-weight: 300;
-  line-height: 1;
-}
-
-.spiritBetweenName {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 400;
-  display: block;
-}
-
-.spiritBetweenWith {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-.spiritBetweenTitle {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  font-style: italic;
-  margin-bottom: var(--space-xs);
-}
-
-.spiritBetweenReason {
-  font-size: 0.82rem;
-  color: var(--text-primary);
-  line-height: 1.7;
-}
-
-/* Phase Rhythms */
-.phaseRhythmList {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-}
-
-.phaseRhythmItem {
-  padding-top: var(--space-sm);
-  border-top: 1px solid var(--glass-border);
-}
-
-.phaseRhythmItem:first-child {
-  border-top: none;
-  padding-top: 0;
-}
-
-.phaseRhythmPair {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-sm);
-}
-
-.phaseRhythmPerson {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-}
-
-.phaseRhythmDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.phaseRhythmSeason {
-  font-family: var(--font-display);
-  font-style: italic;
-  color: var(--text-muted);
-  margin-left: auto;
-  font-size: 0.78rem;
-}
-
-.phaseRhythmInsight {
-  font-size: 0.82rem;
-  color: var(--text-primary);
-  line-height: 1.7;
-  font-style: italic;
-}

@@ -5,7 +5,6 @@ import { getZodiacAnimal } from '../engine/zodiac';
 import { getElement, getElementInfo } from '../engine/elements';
 import { getRelationship } from '../engine/cycles';
 import { getLifePhase } from '../engine/lifePhase';
-import { getSpiritBetween } from '../engine/wuShen';
 import { calculateAge } from '../utils/dateUtils';
 import { loadFriends, saveFriends, loadConstellations, saveConstellations } from '../utils/localStorage';
 import GlassCard from '../components/common/GlassCard';
@@ -20,7 +19,7 @@ export default function RelationsPage() {
   const [showForm, setShowForm] = useState(false);
   const [showSaveForm, setShowSaveForm] = useState(false);
   const [saveName, setSaveName] = useState('');
-  const [formData, setFormData] = useState({ name: '', year: 1990, gender: null });
+  const [formData, setFormData] = useState({ name: '', year: 1990, gender: null, isPartner: false });
 
   useEffect(() => { saveFriends(friends); }, [friends]);
   useEffect(() => { saveConstellations(constellations); }, [constellations]);
@@ -53,11 +52,14 @@ export default function RelationsPage() {
     const element = getElement(zodiac.animal);
     const age = calculateAge(formData.year, 6, 15);
     const phase = getLifePhase(age, formData.gender);
+    // Only one partner at a time — clear flag from existing friends if a new partner is set
+    const baseFriends = formData.isPartner ? friends.map(f => ({ ...f, isPartner: false })) : friends;
     const newFriend = {
       id: Date.now().toString(),
       name: formData.name,
       birthYear: formData.year,
       gender: formData.gender,
+      isPartner: !!formData.isPartner,
       zodiacAnimal: zodiac.animal,
       zodiacSymbol: zodiac.symbol,
       zodiacName: zodiac.name,
@@ -65,8 +67,8 @@ export default function RelationsPage() {
       phase: phase.phase,
       phaseTitle: phase.title,
     };
-    setFriends([...friends, newFriend]);
-    setFormData({ name: '', year: 1990, gender: null });
+    setFriends([...baseFriends, newFriend]);
+    setFormData({ name: '', year: 1990, gender: null, isPartner: false });
     setShowForm(false);
   };
 
@@ -74,50 +76,46 @@ export default function RelationsPage() {
     setFriends(friends.filter(f => f.id !== id));
   };
 
+  // Compute per-friend insight: constitutional meeting + phase-season meeting + partner forskydning if applicable
+  const friendInsights = friends.map((friend) => {
+    const friendEl = getElementInfo(friend.element);
+    const constitutionalRel = getRelationship(data.element, friend.element);
+    const friendAge = Math.max(0, calculateAge(friend.birthYear, 6, 15));
+    const friendPhase = getLifePhase(friendAge, friend.gender);
+    const userPhaseEl = getElementInfo(data.phase.element);
+    const friendPhaseEl = getElementInfo(friendPhase.element);
+    const seasonRel = getRelationship(data.phase.element, friendPhase.element);
+    const userCycle = data.gender === 'female' ? 7 : 8;
+    const partnerCycle = friend.gender === 'female' ? 7 : 8;
+    const cycleForskydning = friend.isPartner && userCycle !== partnerCycle
+      ? `Your ${userCycle}-year cycles meet ${partnerCycle}-year cycles — a small difference that grows over the years, hitting precisely where the big choices ask to be made.`
+      : null;
+    return { friend, friendEl, friendAge, friendPhase, userPhaseEl, friendPhaseEl, constitutionalRel, seasonRel, cycleForskydning };
+  });
+
+  // Generational reading — when phases span 4+ steps (e.g. teen + adult + elder), surface the trinity
+  const allPhases = [data.phase.phase, ...friendInsights.map(fi => fi.friendPhase.phase)];
+  const phaseSpread = friends.length >= 2 ? Math.max(...allPhases) - Math.min(...allPhases) : 0;
+  const isThreeGenerations = phaseSpread >= 4;
+
+  // Group field quote varies by configuration (in the spirit of the source book)
+  const groupFieldQuote = isThreeGenerations
+    ? 'Three lives, three seasons of the same arc — what one is just beginning, another has already let go.'
+    : friendInsights.some(fi => fi.friend.isPartner)
+      ? 'Two rhythms in one home, and the others who orbit it. The whole field moves together — even when you cannot feel it.'
+      : 'Several lives in the same field. Where one element flows into another, where two seasons meet — the whole shape of you, together.';
+
   return (
     <div className={styles.page}>
       <header className={styles.header}>
         <h1>Relations</h1>
-        <p className={styles.subtitle}>Elemental dynamics between lives</p>
+        <p className={styles.subtitle}>What happens when your season meets theirs</p>
       </header>
 
       <IkigaiIllustration userColor={userEl.hex} />
 
-      {/* Introduction card */}
       <div className={styles.content}>
-        <GlassCard>
-          <p className={styles.introText}>
-            Every relationship carries an elemental signature. When you add someone, their birth year reveals their element — and the dynamic between your elements tells a story of nourishment, challenge, or deep resonance.
-          </p>
-        </GlassCard>
-
-        {/* Feature cards */}
-        <div className={styles.featureCards}>
-          <GlassCard className={styles.featureCard}>
-            <span className={styles.featureIcon}>◯—◯</span>
-            <h4 className={styles.featureTitle}>Elemental Dynamics</h4>
-            <p className={styles.featureDesc}>See how your element interacts with theirs — nourishing, tempering, or mirroring</p>
-          </GlassCard>
-          <GlassCard className={styles.featureCard}>
-            <span className={styles.featureIcon}>◯—◯—◯</span>
-            <h4 className={styles.featureTitle}>Group Constellations</h4>
-            <p className={styles.featureDesc}>Add your partner, mother, child, friend — see how the whole field moves together</p>
-          </GlassCard>
-        </div>
-
-        {/* Your element summary */}
-        <GlassCard glowColor={`${userEl.hex}10`}>
-          <div className={styles.youCard}>
-            <span className={styles.youSymbol} style={{ color: userEl.hex }}>{userEl.chinese}</span>
-            <div>
-              <span className={styles.youLabel}>You</span>
-              <h3 className={styles.youElement} style={{ color: userEl.hex }}>{userEl.name}</h3>
-              <span className={styles.youMeta}>Phase {data.phase.phase} · {data.phase.title} · {data.phase.season}</span>
-            </div>
-          </div>
-        </GlassCard>
-
-        {/* Saved constellations */}
+        {/* Saved constellations — compact chip bar (when populated) */}
         {constellations.length > 0 && (
           <div className={styles.constellationBar}>
             <span className={styles.constellationBarLabel}>Saved</span>
@@ -134,11 +132,26 @@ export default function RelationsPage() {
           </div>
         )}
 
-        {/* Friends list */}
+        {/* Empty state — invitation with the book's seed quote */}
+        {friends.length === 0 && !showForm && (
+          <GlassCard glowColor={`${userEl.hex}10`}>
+            <p className={styles.seedQuote}>
+              Three generations under one roof, and the feeling of speaking three different languages.
+            </p>
+            <p className={styles.seedBody}>
+              When you see that what felt like personal conflict is two people in different seasons of the same life — a softness opens that goodwill alone cannot reach.
+            </p>
+            <button className={styles.addPersonBtnPrimary} onClick={() => setShowForm(true)}>
+              + Add the first person
+            </button>
+          </GlassCard>
+        )}
+
+        {/* Friends list — compact cards, both meetings shown */}
         {friends.length > 0 && (
           <div className={styles.friendsList}>
             <div className={styles.friendsListHeader}>
-              <h2 className={styles.sectionTitle}>Your People</h2>
+              <h2 className={styles.sectionTitle}>Your field</h2>
               <div className={styles.friendsActions}>
                 {!showSaveForm && (
                   <button className={styles.actionBtn} onClick={() => setShowSaveForm(true)}>Save</button>
@@ -163,90 +176,96 @@ export default function RelationsPage() {
                 </div>
               </div>
             )}
-            {friends.map((friend) => {
-              const friendEl = getElementInfo(friend.element);
-              const rel = getRelationship(data.element, friend.element);
-              const friendPhaseInfo = getLifePhase(
-                calculateAge(friend.birthYear, 6, 15),
-                friend.gender
-              );
-              return (
-                <GlassCard key={friend.id} glowColor={`${friendEl.hex}15`}>
-                  <div className={styles.friendHeader}>
-                    <div className={styles.friendIdentity}>
-                      <span className={styles.friendSymbol} style={{ color: friendEl.hex }}>
-                        {friendEl.chinese}
-                      </span>
-                      <div>
-                        <h3 className={styles.friendName}>{friend.name}</h3>
-                        <span className={styles.friendMeta}>
-                          {friend.zodiacSymbol} {friend.zodiacName} · {friendEl.name} · Phase {friend.phase}
-                        </span>
+
+            {friendInsights.map((fi) => (
+              <GlassCard key={fi.friend.id} glowColor={`${fi.friendEl.hex}15`}>
+                <div className={styles.friendHeader}>
+                  <div className={styles.friendIdentity}>
+                    <span className={styles.friendSymbol} style={{ color: fi.friendEl.hex }}>
+                      {fi.friendEl.chinese}
+                    </span>
+                    <div>
+                      <div className={styles.friendNameRow}>
+                        <h3 className={styles.friendName}>{fi.friend.name}</h3>
+                        {fi.friend.isPartner && (
+                          <span className={styles.partnerBadge} style={{ borderColor: userEl.hex, color: userEl.hex }}>
+                            partner
+                          </span>
+                        )}
                       </div>
-                    </div>
-                    <button className={styles.removeBtn} onClick={(e) => { e.stopPropagation(); removeFriend(friend.id); }}>×</button>
-                  </div>
-
-                  <div className={styles.relationType}>
-                    <div className={styles.relDots}>
-                      <span className={styles.relDot} style={{ background: userEl.hex }} />
-                      <span className={styles.relLine} />
-                      <span className={styles.relDot} style={{ background: friendEl.hex }} />
-                    </div>
-                    <span className={styles.relName}>{rel.name}</span>
-                  </div>
-                  <p className={styles.relDesc}>{rel.description}</p>
-
-                  <div className={styles.phaseComparison}>
-                    <div className={styles.phaseItem}>
-                      <span className={styles.phaseLabel}>You</span>
-                      <span className={styles.phaseValue}>Phase {data.phase.phase} · {data.phase.title}</span>
-                    </div>
-                    <div className={styles.phaseItem}>
-                      <span className={styles.phaseLabel}>{friend.name}</span>
-                      <span className={styles.phaseValue}>Phase {friendPhaseInfo.phase} · {friendPhaseInfo.title}</span>
+                      <span className={styles.friendMeta}>
+                        {fi.friendEl.name} · Phase {fi.friendPhase.phase} {fi.friendPhase.title} · age {fi.friendAge}
+                      </span>
                     </div>
                   </div>
-
-                  <button className={styles.exploreBtn} onClick={() => navigate(`/relations/${friend.id}`)}>
-                    Explore this connection →
-                  </button>
-                </GlassCard>
-              );
-            })}
-
-            {/* Group constellation entry — visible when 2+ friends */}
-            {friends.length >= 2 && (
-              <GlassCard
-                glowColor={`${userEl.hex}12`}
-                className={styles.groupCard}
-                onClick={() => navigate('/relations/group')}
-              >
-                <div className={styles.groupCardInner}>
-                  <div className={styles.groupDots}>
-                    <span className={styles.groupDotLarge} style={{ background: userEl.hex }} />
-                    {friends.slice(0, 3).map((f) => {
-                      const fEl = getElementInfo(f.element);
-                      return <span key={f.id} className={styles.groupDotLarge} style={{ background: fEl.hex }} />;
-                    })}
-                  </div>
-                  <div>
-                    <span className={styles.groupCardLabel}>Group Constellation</span>
-                    <h3 className={styles.groupCardTitle}>See all {friends.length + 1} together</h3>
-                    <p className={styles.groupCardBody}>
-                      Elemental flows, tensions, and harmonies across the whole field.
-                    </p>
-                  </div>
+                  <button className={styles.removeBtn} onClick={(e) => { e.stopPropagation(); removeFriend(fi.friend.id); }}>×</button>
                 </div>
-                <span className={styles.exploreBtn} style={{ display: 'block', marginTop: 'var(--space-sm)' }}>
-                  Explore group dynamics →
-                </span>
+
+                {/* Two meetings: constitutional element + phase season */}
+                <div className={styles.meetingRow}>
+                  <span className={styles.meetingLabel}>Element</span>
+                  <span className={styles.meetingPair}>
+                    <span style={{ color: userEl.hex }}>{userEl.chinese}</span>
+                    <span className={styles.meetingArrow}>{fi.constitutionalRel.quality === 'Mirror' ? '⟷' : '→'}</span>
+                    <span style={{ color: fi.friendEl.hex }}>{fi.friendEl.chinese}</span>
+                  </span>
+                  <span className={styles.meetingName} style={{ color: fi.friendEl.hex }}>
+                    {fi.constitutionalRel.name}
+                  </span>
+                </div>
+
+                <div className={styles.meetingRow}>
+                  <span className={styles.meetingLabel}>Season</span>
+                  <span className={styles.meetingPair}>
+                    <span style={{ color: fi.userPhaseEl.hex }}>{data.phase.season}</span>
+                    <span className={styles.meetingArrow}>{fi.seasonRel.quality === 'Mirror' ? '⟷' : '→'}</span>
+                    <span style={{ color: fi.friendPhaseEl.hex }}>{fi.friendPhase.season}</span>
+                  </span>
+                  <span className={styles.meetingName} style={{ color: fi.friendPhaseEl.hex }}>
+                    {fi.seasonRel.name}
+                  </span>
+                </div>
+
+                {fi.cycleForskydning && (
+                  <p className={styles.partnerInsight}>{fi.cycleForskydning}</p>
+                )}
+
+                <button className={styles.exploreBtn} onClick={() => navigate(`/relations/${fi.friend.id}`)}>
+                  Explore this connection →
+                </button>
               </GlassCard>
-            )}
+            ))}
           </div>
         )}
 
-        {/* Add person */}
+        {/* Group field — single CTA card, evocative quote varies by configuration */}
+        {friends.length >= 2 && (
+          <GlassCard
+            glowColor={`${userEl.hex}12`}
+            className={styles.groupCard}
+            onClick={() => navigate('/relations/group')}
+          >
+            {isThreeGenerations && (
+              <span className={styles.groupCardKicker}>Three generations meeting</span>
+            )}
+            <div className={styles.groupCardInner}>
+              <div className={styles.groupDots}>
+                <span className={styles.groupDotLarge} style={{ background: userEl.hex }} />
+                {friends.slice(0, 3).map((f) => {
+                  const fEl = getElementInfo(f.element);
+                  return <span key={f.id} className={styles.groupDotLarge} style={{ background: fEl.hex }} />;
+                })}
+              </div>
+              <div>
+                <h3 className={styles.groupCardTitle}>The field of all {friends.length + 1}</h3>
+                <p className={styles.groupCardBody}>{groupFieldQuote}</p>
+              </div>
+            </div>
+            <span className={styles.tapHint}>See the whole field →</span>
+          </GlassCard>
+        )}
+
+        {/* Add person — form expanded or button collapsed */}
         {showForm ? (
           <GlassCard className={styles.formCard}>
             <h3 className={styles.formTitle}>Add someone</h3>
@@ -285,6 +304,16 @@ export default function RelationsPage() {
                 Masculine
               </button>
             </div>
+
+            <button
+              className={`${styles.partnerToggle} ${formData.isPartner ? styles.partnerToggleActive : ''}`}
+              onClick={() => setFormData({ ...formData, isPartner: !formData.isPartner })}
+              style={formData.isPartner ? { borderColor: userEl.hex, color: userEl.hex } : {}}
+            >
+              <span className={styles.partnerToggleCheck}>{formData.isPartner ? '●' : '○'}</span>
+              This person is my partner
+            </button>
+
             <div className={styles.formActions}>
               <button className={styles.cancelBtn} onClick={() => setShowForm(false)}>Cancel</button>
               <button
@@ -296,137 +325,14 @@ export default function RelationsPage() {
               </button>
             </div>
           </GlassCard>
-        ) : (
+        ) : friends.length > 0 ? (
           <button className={styles.addPersonBtn} onClick={() => setShowForm(true)}>
             + Add someone
           </button>
-        )}
+        ) : null}
       </div>
 
       <CyclesIllustration />
-
-      {/* Deeper layer cards */}
-      <div className={styles.deeperCards}>
-        {friends.length >= 2 && (
-          <GlassCard className={`${styles.deepCard} ${styles.tappable}`} onClick={() => navigate('/relations/group')}>
-            <span className={styles.deepLabel}>Group Constellation</span>
-            <h3 className={styles.deepTitle}>The Field Between You All</h3>
-            <p className={styles.deepBody}>
-              See how all your people relate — elemental flows, shared spirits, tensions and harmonies across the whole group.
-            </p>
-            <div className={styles.groupPreview}>
-              {friends.slice(0, 4).map((friend) => {
-                const fEl = getElementInfo(friend.element);
-                return (
-                  <span key={friend.id} className={styles.groupDot} style={{ background: fEl.hex }} title={friend.name} />
-                );
-              })}
-              <span className={styles.groupDot} style={{ background: userEl.hex }} title="You" />
-            </div>
-            <span className={styles.tapHint}>Explore group dynamics →</span>
-          </GlassCard>
-        )}
-
-        <GlassCard className={styles.deepCard}>
-          <span className={styles.deepLabel}>Wu Shen · Relational Layer</span>
-          <h3 className={styles.deepTitle}>Spirits Between You</h3>
-          {friends.length > 0 ? (
-            <div className={styles.spiritBetweenList}>
-              {friends.map((friend) => {
-                const { spirit, reason } = getSpiritBetween(data.element, friend.element);
-                const spiritEl = getElementInfo(spirit.element);
-                return (
-                  <div key={friend.id} className={styles.spiritBetweenItem}>
-                    <div className={styles.spiritBetweenHeader}>
-                      <span className={styles.spiritBetweenChinese} style={{ color: spiritEl.hex }}>{spirit.chinese}</span>
-                      <div>
-                        <span className={styles.spiritBetweenName} style={{ color: spiritEl.hex }}>{spirit.name}</span>
-                        <span className={styles.spiritBetweenWith}>with {friend.name}</span>
-                      </div>
-                    </div>
-                    <p className={styles.spiritBetweenTitle}>{spirit.title}</p>
-                    <p className={styles.spiritBetweenReason}>{reason}</p>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <p className={styles.deepBody}>
-              When two elements meet, a spirit governs the space between them. Add someone to discover which spirit holds your connection.
-            </p>
-          )}
-        </GlassCard>
-
-        <GlassCard className={`${styles.deepCard} ${styles.tappable}`} onClick={() => navigate('/explore/depths')}>
-          <span className={styles.deepLabel}>Qi Jing Ba Mai · Relational Layer</span>
-          <h3 className={styles.deepTitle}>The Relational Vessels</h3>
-          <div className={styles.vesselList}>
-            <div className={styles.vesselItem}>
-              <span className={styles.vesselChinese}>任脈</span>
-              <div>
-                <span className={styles.vesselName}>Ren Mai</span>
-                <span className={styles.vesselRole}>Bonding — can you receive care?</span>
-              </div>
-            </div>
-            <div className={styles.vesselItem}>
-              <span className={styles.vesselChinese}>衝脈</span>
-              <div>
-                <span className={styles.vesselName}>Chong Mai</span>
-                <span className={styles.vesselRole}>Ancestry — what is inherited between you?</span>
-              </div>
-            </div>
-            <div className={styles.vesselItem}>
-              <span className={styles.vesselChinese}>帶脈</span>
-              <div>
-                <span className={styles.vesselName}>Dai Mai</span>
-                <span className={styles.vesselRole}>Shadow — what is held but not yet spoken?</span>
-              </div>
-            </div>
-          </div>
-          <span className={styles.tapHint}>Explore all eight vessels →</span>
-        </GlassCard>
-
-        <GlassCard className={styles.deepCard}>
-          <span className={styles.deepLabel}>Life Phases · Relational Layer</span>
-          <h3 className={styles.deepTitle}>Phase Rhythms</h3>
-          {friends.length > 0 ? (
-            <div className={styles.phaseRhythmList}>
-              {friends.map((friend) => {
-                const friendAge = calculateAge(friend.birthYear, 6, 15);
-                const friendPhase = getLifePhase(friendAge, friend.gender);
-                const friendPhaseEl = getElementInfo(friendPhase.element);
-                const userPhaseEl = getElementInfo(data.phase.element);
-                const phaseDiff = Math.abs(data.phase.phase - friendPhase.phase);
-                return (
-                  <div key={friend.id} className={styles.phaseRhythmItem}>
-                    <div className={styles.phaseRhythmPair}>
-                      <div className={styles.phaseRhythmPerson}>
-                        <span className={styles.phaseRhythmDot} style={{ background: userPhaseEl.hex }} />
-                        <span>You · Phase {data.phase.phase}</span>
-                        <span className={styles.phaseRhythmSeason}>{data.phase.title}</span>
-                      </div>
-                      <div className={styles.phaseRhythmPerson}>
-                        <span className={styles.phaseRhythmDot} style={{ background: friendPhaseEl.hex }} />
-                        <span>{friend.name} · Phase {friendPhase.phase}</span>
-                        <span className={styles.phaseRhythmSeason}>{friendPhase.title}</span>
-                      </div>
-                    </div>
-                    {phaseDiff === 0 ? (
-                      <p className={styles.phaseRhythmInsight}>You share the same life season — a rare synchrony that deepens understanding.</p>
-                    ) : (
-                      <p className={styles.phaseRhythmInsight}>{phaseDiff} phase{phaseDiff > 1 ? 's' : ''} apart — different seasons bring different wisdom to the relationship.</p>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <p className={styles.deepBody}>
-              Women move through 7-year cycles, men through 8-year cycles. Partners are almost never in the same life phase — and understanding this difference transforms how you meet each other.
-            </p>
-          )}
-        </GlassCard>
-      </div>
     </div>
   );
 }
