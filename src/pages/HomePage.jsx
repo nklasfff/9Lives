@@ -8,7 +8,9 @@ import { getDailySpirits } from '../engine/wuShen';
 import { getCurrentOrgan, ORGAN_CLOCK } from '../engine/organClock';
 import { getOrgan, hasDepthContent } from '../engine/organs';
 import { getPracticeForOrgan } from '../engine/practices';
-import { getGreeting, formatDate } from '../utils/dateUtils';
+import { getLifePhase } from '../engine/lifePhase';
+import { getGreeting, formatDate, calculateAge } from '../utils/dateUtils';
+import { loadFriends } from '../utils/localStorage';
 import LifeArcVisualization from '../components/hero/LifeArcVisualization';
 import GlassCard from '../components/common/GlassCard';
 import styles from './HomePage.module.css';
@@ -33,6 +35,17 @@ export default function HomePage() {
       organQuestion = organProfile.lifeQuestions[dayOfYear % organProfile.lifeQuestions.length];
     }
     return { now, dayPillar, dayElementInfo, relationship, spirits, currentOrgan, currentPractice, organProfile, organQuestion, formatted: formatDate(now) };
+  }, [data]);
+
+  const friendsToday = useMemo(() => {
+    if (!data) return [];
+    return loadFriends().map((friend) => {
+      const fAge = calculateAge(friend.birthYear, 6, 15);
+      const fPhase = getLifePhase(Math.max(0, fAge), friend.gender);
+      const fEl = getElementInfo(friend.element);
+      const fPhaseEl = getElementInfo(fPhase.element);
+      return { friend, phase: fPhase, el: fEl, phaseEl: fPhaseEl };
+    });
   }, [data]);
 
   if (!data) return null;
@@ -91,6 +104,45 @@ export default function HomePage() {
           )}
           <span className={styles.tapHint}>Explore any date →</span>
         </GlassCard>
+
+        {friendsToday.length > 0 && (
+          <GlassCard glowColor={`${elementInfo.hex}10`} className={styles.peopleCard}>
+            <div className={styles.cardHeader}>
+              <span className={styles.cardLabel}>Your People Today</span>
+              <span className={styles.cardAccent} style={{ color: elementInfo.hex }}>
+                {friendsToday.length} in your field
+              </span>
+            </div>
+            <p className={styles.peopleSubtitle}>
+              Where your circle stands right now
+            </p>
+            <div className={styles.peopleStrip}>
+              {friendsToday.map(({ friend, phase, el, phaseEl }) => {
+                const possessive = friend.gender === 'female' ? 'her' : friend.gender === 'male' ? 'his' : 'their';
+                return (
+                  <button
+                    key={friend.id}
+                    className={styles.peopleMini}
+                    onClick={() => navigate(`/relations/${friend.id}`)}
+                    style={{ '--mini-accent': phaseEl.hex }}
+                  >
+                    <span className={styles.peopleMiniSymbol} style={{ color: el.hex }}>
+                      {el.chinese}
+                    </span>
+                    <span className={styles.peopleMiniName}>{friend.name}</span>
+                    <span className={styles.peopleMiniPhrase}>
+                      is in {possessive}
+                    </span>
+                    <span className={styles.peopleMiniPhase} style={{ color: phaseEl.hex }}>
+                      {phase.title}
+                    </span>
+                    <span className={styles.peopleMiniNum}>Phase {phase.phase}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </GlassCard>
+        )}
 
         {today.currentOrgan && (() => {
           const organElementInfo = getElementInfo(today.currentOrgan.element);
