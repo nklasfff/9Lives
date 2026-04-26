@@ -1,14 +1,19 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
-import { getDayPillar } from '../engine/calendar';
+import { getDayPillar, getYearPillar } from '../engine/calendar';
 import { getElementInfo } from '../engine/elements';
 import { getLifePhase } from '../engine/lifePhase';
+import { getPhaseDeep } from '../engine/phaseDeep';
 import { getRelationship } from '../engine/cycles';
 import { loadFriends } from '../utils/localStorage';
 import { calculateAge } from '../utils/dateUtils';
 import GlassCard from '../components/common/GlassCard';
 import styles from './TimePage.module.css';
+
+function dateToParts(d) {
+  return { year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate() };
+}
 
 export default function TimePage() {
   const navigate = useNavigate();
@@ -24,6 +29,31 @@ export default function TimePage() {
 
   const friends = useMemo(() => loadFriends(), []);
 
+  // Anchor dates for invitation chips (computed once relative to today)
+  const anchors = useMemo(() => {
+    if (!data) return null;
+    const t = today;
+    const bMonth = data.birthDate.month - 1;
+    const bDay = data.birthDate.day;
+    const thisYearBday = new Date(t.getFullYear(), bMonth, bDay);
+    const lastBday = thisYearBday <= t
+      ? thisYearBday
+      : new Date(t.getFullYear() - 1, bMonth, bDay);
+    const nextBday = thisYearBday > t
+      ? thisYearBday
+      : new Date(t.getFullYear() + 1, bMonth, bDay);
+
+    return [
+      { key: 'today', label: 'Today', date: t },
+      { key: 'year-ago', label: 'A year ago', date: new Date(t.getFullYear() - 1, t.getMonth(), t.getDate()) },
+      { key: 'five-ago', label: '5 years ago', date: new Date(t.getFullYear() - 5, t.getMonth(), t.getDate()) },
+      { key: 'ten-ago', label: '10 years ago', date: new Date(t.getFullYear() - 10, t.getMonth(), t.getDate()) },
+      { key: 'last-bday', label: 'Last birthday', date: lastBday },
+      { key: 'next-bday', label: 'Next birthday', date: nextBday },
+      { key: 'five-ahead', label: '5 years from now', date: new Date(t.getFullYear() + 5, t.getMonth(), t.getDate()) },
+    ];
+  }, [data]);
+
   const computed = useMemo(() => {
     if (!data) return null;
     const dateObj = new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day);
@@ -34,23 +64,47 @@ export default function TimePage() {
     const yearDiff = selectedDate.year - today.getFullYear();
     const monthDiff = selectedDate.month - (today.getMonth() + 1);
     const dayDiff = selectedDate.day - today.getDate();
-    const ageAtSelected = calculateAge(data.birthDate.year, data.birthDate.month, data.birthDate.day) + yearDiff;
-    const phaseAtDate = getLifePhase(Math.max(0, ageAtSelected), data.gender);
+    const ageAtSelected = Math.max(0, calculateAge(data.birthDate.year, data.birthDate.month, data.birthDate.day) + yearDiff);
+    const phaseAtDate = getLifePhase(ageAtSelected, data.gender);
     const isToday = selectedDate.year === today.getFullYear() &&
       selectedDate.month === today.getMonth() + 1 &&
       selectedDate.day === today.getDate();
     const isPast = yearDiff < 0 || (yearDiff === 0 && monthDiff < 0) || (yearDiff === 0 && monthDiff === 0 && dayDiff < 0);
 
-    return { pillar, pillarEl, userEl, rel, ageAtSelected, phaseAtDate, isToday, yearDiff, isPast, dateObj };
+    // Year pillar — the era/year energy of the selected year
+    const yearPillar = getYearPillar(selectedDate.year);
+    const yearEl = getElementInfo(yearPillar.stem.element);
+
+    // Next phase transition from the SELECTED date's perspective
+    const cycleLength = data.gender === 'female' ? 7 : 8;
+    const currentPhaseIdx = phaseAtDate.phaseIndex;
+    let transition = null;
+    if (currentPhaseIdx < 8) {
+      const nextTransitionAge = (currentPhaseIdx + 1) * cycleLength;
+      const yearsUntil = nextTransitionAge - ageAtSelected;
+      const nextPhase = getLifePhase(nextTransitionAge, data.gender);
+      transition = { age: nextTransitionAge, yearsUntil, nextPhase };
+    }
+
+    // Menopause-wisdom line for this phase (deep book material)
+    const phaseDeep = getPhaseDeep(phaseAtDate.phase);
+    const wisdomLine = phaseDeep?.menopause?.wisdom || null;
+
+    return {
+      pillar, pillarEl, userEl, rel, ageAtSelected, phaseAtDate, isToday, yearDiff, isPast, dateObj,
+      yearPillar, yearEl, transition, wisdomLine,
+    };
   }, [data, selectedDate]);
 
   if (!data || !computed) return null;
 
   const phaseEl = getElementInfo(computed.phaseAtDate.element);
 
-  const resetToday = () => {
-    setSelectedDate({ year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() });
-  };
+  const setFromDate = (d) => setSelectedDate(dateToParts(d));
+  const isAnchorActive = (anchor) =>
+    selectedDate.year === anchor.date.getFullYear() &&
+    selectedDate.month === anchor.date.getMonth() + 1 &&
+    selectedDate.day === anchor.date.getDate();
 
   const dateLabel = computed.dateObj.toLocaleDateString('en-US', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
@@ -62,11 +116,11 @@ export default function TimePage() {
       ? 'The Energy of That Day'
       : 'The Energy Ahead';
 
-  const phaseHeaderContext = computed.isToday
-    ? 'today'
-    : computed.yearDiff < 0
-      ? `${Math.abs(computed.yearDiff)} years ago`
-      : `in ${computed.yearDiff} years`;
+  const arcMoment = computed.isToday
+    ? 'now'
+    : computed.isPast
+      ? 'then'
+      : 'ahead';
 
   return (
     <div className={styles.page}>
@@ -78,13 +132,19 @@ export default function TimePage() {
       <SpiralIllustration />
 
       <div className={styles.content}>
-        {/* Date picker — choose the moment */}
+        {/* Date invitation — chips first, selects as fallback */}
         <GlassCard>
-          <div className={styles.pickerHeader}>
-            <span className={styles.cardLabel}>Choose a date</span>
-            {!computed.isToday && (
-              <button className={styles.todayBtn} onClick={resetToday}>Today</button>
-            )}
+          <span className={styles.cardLabel}>Travel to a moment</span>
+          <div className={styles.chipsRow}>
+            {anchors.map((a) => (
+              <button
+                key={a.key}
+                className={`${styles.chip} ${isAnchorActive(a) ? styles.chipActive : ''}`}
+                onClick={() => setFromDate(a.date)}
+              >
+                {a.label}
+              </button>
+            ))}
           </div>
           <div className={styles.dateInputs}>
             <div className={styles.field}>
@@ -114,7 +174,7 @@ export default function TimePage() {
           </div>
         </GlassCard>
 
-        {/* Day Energy — what kind of day this is, and how it meets you */}
+        {/* The Day — stem and branch as the day's two voices */}
         <GlassCard glowColor={`${computed.pillarEl.hex}20`} onClick={() => navigate('/explore/element')} className={styles.tappable}>
           <div className={styles.cardHeader}>
             <span className={styles.cardLabel}>{dayHeaderLabel}</span>
@@ -126,6 +186,7 @@ export default function TimePage() {
             {dateLabel} · {computed.pillar.chineseLabel} {computed.pillar.label}
           </p>
           <p className={styles.dayQuote}>{computed.pillar.stemImage}</p>
+          <p className={styles.dayBranchQuote}>{computed.pillar.branchCharacter}</p>
           <div className={styles.dayMeeting}>
             <span className={styles.dayMeetingPair}>
               <span style={{ color: computed.userEl.hex }}>{computed.userEl.chinese}</span>
@@ -140,74 +201,105 @@ export default function TimePage() {
           </div>
         </GlassCard>
 
-        {/* Your phase at this date */}
-        <GlassCard glowColor={`${phaseEl.hex}15`} onClick={() => navigate('/explore/phases')} className={styles.tappable}>
+        {/* The Year — era energy, the year-pillar's signature */}
+        <GlassCard glowColor={`${computed.yearEl.hex}15`}>
           <div className={styles.cardHeader}>
-            <span className={styles.cardLabel}>Your phase</span>
-            <span className={styles.cardAccent} style={{ color: phaseEl.hex }}>
-              {phaseHeaderContext}
+            <span className={styles.cardLabel}>The year · {selectedDate.year}</span>
+            <span className={styles.cardAccent} style={{ color: computed.yearEl.hex }}>
+              {computed.yearEl.name} · {computed.yearPillar.stem.yinYang === 'yang' ? 'Yang' : 'Yin'}
             </span>
           </div>
-          <div className={styles.phaseDisplay}>
-            <span className={styles.phaseNum} style={{ color: phaseEl.hex }}>{computed.phaseAtDate.phase}</span>
-            <div>
-              <h3 className={styles.phaseTitle}>{computed.phaseAtDate.title}</h3>
-              <span className={styles.phaseMeta}>
-                Age {Math.max(0, computed.ageAtSelected)} · {phaseEl.chinese} {phaseEl.name} · {computed.phaseAtDate.season}
-              </span>
-            </div>
-          </div>
-          <p className={styles.phaseQuote}>{computed.phaseAtDate.subtitle}</p>
+          <p className={styles.dayMeta}>
+            {computed.yearPillar.stem.chinese}{computed.yearPillar.branch.chinese} {computed.yearPillar.stem.name}-{computed.yearPillar.branch.name}
+            {' · '}
+            the {computed.yearPillar.branch.animal} year
+          </p>
+          <p className={styles.dayQuote}>{computed.yearPillar.stem.image}</p>
         </GlassCard>
 
-        {/* Your circle on this date — kryds-funktion */}
-        {friends.length > 0 && (() => {
+        {/* The Arc — you and your circle on this date */}
+        {(() => {
           const userEl = getElementInfo(data.element);
           const dateParam = `${selectedDate.year}-${String(selectedDate.month).padStart(2, '0')}-${String(selectedDate.day).padStart(2, '0')}`;
           const groupHref = computed.isToday ? '/relations/group' : `/relations/group?date=${dateParam}`;
-          const moment = computed.isToday ? 'now' : computed.isPast ? 'then' : 'ahead';
           return (
-            <GlassCard glowColor={`${userEl.hex}10`}>
+            <GlassCard glowColor={`${phaseEl.hex}15`}>
               <div className={styles.cardHeader}>
-                <span className={styles.cardLabel}>Your circle · {moment}</span>
-                <span className={styles.cardAccent} style={{ color: userEl.hex }}>
-                  {friends.length} {friends.length === 1 ? 'person' : 'people'}
+                <span className={styles.cardLabel}>Your arc · {arcMoment}</span>
+                <span className={styles.cardAccent} style={{ color: phaseEl.hex }}>
+                  Age {computed.ageAtSelected}
                 </span>
               </div>
-              <div className={styles.peopleGrid}>
-                {friends.map((friend) => {
-                  const fAgeAt = calculateAge(friend.birthYear, 6, 15) + computed.yearDiff;
-                  const safeAge = Math.max(0, fAgeAt);
-                  const fPhase = getLifePhase(safeAge, friend.gender);
-                  const fEl = getElementInfo(friend.element);
-                  const fPhaseEl = getElementInfo(fPhase.element);
-                  return (
-                    <button
-                      key={friend.id}
-                      className={styles.peopleMini}
-                      onClick={() => navigate(`/relations/${friend.id}`)}
-                      style={{ '--mini-accent': fPhaseEl.hex }}
-                    >
-                      <span className={styles.peopleMiniSymbol} style={{ color: fEl.hex }}>
-                        {fEl.chinese}
-                      </span>
-                      <span className={styles.peopleMiniName}>{friend.name}</span>
-                      <span className={styles.peopleMiniPhase} style={{ color: fPhaseEl.hex }}>
-                        {fPhase.title}
-                      </span>
-                      <span className={styles.peopleMiniMeta}>
-                        Phase {fPhase.phase} · age {safeAge}
-                      </span>
-                    </button>
-                  );
-                })}
+
+              <div className={styles.phaseDisplay}>
+                <span className={styles.phaseNum} style={{ color: phaseEl.hex }}>
+                  {computed.phaseAtDate.phase}
+                </span>
+                <div>
+                  <h3 className={styles.phaseTitle}>{computed.phaseAtDate.title}</h3>
+                  <span className={styles.phaseMeta}>
+                    {phaseEl.chinese} {phaseEl.name} · {computed.phaseAtDate.season}
+                  </span>
+                </div>
               </div>
-              <button
-                className={styles.peopleCircleBtn}
-                onClick={() => navigate(groupHref)}
-              >
-                See this date through your circle →
-              </button>
+              <p className={styles.phaseQuote}>{computed.phaseAtDate.subtitle}</p>
+
+              {computed.transition && (
+                <p className={styles.transitionLine}>
+                  Next gateway at age {computed.transition.age} —
+                  {' '}
+                  <span style={{ color: getElementInfo(computed.transition.nextPhase.element).hex }}>
+                    Phase {computed.transition.nextPhase.phase} · {computed.transition.nextPhase.title}
+                  </span>
+                </p>
+              )}
+
+              {computed.wisdomLine && (
+                <p className={styles.wisdomLine}>{computed.wisdomLine}</p>
+              )}
+
+              {friends.length > 0 && (
+                <>
+                  <div className={styles.circleDivider}>
+                    <span className={styles.circleDividerLabel}>
+                      {friends.length} {friends.length === 1 ? 'person' : 'people'} in your circle
+                    </span>
+                  </div>
+                  <div className={styles.peopleGrid}>
+                    {friends.map((friend) => {
+                      const fAgeAt = Math.max(0, calculateAge(friend.birthYear, 6, 15) + computed.yearDiff);
+                      const fPhase = getLifePhase(fAgeAt, friend.gender);
+                      const fEl = getElementInfo(friend.element);
+                      const fPhaseEl = getElementInfo(fPhase.element);
+                      return (
+                        <button
+                          key={friend.id}
+                          className={styles.peopleMini}
+                          onClick={() => navigate(`/relations/${friend.id}`)}
+                          style={{ '--mini-accent': fPhaseEl.hex }}
+                        >
+                          <span className={styles.peopleMiniSymbol} style={{ color: fEl.hex }}>
+                            {fEl.chinese}
+                          </span>
+                          <span className={styles.peopleMiniName}>{friend.name}</span>
+                          <span className={styles.peopleMiniPhase} style={{ color: fPhaseEl.hex }}>
+                            {fPhase.title}
+                          </span>
+                          <span className={styles.peopleMiniMeta}>
+                            Phase {fPhase.phase} · age {fAgeAt}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <button
+                    className={styles.peopleCircleBtn}
+                    onClick={() => navigate(groupHref)}
+                  >
+                    See this date through your circle →
+                  </button>
+                </>
+              )}
             </GlassCard>
           );
         })()}
