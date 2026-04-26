@@ -117,7 +117,44 @@ const ORGANS = {
     emotion: { balanced: 'Joy', imbalanced: 'Restlessness' },
     domain: ['consciousness', 'presence', 'joy', 'connection'],
     essence:
-      'The dwelling of consciousness — the organ of joy, presence, and the inner light recognized in another\'s eyes.',
+      'The seat of consciousness — the organ of joy, presence, and the inner light you recognize in another person\'s eyes.',
+    description:
+      'The classical texts call the Heart the Sovereign — the emperor of the body, whose condition radiates out to every other organ. It governs the blood and its circulation, but at a deeper level it governs Shen: consciousness, presence, the inner light that lets you be genuinely with another person and with yourself. When Shen is settled in the Heart, thinking is clear, sleep is deep, joy comes without effort, and the people who matter to you can feel that you are actually there with them. When the Heart is overworked or neglected, Shen grows restless — sleep turns shallow, joy hollows out, and someone who has loved deeply can end up watching their own life from a distance. Most of what we call inner peace is, in classical terms, Shen settled in the Heart.',
+    balanced:
+      'A felt sense of presence — being where you are, with whoever is there, without having to work at it. Sleep that is deep and unbroken. Speech that lands easily, eyes that meet other eyes without anxiety. Joy that arrives in small, ordinary moments and doesn\'t need to be performed. The capacity to love someone without losing yourself in the process.',
+    blocked:
+      'Insomnia, or sleep that\'s shallow and broken by dreams. A racing mind that won\'t settle, especially in the hours after midday. Restless joy — laughter that doesn\'t quite reach the eyes, social warmth that costs more than it gives. A heart that has armored itself with cleverness or distance because being fully present has come to feel unsafe. The feeling of watching your own life from behind glass.',
+    themes: [
+      {
+        title: 'The Sovereign — Shen and Presence',
+        body: 'The Heart is the seat of Shen, the spirit of consciousness — the felt presence that other people recognize in you before they can put it into words. When Shen is rooted in the Heart, you can be genuinely with another person, and they can feel it. When Shen is disturbed, you can be physically present and emotionally absent at the same time — the body is in the room, but the inner light has gone elsewhere. The Sovereign doesn\'t rule by force; it rules by being fully where it is.',
+      },
+      {
+        title: 'Joy as Resting State',
+        body: 'In Five Element thinking, joy isn\'t a feeling that comes and goes — it\'s the natural resting state of a healthy Heart. Quiet joy, not euphoria. The kind that arrives unbidden when you sit with someone you love, or when sunlight catches a wall in a particular way. When the Heart is depleted, this baseline disappears, and joy starts to require effort, performance, or external stimulation. Restlessness is what fills the space where joy used to be.',
+      },
+      {
+        title: 'Blood, Sleep, and the Settled Heart',
+        body: 'The Heart governs the Blood, and at night the Blood houses the Shen. A Heart with enough Blood gives you sleep that is deep and restorative — Shen comes home for the night, and you wake up as a self that\'s intact. When Blood is depleted, Shen can\'t settle, and sleep becomes fitful, dream-disturbed, or shallow. The Heart\'s most important time of day is, paradoxically, the night — because that\'s when it\'s meant to be still.',
+      },
+      {
+        title: 'Speech and the Tongue',
+        body: 'The tongue is the sense organ of the Heart — and so the Heart governs speech, especially the kind of speech that carries presence. Healthy Heart Qi produces speech that is warm, clear, and connected to the eyes. Disturbed Heart Qi produces speech that races, stutters, runs ahead of itself, or else goes flat and dissociated. The ability to say what you mean and have it land is, at the level of the body, a Heart capacity.',
+      },
+      {
+        title: 'Connection Without Disappearing',
+        body: 'The Heart is the organ of intimacy — but healthy intimacy, in the Chinese view, requires a sovereign, not a servant. A Heart that is well can love deeply and remain itself; a Heart that is depleted often loves by disappearing into the other person, and then resents the disappearance. The Pericardium exists precisely so the Sovereign doesn\'t have to do this work alone.',
+      },
+      {
+        title: 'Midday and the Inner Light',
+        body: 'Between 11:00 and 13:00, the Heart reaches its peak — the body\'s noon, the hour when the inner light is meant to be most accessible. This is not a time for hard work; it\'s a time for connection, for shared meals, for the kind of conversation that nourishes you rather than draining you. A culture that schedules its hardest meetings during the Heart\'s hour is asking the Sovereign to do the work of a soldier — and over the years, that costs.',
+      },
+    ],
+    lifeQuestions: [
+      'When was the last time you felt your Shen settle — fully present, fully here — and what did it take to get there?',
+      'Where in your life have you been loving by disappearing, and what would it cost you to stay yourself while you love?',
+      'What joy in your life has turned into a performance, and what would it look like to let it be quiet again?',
+    ],
   },
 
   smallIntestine: {
@@ -133,7 +170,44 @@ const ORGANS = {
     emotion: { balanced: 'Joy', imbalanced: 'Restlessness' },
     domain: ['discernment', 'sorting', 'clarity'],
     essence:
-      'Separates the pure from the impure — the organ of discernment, of telling what to absorb from what to release.',
+      'Separates the pure from the impure — the organ of discernment, of telling what to take in from what to let go.',
+    description:
+      'The Small Intestine is the yang partner of the Heart, and its function in classical TCM is to separate the pure from the impure — to sort what nourishes from what does not, what to take in from what to let go. Physically, this happens with food in the gut between 13:00 and 15:00, when the body settles into the slower work of digestion. Energetically, the Small Intestine extends the same capacity into the mental and emotional realm: discernment about which impressions to keep, which thoughts to follow, which relationships to invest in. It is the organ of clarity in the practical sense — not insight, but the everyday ability to tell signal from noise. When the Small Intestine is healthy, the small decisions about what matters get made quietly and continuously in the background; when it is overwhelmed, the same person can be flooded with information and unable to tell what is theirs and what isn\'t.',
+    balanced:
+      'The ability to sort — quickly and quietly — what serves you from what doesn\'t. Discernment that is clear without being harsh. Easy digestion, both of food and of impressions. The ability to spend time in a busy environment without bringing all of it home with you. A selective relationship to information rather than an absorptive one.',
+    blocked:
+      'Mental overwhelm in the early afternoon — the Small Intestine\'s hour. A sense of being saturated with other people\'s thoughts, opinions, and emotional residue. Difficulty deciding what is worth caring about. Bloating or sluggish digestion in the mid-afternoon. A tendency to carry other people\'s stress home and treat it as your own.',
+    themes: [
+      {
+        title: 'The Sorter — Pure and Impure',
+        body: 'The Small Intestine\'s classical function is to separate the pure from the impure — the most useful description of a capacity we all need many times a day. From food, it extracts what nourishes and sends the rest on. From experience, it extracts what teaches and lets the rest pass. When this function is working well, life feels less crowded — not because less is happening, but because more of it is being sorted in the background.',
+      },
+      {
+        title: 'Discernment Without Harshness',
+        body: 'A healthy Small Intestine gives you the gentlest kind of clarity — the kind that doesn\'t need to argue. When it is depleted, sorting becomes either too lax (everything in) or too rigid (nothing in). The first is overwhelm; the second is the brittleness of a life that has turned its discernments into walls. In classical terms, either pattern is the same organ asking for the same thing: rest, warmth, and time.',
+      },
+      {
+        title: 'The Body\'s Afternoon',
+        body: 'Between 13:00 and 15:00, the Small Intestine works hardest. This is the body\'s afternoon — slower than morning, quieter than evening, deeply occupied with sorting what the day has brought so far. Cultures that honor the siesta are honoring this organ; cultures that schedule their hardest meetings in this window are asking the Sorter to perform when it is meant to be sorting. A lot of afternoon energy crashes are simply the Small Intestine asking for what it actually needs.',
+      },
+      {
+        title: 'What You Absorb, What You Release',
+        body: 'The Small Intestine governs absorption — and so, in subtle ways, it decides what becomes part of you and what does not. This applies to food, but also to opinions, to other people\'s moods, to the texture of a difficult conversation. People with a strong Small Intestine can spend a day in chaos and still arrive home as themselves; people with a depleted Small Intestine can spend an hour in a difficult room and carry it for days.',
+      },
+      {
+        title: 'The Heart\'s Practical Companion',
+        body: 'The Heart sees what matters; the Small Intestine sorts the daily details that allow what matters to actually get lived. They work as a pair: vision and discernment, presence and practicality. A life with a clear Heart but a depleted Small Intestine knows what is important but can\'t organize the days around it. A life with a strong Small Intestine but an unsettled Heart sorts beautifully but is no longer sure what it is sorting toward.',
+      },
+      {
+        title: 'Bloating, Mental Fog, and the Same Pattern',
+        body: 'In classical Chinese medicine, mid-afternoon bloating and mid-afternoon mental fog are often the same problem — a Small Intestine that has been asked to sort more than it has the capacity to sort. Body and mind are not separate systems here. Both improve when the same organ is supported: with warm food, with rest, and with permission to take less in.',
+      },
+    ],
+    lifeQuestions: [
+      'What are you taking in right now that isn\'t actually yours to take in?',
+      'Where have you let your discernment harden into a wall, and what is on the other side of it that you\'ve stopped letting in?',
+      'What is the most important thing your day has been trying to sort out for you that you haven\'t yet given it time to finish?',
+    ],
   },
 
   bladder: {
