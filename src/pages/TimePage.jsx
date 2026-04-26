@@ -264,6 +264,65 @@ export default function TimePage() {
           <span className={styles.tapHint}>Explore all phases →</span>
         </GlassCard>
 
+        {/* ─── Your circle on this date ─── prominent kryds-funktion */}
+        {friends.length > 0 && (() => {
+          const userEl = getElementInfo(data.element);
+          const dateParam = `${selectedDate.year}-${String(selectedDate.month).padStart(2, '0')}-${String(selectedDate.day).padStart(2, '0')}`;
+          const groupHref = computed.isToday ? '/relations/group' : `/relations/group?date=${dateParam}`;
+          const moment = computed.isToday ? 'now' : computed.isPast ? 'then' : 'ahead';
+          return (
+            <GlassCard glowColor={`${userEl.hex}10`}>
+              <div className={styles.cardHeader}>
+                <span className={styles.cardLabel}>Your circle · {moment}</span>
+                <span className={styles.cardAccent} style={{ color: userEl.hex }}>
+                  {friends.length} {friends.length === 1 ? 'person' : 'people'}
+                </span>
+              </div>
+              <p className={styles.peopleSubtitle}>
+                {computed.isToday
+                  ? 'Where each person stands today.'
+                  : computed.isPast
+                    ? 'Where each person stood on this date.'
+                    : 'Where each person will stand on this date.'}
+              </p>
+              <div className={styles.peopleGrid}>
+                {friends.map((friend) => {
+                  const fAgeAt = calculateAge(friend.birthYear, 6, 15) + computed.yearDiff;
+                  const safeAge = Math.max(0, fAgeAt);
+                  const fPhase = getLifePhase(safeAge, friend.gender);
+                  const fEl = getElementInfo(friend.element);
+                  const fPhaseEl = getElementInfo(fPhase.element);
+                  return (
+                    <button
+                      key={friend.id}
+                      className={styles.peopleMini}
+                      onClick={() => navigate(`/relations/${friend.id}`)}
+                      style={{ '--mini-accent': fPhaseEl.hex }}
+                    >
+                      <span className={styles.peopleMiniSymbol} style={{ color: fEl.hex }}>
+                        {fEl.chinese}
+                      </span>
+                      <span className={styles.peopleMiniName}>{friend.name}</span>
+                      <span className={styles.peopleMiniPhase} style={{ color: fPhaseEl.hex }}>
+                        {fPhase.title}
+                      </span>
+                      <span className={styles.peopleMiniMeta}>
+                        Phase {fPhase.phase} · age {safeAge}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+              <button
+                className={styles.peopleCircleBtn}
+                onClick={() => navigate(groupHref)}
+              >
+                See this date through your circle →
+              </button>
+            </GlassCard>
+          );
+        })()}
+
         {/* ─── Organ Clock — always visible ─── */}
         <GlassCard
           glowColor={computed.isToday ? `${organEl.hex}15` : undefined}
@@ -385,27 +444,6 @@ export default function TimePage() {
           <p className={styles.imbalanceNote}>{computed.pillarEl.imbalancedDescription}</p>
         </GlassCard>
 
-        {/* ─── Friends on this date ─── */}
-        {friends.length > 0 && (
-          <GlassCard>
-            <span className={styles.cardLabel}>Your people · {computed.isToday ? 'now' : selectedDate.year}</span>
-            <div className={styles.friendPhases}>
-              {friends.map((friend) => {
-                const fAge = calculateAge(friend.birthYear, 6, 15) + computed.yearDiff;
-                const fPhase = getLifePhase(Math.max(0, fAge), friend.gender);
-                const fEl = getElementInfo(fPhase.element);
-                return (
-                  <div key={friend.id} className={styles.friendPhaseRow}>
-                    <span className={styles.friendPhaseName}>{friend.name}</span>
-                    <span className={styles.friendPhaseInfo} style={{ color: fEl.hex }}>
-                      Phase {fPhase.phase} · {fPhase.title}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </GlassCard>
-        )}
       </div>
 
       <DailyCycleIllustration />

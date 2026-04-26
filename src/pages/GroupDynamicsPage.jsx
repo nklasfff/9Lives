@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import { getElementInfo, SHENG_DESCRIPTIONS, KE_DESCRIPTIONS } from '../engine/elements';
 import { getRelationship } from '../engine/cycles';
@@ -9,6 +9,15 @@ import { calculateAge } from '../utils/dateUtils';
 import { loadFriends } from '../utils/localStorage';
 import GlassCard from '../components/common/GlassCard';
 import styles from './GroupDynamicsPage.module.css';
+
+function parseDateParam(value) {
+  if (!value) return null;
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!m) return null;
+  const year = +m[1], month = +m[2], day = +m[3];
+  if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+  return { year, month, day };
+}
 
 const ALL_ELEMENTS = ['wood', 'fire', 'earth', 'metal', 'water'];
 
@@ -141,6 +150,7 @@ function getPhaseSpreadInsight(memberPhases) {
 
 export default function GroupDynamicsPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { getDerivedData } = useUser();
   const data = getDerivedData();
   const allFriends = loadFriends();
@@ -149,6 +159,23 @@ export default function GroupDynamicsPage() {
   if (!data) return null;
 
   const userEl = getElementInfo(data.element);
+
+  // Optional date context from ?date=YYYY-MM-DD
+  const targetDate = parseDateParam(searchParams.get('date'));
+  const today = new Date();
+  const isAtTarget = !!targetDate;
+  const yearDiff = targetDate ? targetDate.year - today.getFullYear() : 0;
+  const monthDiff = targetDate ? targetDate.month - (today.getMonth() + 1) : 0;
+  const dayDiff = targetDate ? targetDate.day - today.getDate() : 0;
+  const isPast = isAtTarget && (yearDiff < 0 || (yearDiff === 0 && monthDiff < 0) || (yearDiff === 0 && monthDiff === 0 && dayDiff < 0));
+  const dateLabel = targetDate
+    ? new Date(targetDate.year, targetDate.month - 1, targetDate.day).toLocaleDateString('en-US', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      })
+    : null;
+  const userPhaseAt = isAtTarget
+    ? getLifePhase(Math.max(0, calculateAge(data.birthDate.year, data.birthDate.month, data.birthDate.day) + yearDiff), data.gender)
+    : data.phase;
 
   const toggleFriend = (id) => {
     setSelectedIds(prev =>
@@ -211,12 +238,12 @@ export default function GroupDynamicsPage() {
     emotionMap[m.element].names.push(m.name);
   });
 
-  // Phase info for all members
+  // Phase info for all members (recalculated for target date when present)
   const memberPhases = members.map(m => {
     if (m.isUser) {
-      return { ...m, phase: data.phase };
+      return { ...m, phase: userPhaseAt };
     }
-    const age = calculateAge(m.birthYear, 6, 15);
+    const age = calculateAge(m.birthYear, 6, 15) + yearDiff;
     const phase = getLifePhase(Math.max(0, age), m.gender);
     return { ...m, phase };
   });
@@ -226,14 +253,28 @@ export default function GroupDynamicsPage() {
 
   return (
     <div className={styles.page}>
-      <button className={styles.backBtn} onClick={() => navigate('/relations')}>← Relations</button>
+      <button className={styles.backBtn} onClick={() => navigate(isAtTarget ? '/time' : '/relations')}>
+        ← {isAtTarget ? 'Time' : 'Relations'}
+      </button>
 
       <header className={styles.header}>
-        <span className={styles.label}>Group Constellation</span>
+        <span className={styles.label}>
+          {isAtTarget
+            ? `${dateLabel} · ${isPast ? 'then' : yearDiff === 0 && monthDiff === 0 && dayDiff === 0 ? 'now' : 'ahead'}`
+            : 'Group Constellation'}
+        </span>
         <h1>The Field Between You</h1>
         <p className={styles.subtitle}>
           {members.length} {members.length === 1 ? 'person' : 'people'} · {presentElements.length} element{presentElements.length !== 1 ? 's' : ''}
         </p>
+        {isAtTarget && (
+          <button
+            className={styles.dateClearBtn}
+            onClick={() => navigate('/relations/group')}
+          >
+            View as now →
+          </button>
+        )}
       </header>
 
       <ConstellationIllustration members={members} memberColors={memberColors} pairs={pairs} />

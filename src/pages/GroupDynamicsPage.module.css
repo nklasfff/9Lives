@@ -47,6 +47,28 @@
   margin-top: var(--space-xs);
 }
 
+.dateClearBtn {
+  margin-top: var(--space-sm);
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-muted);
+  padding: 6px var(--space-md);
+  border-radius: var(--radius-full, 999px);
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all var(--transition);
+  min-height: 32px;
+}
+
+.dateClearBtn:hover {
+  border-color: var(--text-secondary);
+  color: var(--text-bright);
+}
+
 /* Illustration */
 .illustration {
   width: 340px;
