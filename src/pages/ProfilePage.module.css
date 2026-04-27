@@ -369,6 +369,166 @@
   padding: 0 var(--space-sm);
 }
 
+/* Birth pillars — the year and day of birth in Gan Zhi */
+.pillarsCard {
+  animation: fadeUp 0.8s var(--ease-out) 0.35s both;
+}
+
+.pillarsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.pillarBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  padding: var(--space-sm) 0;
+}
+
+.pillarKicker {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.pillarChars {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 20px currentColor;
+  line-height: 1.1;
+  margin-top: 2px;
+}
+
+.pillarName {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.pillarMeta {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
+.pillarsLine {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--glass-border);
+  text-align: center;
+}
+
+/* Your Trail — reflections journal (moved from Explore) */
+.trailCard {
+  animation: fadeUp 0.8s var(--ease-out) 0.45s both;
+}
+
+.trailEmpty {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.6;
+  padding: var(--space-sm);
+}
+
+.trailSummary {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--text-muted);
+  margin-bottom: var(--space-md);
+}
+
+.trailWeek {
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--glass-border);
+}
+
+.trailWeek:first-of-type {
+  border-top: none;
+  padding-top: 0;
+  margin-top: var(--space-xs);
+}
+
+.trailWeekLabel {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--text-muted);
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 300;
+  margin-bottom: var(--space-sm);
+}
+
+.trailEntry {
+  background: rgba(17, 29, 43, 0.35);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-xs);
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: opacity var(--transition);
+}
+
+.trailEntry:active {
+  opacity: 0.75;
+}
+
+.trailEntryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.trailEntrySource {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.trailEntryDate {
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+.trailEntryQuestion {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.trailEntryText {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  line-height: 1.65;
+}
+
 /* Saved Constellations (on Profile) */
 .constellationList {
   display: flex;

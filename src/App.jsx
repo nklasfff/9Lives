@@ -17,6 +17,7 @@ import RelationDetailPage from './pages/RelationDetailPage';
 import GroupDynamicsPage from './pages/GroupDynamicsPage';
 import OrgansDetailPage from './pages/OrgansDetailPage';
 import OrganDeepPage from './pages/OrganDeepPage';
+import CalendarDetailPage from './pages/CalendarDetailPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -43,6 +44,7 @@ function AppRoutes() {
         <Route path="/explore/organs" element={<OrgansDetailPage />} />
         <Route path="/explore/organs/:organKey" element={<OrganDeepPage />} />
         <Route path="/explore/depths" element={<DepthDetailPage />} />
+        <Route path="/explore/calendar" element={<CalendarDetailPage />} />
         <Route path="/relations" element={<RelationsPage />} />
         <Route path="/relations/group" element={<GroupDynamicsPage />} />
         <Route path="/relations/:friendId" element={<RelationDetailPage />} />
