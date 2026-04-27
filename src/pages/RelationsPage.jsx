@@ -136,15 +136,6 @@ export default function RelationsPage() {
     (a, b) => (ROLE_ORDER[a.friend.relationship] ?? 99) - (ROLE_ORDER[b.friend.relationship] ?? 99)
   );
 
-  // Build the petals for the Flower hero — one petal per role group, aware of who is in it
-  const petalGroups = [
-    { id: 'partner',  label: 'Partner',  members: friendInsights.filter(fi => fi.friend.relationship === 'partner') },
-    { id: 'parents',  label: 'Parents',  members: friendInsights.filter(fi => ['mother', 'father'].includes(fi.friend.relationship)) },
-    { id: 'children', label: 'Children', members: friendInsights.filter(fi => fi.friend.relationship === 'child') },
-    { id: 'siblings', label: 'Siblings', members: friendInsights.filter(fi => fi.friend.relationship === 'sibling') },
-    { id: 'friends',  label: 'Friends',  members: friendInsights.filter(fi => ['friend', 'other'].includes(fi.friend.relationship)) },
-  ];
-
   // Adaptive narrative flags — each card lights up only when the constellation actually has the shape
   const partnerInsight = friendInsights.find(fi => fi.friend.relationship === 'partner');
   const hasParent = friendInsights.some(fi => ['mother', 'father'].includes(fi.friend.relationship));
@@ -171,7 +162,7 @@ export default function RelationsPage() {
         <p className={styles.subtitle}>What happens when your season meets theirs</p>
       </header>
 
-      <FlowerIllustration userColor={userEl.hex} petalGroups={petalGroups} />
+      <IkigaiIllustration userColor={userEl.hex} />
 
       <div className={styles.content}>
         {/* Saved constellations — compact chip bar (when populated) */}
@@ -470,133 +461,86 @@ export default function RelationsPage() {
   );
 }
 
-function FlowerIllustration({ userColor, petalGroups }) {
-  // The book's flower diagram — DIG I MIDTEN. Five petals around the user, lit by who is in each one.
-  const cx = 150, cy = 150;
-  const petalDist = 60;     // distance from center to petal center
-  const petalRx = 46;       // petal width
-  const petalRy = 32;       // petal height (ellipse)
+function IkigaiIllustration({ userColor }) {
+  // Four overlapping circles in ikigai pattern — you + up to 3 others
+  const colors = [userColor || '#c75a3a', '#4a9e6e', '#3a6fa0', '#c9a84c'];
+  const labels = ['You', 'Partner', 'Child', 'Friend'];
+  const cx = 130, cy = 110, spread = 32, r = 42;
 
-  // Five petals at 72° around, top petal pointing up. Order chosen so family-of-origin sits on top half.
-  const layout = [
-    { id: 'partner',  angle: -90  },   // top
-    { id: 'parents',  angle: -18  },   // upper-right
-    { id: 'children', angle:  54  },   // lower-right
-    { id: 'siblings', angle: 126  },   // lower-left
-    { id: 'friends',  angle: -162 },   // upper-left (i.e. 198°)
+  // Four circle positions (top, right, bottom-right, left)
+  const positions = [
+    { x: cx, y: cy - spread * 0.6 },           // You (top center)
+    { x: cx + spread * 0.9, y: cy + spread * 0.3 }, // Partner (right)
+    { x: cx - spread * 0.9, y: cy + spread * 0.3 }, // Child (left)
+    { x: cx, y: cy + spread * 0.9 },            // Friend (bottom)
   ];
 
-  // Map our role groups by id for fast lookup
-  const groupById = Object.fromEntries(petalGroups.map(g => [g.id, g]));
-
   return (
-    <svg viewBox="0 0 300 300" className={styles.heroIllustration}>
+    <svg viewBox="0 0 260 220" className={styles.heroIllustration}>
       <style>{`
-        @keyframes flowerBreathe {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.025); }
+        @keyframes ikigaiBreathe1 {
+          0%, 100% { transform: translate(0, 2px); }
+          50% { transform: translate(0, -2px); }
         }
-        @keyframes flowerCenterPulse {
-          0%, 100% { r: 4; opacity: 0.7; }
-          50% { r: 7; opacity: 0.35; }
+        @keyframes ikigaiBreathe2 {
+          0%, 100% { transform: translate(2px, 0); }
+          50% { transform: translate(-2px, 0); }
         }
-        @keyframes flowerHalo {
-          0%, 100% { opacity: 0.05; }
-          50% { opacity: 0.18; }
+        @keyframes ikigaiBreathe3 {
+          0%, 100% { transform: translate(-2px, 0); }
+          50% { transform: translate(2px, 0); }
+        }
+        @keyframes ikigaiBreathe4 {
+          0%, 100% { transform: translate(0, -2px); }
+          50% { transform: translate(0, 2px); }
         }
       `}</style>
 
       <defs>
-        {layout.map(({ id }) => {
-          const group = groupById[id];
-          const occupied = group && group.members.length > 0;
-          const color = occupied ? group.members[0].friendEl.hex : '#888';
-          return (
-            <radialGradient key={`flGrad-${id}`} id={`flGrad-${id}`} cx="50%" cy="50%" r="50%">
-              <stop offset="0%"  stopColor={color} stopOpacity={occupied ? 0.32 : 0.04} />
-              <stop offset="60%" stopColor={color} stopOpacity={occupied ? 0.10 : 0.02} />
-              <stop offset="100%" stopColor={color} stopOpacity="0" />
-            </radialGradient>
-          );
-        })}
+        {colors.map((color, i) => (
+          <radialGradient key={`rg${i}`} id={`ikGrad${i}`} cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor={color} stopOpacity="0.12" />
+            <stop offset="70%" stopColor={color} stopOpacity="0.04" />
+            <stop offset="100%" stopColor={color} stopOpacity="0" />
+          </radialGradient>
+        ))}
       </defs>
 
-      {/* Outer halo around the whole flower — gives it presence */}
-      <circle cx={cx} cy={cy} r="118" fill="none"
-        strokeWidth="0.6" strokeDasharray="1 6"
-        style={{ stroke: 'var(--line-faint)', animation: 'flowerHalo 9s ease-in-out infinite' }} />
+      {/* The four overlapping circles */}
+      {positions.map(({ x, y }, i) => (
+        <g key={i} style={{ animation: `ikigaiBreathe${i + 1} ${10 + i * 2}s ease-in-out infinite` }}>
+          <circle cx={x} cy={y} r={r} fill={`url(#ikGrad${i})`} />
+          <circle cx={x} cy={y} r={r} fill="none" stroke={colors[i]} strokeWidth="0.8" opacity="0.35" />
+          <circle cx={x} cy={y} r={r * 0.55} fill="none" stroke={colors[i]} strokeWidth="0.4" opacity="0.15" strokeDasharray="2 3" />
+        </g>
+      ))}
 
-      {/* Petals */}
-      {layout.map(({ id, angle }, i) => {
-        const group = groupById[id];
-        const occupied = group && group.members.length > 0;
-        const count = group ? group.members.length : 0;
-        const a = (angle * Math.PI) / 180;
-        const px = cx + petalDist * Math.cos(a);
-        const py = cy + petalDist * Math.sin(a);
-        const color = occupied ? group.members[0].friendEl.hex : '#888';
-        const labelDist = petalDist + petalRx + 12;
-        const lx = cx + labelDist * Math.cos(a);
-        const ly = cy + labelDist * Math.sin(a);
-        const anchor = Math.cos(a) > 0.2 ? 'start' : Math.cos(a) < -0.2 ? 'end' : 'middle';
+      {/* Single breathing center dot */}
+      <circle cx="130" cy="117" r="4" fill={userColor} opacity="0.6">
+        <animate attributeName="r" values="3;8;3" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
+        <animate attributeName="opacity" values="0.6;0.2;0.6" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
+      </circle>
 
+      {/* Labels */}
+      {positions.map(({ x, y }, i) => {
+        const labelY = i === 0 ? y - r - 6 : i === 3 ? y + r + 10 : y;
+        const labelX = i === 1 ? x + r + 4 : i === 2 ? x - r - 4 : x;
+        const anchor = i === 1 ? 'start' : i === 2 ? 'end' : 'middle';
         return (
-          <g key={id}>
-            {/* Outer wrapper: rotate the petal so its long axis points radially outward */}
-            <g style={{
-              transform: `rotate(${angle + 90}deg)`,
-              transformOrigin: `${px}px ${py}px`,
-            }}>
-              {/* Inner wrapper: subtle breathing scale, separate from rotation */}
-              <g style={{
-                transformOrigin: `${px}px ${py}px`,
-                animation: occupied ? `flowerBreathe ${10 + i * 1.4}s ease-in-out infinite` : 'none',
-              }}>
-                <ellipse cx={px} cy={py} rx={petalRx} ry={petalRy}
-                  fill={`url(#flGrad-${id})`} />
-                <ellipse cx={px} cy={py} rx={petalRx} ry={petalRy}
-                  fill="none" stroke={color} strokeWidth="0.7"
-                  opacity={occupied ? 0.55 : 0.18} />
-                <ellipse cx={px} cy={py} rx={petalRx * 0.55} ry={petalRy * 0.55}
-                  fill="none" stroke={color} strokeWidth="0.4"
-                  opacity={occupied ? 0.25 : 0.08} strokeDasharray="2 3" />
-              </g>
-            </g>
-
-            {/* Member dots inside each petal — one tiny dot per person, in their element color */}
-            {occupied && group.members.map((m, mi) => {
-              const offset = (mi - (count - 1) / 2) * 8;
-              const ox = Math.cos(a + Math.PI / 2) * offset;
-              const oy = Math.sin(a + Math.PI / 2) * offset;
-              return (
-                <circle key={`m-${id}-${mi}`}
-                  cx={px + ox} cy={py + oy} r="2.2"
-                  fill={m.friendEl.hex} opacity="0.85"
-                />
-              );
-            })}
-
-            {/* Petal label */}
-            <text x={lx} y={ly}
-              textAnchor={anchor} dominantBaseline="central"
-              fontSize="8"
-              fontFamily="var(--font-display)"
-              fontStyle="italic"
-              fontWeight="300"
-              opacity={occupied ? 0.85 : 0.4}
-              style={{ fill: occupied ? color : 'var(--text-muted)' }}
-            >
-              {group ? group.label : id}
-              {count > 1 ? ` · ${count}` : ''}
-            </text>
-          </g>
+          <text key={`lbl-${i}`}
+            x={labelX} y={labelY}
+            textAnchor={anchor}
+            fill={colors[i]}
+            fontSize="7"
+            fontFamily="var(--font-display)"
+            fontStyle="italic"
+            fontWeight="300"
+            opacity="0.6"
+          >
+            {labels[i]}
+          </text>
         );
       })}
-
-      {/* Center — you */}
-      <circle cx={cx} cy={cy} r="14" fill={userColor} opacity="0.08" />
-      <circle cx={cx} cy={cy} r="5" fill={userColor} opacity="0.7"
-        style={{ animation: 'flowerCenterPulse 6s ease-in-out infinite' }} />
     </svg>
   );
 }
