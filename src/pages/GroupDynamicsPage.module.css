@@ -150,13 +150,145 @@
   line-height: 1.7;
 }
 
-/* Cards */
+/* Cards — match Home/Time/Relations spacing for visual harmony */
 .cards {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-2xl);
   animation: fadeUp 0.8s var(--ease-out) 0.2s both;
   margin-bottom: var(--space-lg);
+}
+
+/* ─── Composition: a quiet horizontal row of 5 element symbols ─── */
+.compRow {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: var(--space-sm);
+  margin: var(--space-sm) 0 var(--space-md);
+  padding: var(--space-sm) 0;
+}
+
+.compDot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 300;
+  line-height: 1;
+  text-shadow: 0 0 18px currentColor;
+}
+
+.compDotEmpty {
+  text-shadow: none;
+}
+
+.compCount {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-style: italic;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ─── The Pattern: simple count strip below the body ─── */
+.patternCounts {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--glass-border);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.patternCounts strong {
+  font-style: normal;
+  font-weight: 300;
+  color: var(--text-bright);
+  margin-right: 4px;
+}
+
+/* ─── Dominant spirit row: chinese char + name + quality ─── */
+.dominantSpiritRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin: var(--space-sm) 0 var(--space-md);
+}
+
+.dominantSpiritChinese {
+  font-size: 2.4rem;
+  font-weight: 300;
+  line-height: 1;
+  text-shadow: 0 0 22px currentColor;
+}
+
+.dominantSpiritQuality {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+/* ─── Seasons: compact one-line per member ─── */
+.seasonsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin: var(--space-sm) 0 var(--space-md);
+}
+
+.seasonRow {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.seasonRow:last-child {
+  border-bottom: none;
+}
+
+.seasonChinese {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 300;
+  text-shadow: 0 0 12px currentColor;
+  text-align: center;
+}
+
+.seasonName {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--text-bright);
+}
+
+.seasonPhase {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+/* ─── Closing thought: a single italic line, no card chrome ─── */
+.closingNote {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  text-align: center;
+  margin: var(--space-md) auto 0;
+  max-width: 320px;
+  opacity: 0.85;
 }
 
 .cardLabel {

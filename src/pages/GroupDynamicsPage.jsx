@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
-import { getElementInfo, SHENG_DESCRIPTIONS, KE_DESCRIPTIONS } from '../engine/elements';
+import { getElementInfo } from '../engine/elements';
 import { getRelationship } from '../engine/cycles';
 import { getLifePhase } from '../engine/lifePhase';
-import { getSpiritBetween, getSpiritByElement } from '../engine/wuShen';
+import { getSpiritBetween } from '../engine/wuShen';
 import { calculateAge } from '../utils/dateUtils';
 import { loadFriends } from '../utils/localStorage';
 import GlassCard from '../components/common/GlassCard';
@@ -314,256 +314,104 @@ export default function GroupDynamicsPage() {
         </GlassCard>
       ) : (
         <div className={styles.cards}>
-          {/* ─── Elemental Map ─── */}
+
+          {/* ─── Composition — at-a-glance row of element dots ─── */}
           <GlassCard>
-            <span className={styles.cardLabel}>Elemental Composition</span>
-            <h2 className={styles.cardTitle}>Who Brings What</h2>
-            <div className={styles.elementGrid}>
+            <span className={styles.cardLabel}>Composition</span>
+            <div className={styles.compRow}>
               {ALL_ELEMENTS.map(el => {
                 const info = getElementInfo(el);
                 const count = elementCounts[el] || 0;
-                const names = members.filter(m => m.element === el).map(m => m.name);
+                const present = count > 0;
                 return (
-                  <div key={el} className={`${styles.elementItem} ${count === 0 ? styles.elementAbsent : ''}`}>
-                    <span className={styles.elementChinese} style={{ color: count > 0 ? info.hex : 'var(--text-muted)' }}>
+                  <div key={el} className={`${styles.compDot} ${present ? '' : styles.compDotEmpty}`}>
+                    <span style={{ color: present ? info.hex : 'var(--text-muted)', opacity: present ? 1 : 0.35 }}>
                       {info.chinese}
                     </span>
-                    <span className={styles.elementName} style={{ color: count > 0 ? info.hex : 'var(--text-muted)' }}>
-                      {info.name}
-                    </span>
-                    {count > 0 ? (
-                      <span className={styles.elementMembers}>{names.join(', ')}</span>
-                    ) : (
-                      <span className={styles.elementMissing}>absent</span>
-                    )}
+                    {count > 1 && <em className={styles.compCount}>×{count}</em>}
                   </div>
                 );
               })}
             </div>
-
-            {missingElements.length > 0 && (
-              <p className={styles.bodyText}>
-                {GROUP_THEMES.missingElements(missingInfo.map(e => e.name))}
-              </p>
-            )}
+            <p className={styles.bodyText}>
+              {missingElements.length === 0
+                ? 'All five elements are present — the full spectrum lives in this field.'
+                : missingElements.length === 5 - 1 || missingElements.length === 4
+                  ? `Most of the spectrum is absent. The qualities of ${missingInfo.slice(0, 2).map(e => e.name).join(' and ')} live elsewhere.`
+                  : `${missingInfo.map(e => e.name).join(' and ')} ${missingElements.length === 1 ? 'is' : 'are'} absent — what is missing shapes the group as much as what is here.`
+              }
+            </p>
           </GlassCard>
 
-          {/* ─── Group Theme ─── */}
+          {/* ─── The Pattern — one headline + small counts ─── */}
           <GlassCard>
-            <span className={styles.cardLabel}>The Pattern</span>
-            <h2 className={styles.cardTitle}>What Holds This Group Together</h2>
+            <span className={styles.cardLabel}>The pattern</span>
+            <h2 className={styles.cardTitle}>
+              {pairs.every(p => p.rel.type === 'same') ? 'A field of one element'
+                : (relTypes.ke_control || relTypes.ke_controlled) ? 'Tempering present'
+                : pairs.every(p => p.rel.type.startsWith('sheng') || p.rel.type === 'same') ? 'Unbroken nourishing'
+                : 'Multiple flows'}
+            </h2>
             <p className={styles.bodyText}>{getGroupTheme()}</p>
-
-            <div className={styles.relSummary}>
-              {relTypes.same > 0 && (
-                <div className={styles.relSummaryItem}>
-                  <span className={styles.relSummaryCount}>{relTypes.same}</span>
-                  <span className={styles.relSummaryType}>Resonance</span>
-                  <span className={styles.relSummaryDesc}>Mirror connections</span>
-                </div>
-              )}
+            <div className={styles.patternCounts}>
+              {relTypes.same > 0 && <span><strong>{relTypes.same}</strong> resonance</span>}
               {(relTypes.sheng_give || 0) + (relTypes.sheng_receive || 0) > 0 && (
-                <div className={styles.relSummaryItem}>
-                  <span className={styles.relSummaryCount}>{(relTypes.sheng_give || 0) + (relTypes.sheng_receive || 0)}</span>
-                  <span className={styles.relSummaryType}>Nourishing</span>
-                  <span className={styles.relSummaryDesc}>Generative flows</span>
-                </div>
+                <span><strong>{(relTypes.sheng_give || 0) + (relTypes.sheng_receive || 0)}</strong> nourishing</span>
               )}
               {(relTypes.ke_control || 0) + (relTypes.ke_controlled || 0) > 0 && (
-                <div className={styles.relSummaryItem}>
-                  <span className={styles.relSummaryCount}>{(relTypes.ke_control || 0) + (relTypes.ke_controlled || 0)}</span>
-                  <span className={styles.relSummaryType}>Tempering</span>
-                  <span className={styles.relSummaryDesc}>Structuring tensions</span>
-                </div>
+                <span><strong>{(relTypes.ke_control || 0) + (relTypes.ke_controlled || 0)}</strong> tempering</span>
               )}
             </div>
-
-            {/* Deeper layer */}
-            {(() => {
-              const depth = getPatternDepth(relTypes);
-              return (
-                <div className={styles.deeperLayer}>
-                  <div className={styles.deeperRow}>
-                    <span className={styles.deeperLabel}>Gift</span>
-                    <p className={styles.deeperText}>{depth.gift}</p>
-                  </div>
-                  <div className={styles.deeperRow}>
-                    <span className={styles.deeperLabel}>Shadow</span>
-                    <p className={styles.deeperText}>{depth.shadow}</p>
-                  </div>
-                  <div className={styles.deeperRow}>
-                    <span className={styles.deeperLabel}>Practice</span>
-                    <p className={styles.deeperText}>{depth.practice}</p>
-                  </div>
-                </div>
-              );
-            })()}
           </GlassCard>
 
-          {/* ─── All Pairwise Dynamics ─── */}
-          <GlassCard>
-            <span className={styles.cardLabel}>Pairwise Dynamics</span>
-            <h2 className={styles.cardTitle}>Every Connection</h2>
-
-            {pairs.map((pair, idx) => {
-              const aEl = getElementInfo(pair.a.element);
-              const bEl = getElementInfo(pair.b.element);
-              const cycleKey = `${pair.a.element}_${pair.b.element}`;
-              const reverseKey = `${pair.b.element}_${pair.a.element}`;
-              const metaphor = SHENG_DESCRIPTIONS[cycleKey] || SHENG_DESCRIPTIONS[reverseKey] || KE_DESCRIPTIONS[cycleKey] || KE_DESCRIPTIONS[reverseKey];
-              return (
-                <div key={idx} className={styles.pairItem}>
-                  <div className={styles.pairHeader}>
-                    <div className={styles.pairDots}>
-                      <span className={styles.pairDot} style={{ background: aEl.hex }} />
-                      <span className={styles.pairLine} />
-                      <span className={styles.pairDot} style={{ background: bEl.hex }} />
-                    </div>
-                    <div className={styles.pairNames}>
-                      <span>{pair.a.name} & {pair.b.name}</span>
-                      <span className={styles.pairRelName}>{pair.rel.name}</span>
-                    </div>
-                  </div>
-                  {metaphor && <p className={styles.pairMetaphor}>{metaphor}</p>}
-                  <p className={styles.pairDesc}>{pair.rel.description}</p>
-                </div>
-              );
-            })}
-          </GlassCard>
-
-          {/* ─── Spirits Between ─── */}
-          <GlassCard>
-            <span className={styles.cardLabel}>Wu Shen · Group Layer</span>
-            <h2 className={styles.cardTitle}>Spirits Governing the Field</h2>
-            <p className={styles.bodyText}>
-              Between each pair of people, a spirit holds the relational space. In a group, these spirits form a constellation of their own — revealing which qualities are most alive in your shared field.
-            </p>
-
-            {pairs.map((pair, idx) => (
-              <div key={idx} className={styles.spiritItem}>
-                <div className={styles.spiritItemHeader}>
-                  <span className={styles.spiritChinese} style={{ color: pair.spiritEl.hex }}>{pair.spirit.chinese}</span>
+          {/* ─── Spirit Field — only the dominant one ─── */}
+          {(() => {
+            const insight = getDominantSpiritInsight(pairs);
+            if (!insight) return null;
+            const counts = {};
+            pairs.forEach(p => { counts[p.spirit.name] = (counts[p.spirit.name] || 0) + 1; });
+            const dominantName = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
+            const dominantPair = pairs.find(p => p.spirit.name === dominantName);
+            return (
+              <GlassCard>
+                <span className={styles.cardLabel}>Wu Shen · The spirit between you</span>
+                <div className={styles.dominantSpiritRow}>
+                  <span className={styles.dominantSpiritChinese} style={{ color: dominantPair.spiritEl.hex }}>
+                    {dominantPair.spirit.chinese}
+                  </span>
                   <div>
-                    <span className={styles.spiritName} style={{ color: pair.spiritEl.hex }}>{pair.spirit.name}</span>
-                    <span className={styles.spiritPairNames}>{pair.a.name} & {pair.b.name}</span>
+                    <h2 className={styles.cardTitle} style={{ marginBottom: 2 }}>{dominantPair.spirit.name}</h2>
+                    <span className={styles.dominantSpiritQuality}>{insight.quality}</span>
                   </div>
                 </div>
-                <p className={styles.spiritTitle}>{pair.spirit.title}</p>
-                <p className={styles.spiritReason}>{pair.reason}</p>
-              </div>
-            ))}
+                <p className={styles.bodyText}>{insight.field}</p>
+              </GlassCard>
+            );
+          })()}
 
-            {/* Deeper layer — dominant spirit in the field */}
-            {(() => {
-              const insight = getDominantSpiritInsight(pairs);
-              if (!insight) return null;
-              return (
-                <div className={styles.deeperLayer}>
-                  <span className={styles.deeperHeading}>The dominant spirit in this field</span>
-                  <span className={styles.deeperQuality}>{insight.quality}</span>
-                  <p className={styles.deeperText}>{insight.field}</p>
-                </div>
-              );
-            })()}
-          </GlassCard>
-
-          {/* ─── Emotional Landscape ─── */}
+          {/* ─── Where each stands in time — compact list ─── */}
           <GlassCard>
-            <span className={styles.cardLabel}>Emotional Landscape</span>
-            <h2 className={styles.cardTitle}>The Feeling Field</h2>
-            <p className={styles.bodyText}>
-              Each element carries its own emotional signature — a balanced expression and a shadow. In a group, these emotions weave together into a shared field that is greater than any single person.
-            </p>
-
-            <div className={styles.emotionGrid}>
-              {Object.entries(emotionMap).map(([el, info]) => (
-                <div key={el} className={styles.emotionItem}>
-                  <span className={styles.emotionChinese} style={{ color: info.hex }}>{info.chinese}</span>
-                  <div className={styles.emotionContent}>
-                    <span className={styles.emotionNames}>{info.names.join(', ')}</span>
-                    <span className={styles.emotionBalanced}>{info.balanced}</span>
-                    <span className={styles.emotionShadow}>Shadow: {info.imbalanced}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Deeper layer — collective field insight */}
-            <div className={styles.deeperLayer}>
-              <div className={styles.deeperRow}>
-                <span className={styles.deeperLabel}>Field</span>
-                <p className={styles.deeperText}>{getEmotionalFieldInsight(presentElements)}</p>
-              </div>
-              <div className={styles.deeperRow}>
-                <span className={styles.deeperLabel}>Absence</span>
-                <p className={styles.deeperText}>{getEmotionalShadow(presentElements)}</p>
-              </div>
-            </div>
-          </GlassCard>
-
-          {/* ─── Life Seasons ─── */}
-          <GlassCard>
-            <span className={styles.cardLabel}>Life Seasons</span>
-            <h2 className={styles.cardTitle}>Where Each Person Stands in Time</h2>
-
-            <div className={styles.phaseList}>
+            <span className={styles.cardLabel}>Seasons</span>
+            <h2 className={styles.cardTitle}>Where each stands</h2>
+            <div className={styles.seasonsList}>
               {memberPhases.map((m, idx) => {
                 const phaseEl = getElementInfo(m.phase.element);
                 return (
-                  <div key={idx} className={styles.phaseItem}>
-                    <span className={styles.phaseNum} style={{ color: phaseEl.hex }}>{m.phase.phase}</span>
-                    <div>
-                      <span className={styles.phaseName}>{m.name}</span>
-                      <h3 className={styles.phaseTitle}>{m.phase.title}</h3>
-                      <span className={styles.phaseSeason}>
-                        {phaseEl.chinese} {phaseEl.name} · {m.phase.season}
-                      </span>
-                    </div>
+                  <div key={idx} className={styles.seasonRow}>
+                    <span className={styles.seasonChinese} style={{ color: phaseEl.hex }}>{phaseEl.chinese}</span>
+                    <span className={styles.seasonName}>{m.name}</span>
+                    <span className={styles.seasonPhase}>Phase {m.phase.phase} · {m.phase.title}</span>
                   </div>
                 );
               })}
             </div>
-
-            {(() => {
-              const phases = memberPhases.map(m => m.phase.phase);
-              const uniquePhases = [...new Set(phases)];
-              const phaseElements = [...new Set(memberPhases.map(m => m.phase.element))];
-              if (uniquePhases.length === 1) {
-                return <p className={styles.phaseInsight}>Everyone stands in the same life season — a rare convergence. You are asking the same questions at the same time.</p>;
-              }
-              if (phaseElements.length === 1) {
-                return <p className={styles.phaseInsight}>Though your phases differ, you all move through the same elemental season. The questions you carry are variations on a single theme.</p>;
-              }
-              const spread = Math.max(...phases) - Math.min(...phases);
-              return <p className={styles.phaseInsight}>{spread} phases span this group — from the youngest season to the oldest. Each person brings the wisdom of their particular moment in time.</p>;
-            })()}
-
-            {/* Deeper layer — phase wisdom per person + spread insight */}
-            <div className={styles.deeperLayer}>
-              <span className={styles.deeperHeading}>What each season carries</span>
-              {memberPhases.map((m, idx) => (
-                <div key={idx} className={styles.deeperPhaseRow}>
-                  <span className={styles.deeperPhaseName}>{m.name}</span>
-                  <p className={styles.deeperText}>{PHASE_WISDOM[m.phase.phase]}</p>
-                </div>
-              ))}
-              <div className={styles.deeperRow} style={{ marginTop: 'var(--space-sm)' }}>
-                <span className={styles.deeperLabel}>Together</span>
-                <p className={styles.deeperText}>{getPhaseSpreadInsight(memberPhases)}</p>
-              </div>
-            </div>
+            <p className={styles.bodyText}>{getPhaseSpreadInsight(memberPhases)}</p>
           </GlassCard>
 
-          {/* ─── Group Reflection ─── */}
-          <GlassCard>
-            <div className={styles.finalReflection}>
-              <span className={styles.cardLabel}>A closing thought</span>
-              <p className={styles.finalText}>
-                A group is not the sum of its parts — it is a field. The elements you carry, the spirits that govern your connections, the life seasons you each inhabit — these create something that exists only when you are together.
-                What emerges in this particular constellation cannot emerge anywhere else. Pay attention to it.
-              </p>
-            </div>
-          </GlassCard>
+          {/* ─── A closing thought — single italic line ─── */}
+          <p className={styles.closingNote}>
+            What emerges in this particular constellation cannot emerge anywhere else.
+          </p>
         </div>
       )}
     </div>
