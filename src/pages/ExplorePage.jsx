@@ -1,79 +1,90 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import GlassCard from '../components/common/GlassCard';
+import { useUser } from '../context/UserContext';
+import { getElementInfo } from '../engine/elements';
+import { getDayPillar, getYearPillar } from '../engine/calendar';
+import { getRelationship } from '../engine/cycles';
+import { getCurrentOrgan } from '../engine/organClock';
+import { getElementPractice, getPracticeForOrgan } from '../engine/practices';
+import { getLifePhase, getAllPhases } from '../engine/lifePhase';
+import { EXTRAORDINARY_MERIDIANS } from '../engine/meridians';
+import { getSpiritByElement } from '../engine/wuShen';
+import { getPhaseDeep } from '../engine/phaseDeep';
 import { getTimelineGroupedByWeek } from '../utils/reflectionStore';
+import GlassCard from '../components/common/GlassCard';
 import styles from './ExplorePage.module.css';
 
-const LAYERS = [
-  { key: 'elements', chinese: '五行', title: 'The Five Elements', subtitle: 'Wood · Fire · Earth · Metal · Water', tagline: 'The five qualities through which life expresses itself.', route: '/explore/element' },
-  { key: 'phases',   chinese: '九段', title: 'The Nine Seasons',  subtitle: 'A lifetime in nine chapters',                tagline: 'Seven-year cycles for women, eight for men — each its own element, season, and calling.', route: '/explore/phases' },
-  { key: 'spirits',  chinese: '五神', title: 'The Five Spirits',  subtitle: 'Wu Shen — consciousness in five forms',     tagline: 'Five aspects of the soul, residing in the five yin organs.', route: '/explore/spirits' },
-  { key: 'organs',   chinese: '十二臟', title: 'The Twelve Organs', subtitle: 'Twelve systems, twelve teachers',         tagline: 'Each organ a function, an emotion, a time of day, and a particular kind of intelligence.', route: '/explore/organs' },
-  { key: 'depths',   chinese: '八脈', title: 'The Eight Depths',   subtitle: 'Qi Jing Ba Mai — extraordinary vessels',   tagline: 'Eight hidden rivers carrying inheritance, shadow, and unfinished work.', route: '/explore/depths' },
-];
+// ─── Helpers ────────────────────────────────────────────────────────────
 
-const FIRST_CONCEPTS = [
-  {
-    chinese: '陰陽',
-    name: 'Yin & Yang',
-    body: 'Two qualities that cannot exist without each other. Yin is the quiet, the inward, the dark, the receptive. Yang is the active, the outward, the light, the expanding. Night and day. Winter and summer. Rest and movement. Yin is not absence of force — it is the kind of force that works while you rest.',
-  },
-  {
-    chinese: '精氣神',
-    name: 'Jing · Qi · Shen',
-    body: 'Three forms of life-force living in everyone. Jing is the deep essence inherited at conception, stored in the Kidneys — your battery for a whole life. Qi is the daily energy that moves through breath, food, and movement. Shen is consciousness and inner light, dwelling in the Heart and visible in the eyes. These three are the threads woven through every chapter that follows.',
-  },
-];
+// For her profile, which 2-3 vessels are most active (element-driven + phase-driven)
+const ELEMENT_VESSELS = {
+  wood:  [2, 5], // Du Mai (yang authority), Yang Wei Mai (evolution)
+  fire:  [1, 4], // Ren Mai (bonding), Yin Wei Mai (meaning)
+  earth: [1, 0], // Ren Mai (nourishment), Chong Mai (ancestry)
+  metal: [3, 6], // Dai Mai (release), Yin Qiao Mai (receptivity)
+  water: [0, 4], // Chong Mai (essence), Yin Wei Mai (meaning)
+};
+const PHASE_VESSEL = {
+  1: 7, 2: 7, // Yang Qiao (visibility, becoming)
+  3: 2,       // Du Mai (uprightness, identity)
+  4: 1, 5: 1, // Ren Mai (bonding, holding)
+  6: 5, 7: 5, // Yang Wei (evolution, release)
+  8: 4,       // Yin Wei (meaning, essence)
+  9: 0,       // Chong Mai (second spring, ancestral)
+};
+const VESSEL_REASON = {
+  wood:  'Wood needs the upright spine — your direction depends on it.',
+  fire:  'Fire seeks bonding — your heart asks to be held and to hold.',
+  earth: 'Earth nourishes — your work is to receive as well as to give.',
+  metal: 'Metal refines — your faculty is letting what is finished go.',
+  water: 'Water carries essence — your line is older than you.',
+};
+const PHASE_REASON = {
+  1: 'Becoming visible for the first time.',
+  2: 'Becoming visible for the first time.',
+  3: 'Standing upright in your own identity.',
+  4: 'Holding what you have built — bonding deeply.',
+  5: 'Holding what you have built — bonding deeply.',
+  6: 'Releasing what is no longer essential — the work of evolution.',
+  7: 'Releasing what is no longer essential — the work of evolution.',
+  8: 'Listening for the meaning beneath your story.',
+  9: 'Drawing on what was passed to you, and passing it on.',
+};
 
-function ExploreIllustration() {
-  const layerColors = ['#3a6fa0', '#a8b8c8', '#c9a84c', '#c75a3a', '#4a9e6e', '#b88a6a', '#7a9ab5'];
-
-  return (
-    <svg viewBox="0 0 200 130" className={styles.illustration}>
-      <style>{`
-        @keyframes arcWave {
-          0% { opacity: 0; stroke-dashoffset: 60; }
-          20% { opacity: 0.45; stroke-dashoffset: 0; }
-          70% { opacity: 0.45; stroke-dashoffset: 0; }
-          100% { opacity: 0; stroke-dashoffset: -60; }
-        }
-        @keyframes corePulse {
-          0%, 100% { opacity: 0.2; }
-          50% { opacity: 0.5; }
-        }
-      `}</style>
-
-      {[96, 82, 68, 54, 42, 30, 20].map((r, i) => (
-        <path key={i}
-          d={`M ${100 - r} 100 A ${r} ${r} 0 0 1 ${100 + r} 100`}
-          fill="none"
-          stroke={layerColors[i]}
-          strokeWidth={0.9}
-          strokeDasharray={i % 2 === 0 ? 'none' : '4 3'}
-          opacity="0.35"
-          style={{ animation: `arcWave ${8 + i * 0.5}s ease-in-out ${i * 1.2}s infinite` }}
-        />
-      ))}
-      {[92, 60, 32].map((r, i) => (
-        <g key={`d-${i}`}>
-          <circle cx={100 - r} cy="100" r="1.5" fill={layerColors[i * 2]} opacity="0.3"
-            style={{ animation: `corePulse ${6 + i}s ease-in-out ${i * 2}s infinite` }} />
-          <circle cx={100 + r} cy="100" r="1.5" fill={layerColors[i * 2]} opacity="0.3"
-            style={{ animation: `corePulse ${6 + i}s ease-in-out ${i * 2 + 1}s infinite` }} />
-        </g>
-      ))}
-      <line x1="100" y1="100" x2="100" y2="5" style={{ stroke: 'var(--line-subtle)' }} strokeWidth="0.5" strokeDasharray="2 4" />
-      <circle cx="100" cy="5" r="4" fill="none" strokeWidth="0.6"
-        style={{ stroke: 'var(--text-illustration-dim)', animation: 'corePulse 7s ease-in-out infinite' }} />
-      <circle cx="100" cy="100" r="3.5" style={{ fill: 'var(--line-subtle)', animation: 'corePulse 5s ease-in-out infinite' }} />
-      <circle cx="100" cy="100" r="1.5" style={{ fill: 'var(--line-strong)' }} />
-    </svg>
-  );
+function getActiveVessels(element, phase) {
+  const elIdx = ELEMENT_VESSELS[element] || [0, 1];
+  const phIdx = PHASE_VESSEL[phase] != null ? PHASE_VESSEL[phase] : 4;
+  const indices = [...new Set([...elIdx, phIdx])].slice(0, 3);
+  return indices.map((i) => ({
+    ...EXTRAORDINARY_MERIDIANS[i],
+    reason: VESSEL_REASON[element] + ' ' + PHASE_REASON[phase],
+  }));
 }
 
-function formatWeek(iso) {
-  const d = new Date(iso);
-  return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+function getPhaseTimeline(birthYear, gender) {
+  const cycleLength = gender === 'female' ? 7 : 8;
+  const allPhases = getAllPhases(gender);
+  return allPhases.map((p, i) => {
+    const startAge = i * cycleLength;
+    const endAge = i === 8 ? null : (i + 1) * cycleLength - 1;
+    return {
+      ...p,
+      startAge,
+      endAge,
+      startYear: birthYear + startAge,
+      endYear: endAge != null ? birthYear + endAge : null,
+    };
+  });
+}
+
+function ordinalDay(n) {
+  if (n >= 11 && n <= 13) return `${n}th`;
+  switch (n % 10) {
+    case 1: return `${n}st`;
+    case 2: return `${n}nd`;
+    case 3: return `${n}rd`;
+    default: return `${n}th`;
+  }
 }
 
 function entryRoute(entry) {
@@ -83,86 +94,288 @@ function entryRoute(entry) {
 }
 
 function entrySource(entry) {
-  if (entry.type === 'organ') return entry.organKey ? entry.organKey.replace(/([A-Z])/g, ' $1').replace(/^./, c => c.toUpperCase()) : 'Organ';
+  if (entry.type === 'organ') {
+    return (entry.organKey || 'Organ').replace(/([A-Z])/g, ' $1').replace(/^./, (c) => c.toUpperCase());
+  }
   if (entry.type === 'reflection' || entry.type === 'journal') return `Phase ${entry.phaseId}`;
   return '';
 }
 
+// ─── Page ───────────────────────────────────────────────────────────────
+
 export default function ExplorePage() {
   const navigate = useNavigate();
-  const trailWeeks = useMemo(() => getTimelineGroupedByWeek(), []);
+  const { getDerivedData } = useUser();
+  const data = getDerivedData();
+
+  const view = useMemo(() => {
+    if (!data) return null;
+    const today = new Date();
+    const userEl = getElementInfo(data.element);
+    const phaseEl = getElementInfo(data.phase.element);
+
+    // 1. Birth-pillar chart
+    const yearPillar = getYearPillar(data.birthDate.year);
+    const birthDate = new Date(data.birthDate.year, data.birthDate.month - 1, data.birthDate.day);
+    const dayPillar = getDayPillar(birthDate);
+    const dayPillarEl = getElementInfo(dayPillar.element);
+    const yearStemEl = getElementInfo(yearPillar.stem.element);
+    const yearBranchEl = getElementInfo(yearPillar.branch.element);
+
+    // 2. Alignment now
+    const todayPillar = getDayPillar(today);
+    const todayEl = getElementInfo(todayPillar.element);
+    const currentOrgan = getCurrentOrgan();
+    const organEl = getElementInfo(currentOrgan.element);
+    const alignment = [
+      { fromLabel: 'You',   fromEl: userEl,  toLabel: 'Phase',  toEl: phaseEl,   rel: getRelationship(data.element, data.phase.element) },
+      { fromLabel: 'Phase', fromEl: phaseEl, toLabel: 'Today',  toEl: todayEl,   rel: getRelationship(data.phase.element, todayPillar.element) },
+      { fromLabel: 'Today', fromEl: todayEl, toLabel: 'Hour',   toEl: organEl,   rel: getRelationship(todayPillar.element, currentOrgan.element) },
+    ];
+
+    // 3. Life map
+    const timeline = getPhaseTimeline(data.birthDate.year, data.gender);
+
+    // 4. Active vessels for HER profile
+    const activeVessels = getActiveVessels(data.element, data.phase.phase);
+
+    // 5. Trail
+    const trailWeeks = getTimelineGroupedByWeek();
+
+    // 6. Practice for you now
+    const elPractice = getElementPractice(data.element);
+    const organPractice = getPracticeForOrgan(currentOrgan.organ);
+    const phaseDeep = getPhaseDeep(data.phase.phase);
+    // Rotate phase advice by day-of-year so it changes daily but is stable across reloads
+    const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+    const phaseAdvice = phaseDeep && phaseDeep.advice && phaseDeep.advice.length > 0
+      ? phaseDeep.advice[dayOfYear % phaseDeep.advice.length]
+      : null;
+    const practice = {
+      element: elPractice,
+      organ: organPractice,
+      organName: currentOrgan.organ,
+      organTime: currentOrgan.time,
+      phaseAdvice,
+    };
+
+    const spirit = getSpiritByElement(data.element);
+
+    return {
+      userEl, phaseEl,
+      yearPillar, yearStemEl, yearBranchEl,
+      dayPillar, dayPillarEl,
+      alignment, todayPillar, todayEl, currentOrgan, organEl,
+      timeline, activeVessels, trailWeeks, practice, spirit,
+    };
+  }, [data]);
+
+  if (!data || !view) return null;
 
   return (
     <div className={styles.page}>
       <header className={styles.header}>
         <h1>Explore</h1>
-        <p className={styles.subtitle}>The wisdom system, and the trail you leave inside it</p>
+        <p className={styles.subtitle}>Readings the engine produces only here</p>
       </header>
 
-      <ExploreIllustration />
-
       <div className={styles.content}>
-        {/* First concepts — the foundation the book opens with */}
+
+        {/* ─── 1. Your chart ─── */}
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>First concepts</h2>
-          <p className={styles.sectionLead}>The two ideas that ground everything that follows.</p>
-          {FIRST_CONCEPTS.map((c) => (
-            <GlassCard key={c.chinese} className={styles.conceptCard}>
-              <div className={styles.conceptHeader}>
-                <span className={styles.conceptChinese}>{c.chinese}</span>
-                <h3 className={styles.conceptName}>{c.name}</h3>
-              </div>
-              <p className={styles.conceptBody}>{c.body}</p>
-            </GlassCard>
-          ))}
+          <h2 className={styles.sectionTitle}>Your chart</h2>
+          <p className={styles.sectionLead}>Two pillars from the day and the year you were born — the classical reading.</p>
+
+          <GlassCard className={styles.pillarCard}>
+            <div className={styles.pillarHead}>
+              <span className={styles.pillarKicker}>Year of birth · {data.birthDate.year}</span>
+              <span className={styles.pillarChinese} style={{ color: view.yearStemEl.hex }}>
+                {view.yearPillar.stem.chinese}{view.yearPillar.branch.chinese}
+              </span>
+              <span className={styles.pillarLabel}>
+                {view.yearPillar.stem.name}-{view.yearPillar.branch.name}
+                {' · '}
+                <span style={{ color: view.yearStemEl.hex }}>{view.yearPillar.stem.yinYang === 'yang' ? 'Yang' : 'Yin'} {view.yearStemEl.name}</span>
+                {' · '}
+                <span>the {view.yearPillar.branch.animal}</span>
+              </span>
+            </div>
+            <p className={styles.pillarStem}>{view.yearPillar.stem.image}</p>
+            <p className={styles.pillarBranch}>{view.yearPillar.branch.character}</p>
+          </GlassCard>
+
+          <GlassCard className={styles.pillarCard}>
+            <div className={styles.pillarHead}>
+              <span className={styles.pillarKicker}>
+                Day of birth · {data.birthDate.month}/{data.birthDate.day}/{data.birthDate.year}
+              </span>
+              <span className={styles.pillarChinese} style={{ color: view.dayPillarEl.hex }}>
+                {view.dayPillar.chineseLabel}
+              </span>
+              <span className={styles.pillarLabel}>
+                {view.dayPillar.label}
+                {' · '}
+                <span style={{ color: view.dayPillarEl.hex }}>
+                  {view.dayPillar.yinYang === 'yang' ? 'Yang' : 'Yin'} {view.dayPillarEl.name}
+                </span>
+              </span>
+            </div>
+            <p className={styles.pillarStem}>{view.dayPillar.stemImage}</p>
+            <p className={styles.pillarBranch}>{view.dayPillar.branchCharacter}</p>
+          </GlassCard>
+
+          <GlassCard className={styles.pillarSummary}>
+            <p className={styles.pillarSummaryText}>
+              Your constitutional element is{' '}
+              <span style={{ color: view.userEl.hex }}>{view.userEl.chinese} {view.userEl.name}</span>
+              {' '}— inherited through your year-branch, the {data.zodiac.name}.
+              {view.spirit && (
+                <> Your inhabiting spirit is <span style={{ color: view.userEl.hex }}>{view.spirit.chinese} {view.spirit.name}</span>{' '}— {view.spirit.title.toLowerCase()}.</>
+              )}
+            </p>
+          </GlassCard>
         </section>
 
-        {/* The system — five lenses */}
+        {/* ─── 2. Alignment now ─── */}
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>The system</h2>
-          <p className={styles.sectionLead}>Five lenses through which the body, the life, and the field are read.</p>
-          {LAYERS.map((layer) => (
+          <h2 className={styles.sectionTitle}>Alignment now</h2>
+          <p className={styles.sectionLead}>Where the element forces meet at this moment.</p>
+
+          <GlassCard>
+            <div className={styles.alignmentRows}>
+              <AlignRow label="You"   el={view.userEl} />
+              <AlignRow label="Phase" el={view.phaseEl} relation={view.alignment[0].rel} />
+              <AlignRow label="Today" el={view.todayEl} relation={view.alignment[1].rel} />
+              <AlignRow label="Hour"  el={view.organEl} relation={view.alignment[2].rel} sub={view.currentOrgan.organ} />
+            </div>
+            <p className={styles.alignmentNote}>
+              Three element relationships in active conversation right now — between who you are, where you stand in your life, what kind of day this is, and what your body is doing in this hour.
+            </p>
+          </GlassCard>
+        </section>
+
+        {/* ─── 3. Practice for you now ─── */}
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Practice for you now</h2>
+          <p className={styles.sectionLead}>Synthesised from your element, your phase, and the active organ.</p>
+
+          {view.practice.organ && (
+            <GlassCard>
+              <span className={styles.practiceLabel}>This hour · {view.practice.organName}</span>
+              <p className={styles.practiceMove}>移 {view.practice.organ.movement}</p>
+              <p className={styles.practiceNourish}>食 {view.practice.organ.dietary}</p>
+            </GlassCard>
+          )}
+
+          {view.practice.element && (
+            <GlassCard glowColor={`${view.userEl.hex}10`}>
+              <span className={styles.practiceLabel} style={{ color: view.userEl.hex }}>
+                For your {view.userEl.name}
+              </span>
+              <p className={styles.practiceMove}>{view.practice.element.dietBody}</p>
+            </GlassCard>
+          )}
+
+          {view.practice.phaseAdvice && (
+            <GlassCard glowColor={`${view.phaseEl.hex}10`}>
+              <span className={styles.practiceLabel} style={{ color: view.phaseEl.hex }}>
+                For Phase {data.phase.phase} · {data.phase.title}
+              </span>
+              <h3 className={styles.practiceHeading}>{view.practice.phaseAdvice.title}</h3>
+              <p className={styles.practiceBody}>{view.practice.phaseAdvice.body}</p>
+            </GlassCard>
+          )}
+        </section>
+
+        {/* ─── 4. Active vessels ─── */}
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Active vessels</h2>
+          <p className={styles.sectionLead}>
+            Of the eight extraordinary meridians, these carry your most active currents now.
+          </p>
+
+          {view.activeVessels.map((m, i) => (
             <GlassCard
-              key={layer.key}
-              className={styles.layerCard}
-              onClick={() => navigate(layer.route)}
+              key={i}
+              className={styles.vesselCard}
+              onClick={() => navigate('/explore/depths')}
             >
-              <div className={styles.layerHeader}>
-                <span className={styles.layerChinese}>{layer.chinese}</span>
-                <div className={styles.layerText}>
-                  <h3 className={styles.layerTitle}>{layer.title}</h3>
-                  <span className={styles.layerSubtitle}>{layer.subtitle}</span>
+              <div className={styles.vesselHead}>
+                <span className={styles.vesselChinese}>{m.chinese}</span>
+                <div>
+                  <h3 className={styles.vesselName}>{m.name}</h3>
+                  <span className={styles.vesselEnglish}>{m.englishName}</span>
                 </div>
-                <span className={styles.layerArrow}>→</span>
               </div>
-              <p className={styles.layerTagline}>{layer.tagline}</p>
+              <p className={styles.vesselEssence}>{m.essence}</p>
+              <p className={styles.vesselReason}>{m.reason}</p>
             </GlassCard>
           ))}
         </section>
 
-        {/* Your trail — what you have written, gathered */}
+        {/* ─── 5. Your nine seasons ─── */}
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Your nine seasons</h2>
+          <p className={styles.sectionLead}>The full arc of your life — past, present, ahead.</p>
+
+          <div className={styles.timeline}>
+            {view.timeline.map((p) => {
+              const pEl = getElementInfo(p.element);
+              const isPast    = data.age > (p.endAge ?? Infinity);
+              const isCurrent = data.age >= p.startAge && (p.endAge == null || data.age <= p.endAge);
+              const isFuture  = data.age < p.startAge;
+              return (
+                <button
+                  key={p.phase}
+                  className={`${styles.tlEntry} ${isCurrent ? styles.tlCurrent : ''} ${isPast ? styles.tlPast : ''} ${isFuture ? styles.tlFuture : ''}`}
+                  style={{ '--tl-accent': pEl.hex }}
+                  onClick={() => navigate(`/explore/phases/${p.phase}`)}
+                >
+                  <span className={styles.tlNum} style={{ color: pEl.hex }}>{p.phase}</span>
+                  <div className={styles.tlText}>
+                    <span className={styles.tlTitle}>{p.title}</span>
+                    <span className={styles.tlMeta}>
+                      ages {p.startAge}{p.endAge != null ? `–${p.endAge}` : '+'}
+                      {' · '}
+                      {p.startYear}{p.endYear != null ? `–${p.endYear}` : '+'}
+                    </span>
+                    <span className={styles.tlSeason} style={{ color: pEl.hex }}>
+                      {pEl.chinese} {pEl.name} · {p.season}
+                    </span>
+                  </div>
+                  {isCurrent && <span className={styles.tlBadge} style={{ color: pEl.hex, borderColor: pEl.hex }}>now</span>}
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* ─── 6. Your trail ─── */}
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>Your trail</h2>
-          {trailWeeks.length === 0 ? (
+          {view.trailWeeks.length === 0 ? (
             <GlassCard>
               <p className={styles.trailEmpty}>
-                As you reflect on the questions inside each layer, your trail begins here. A line at a time. A week at a time. A life, slowly making itself visible.
+                As you reflect on the questions inside each layer, your trail begins here.
               </p>
             </GlassCard>
           ) : (
             <p className={styles.sectionLead}>
-              {trailWeeks.reduce((sum, w) => sum + w.entries.length, 0)} reflections, gathered week by week.
+              {view.trailWeeks.reduce((s, w) => s + w.entries.length, 0)} reflections, week by week.
             </p>
           )}
 
-          {trailWeeks.slice().reverse().map((week) => (
+          {view.trailWeeks.slice().reverse().map((week) => (
             <div key={week.weekOf} className={styles.trailWeek}>
-              <h3 className={styles.trailWeekLabel}>Week of {formatWeek(week.weekOf)}</h3>
+              <h3 className={styles.trailWeekLabel}>
+                Week of {new Date(week.weekOf).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+              </h3>
               {week.entries.slice().reverse().map((entry) => {
                 const route = entryRoute(entry);
                 const source = entrySource(entry);
-                const question = entry.question || entry.prompt || (entry.choiceText ? 'Reflection' : '');
+                const question = entry.question || entry.prompt || '';
                 const text = entry.text || entry.choiceText || '';
+                const d = new Date(entry.date);
                 return (
                   <button
                     key={entry.id}
@@ -172,7 +385,7 @@ export default function ExplorePage() {
                     <div className={styles.trailEntryHeader}>
                       <span className={styles.trailEntrySource}>{source}</span>
                       <span className={styles.trailEntryDate}>
-                        {new Date(entry.date).toLocaleDateString('en-US', { weekday: 'short', day: 'numeric' })}
+                        {d.toLocaleDateString('en-US', { weekday: 'short' })} {ordinalDay(d.getDate())}
                       </span>
                     </div>
                     {question && <p className={styles.trailEntryQuestion}>{question}</p>}
@@ -183,7 +396,29 @@ export default function ExplorePage() {
             </div>
           ))}
         </section>
+
       </div>
+    </div>
+  );
+}
+
+// ─── Sub-component for alignment row ────────────────────────────────────
+
+function AlignRow({ label, el, relation, sub }) {
+  return (
+    <div className={styles.alignRow}>
+      <div className={styles.alignLeft}>
+        <span className={styles.alignLabel}>{label}</span>
+        {sub && <span className={styles.alignSub}>{sub}</span>}
+      </div>
+      <span className={styles.alignChinese} style={{ color: el.hex }}>{el.chinese}</span>
+      <span className={styles.alignName} style={{ color: el.hex }}>{el.name}</span>
+      {relation && (
+        <span className={styles.alignRel}>
+          <span className={styles.alignArrow}>{relation.quality === 'Mirror' ? '⟷' : '→'}</span>
+          <span className={styles.alignRelName}>{relation.name}</span>
+        </span>
+      )}
     </div>
   );
 }

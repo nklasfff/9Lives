@@ -6,7 +6,7 @@
 
 .header {
   text-align: center;
-  padding: var(--space-lg) 0 var(--space-lg);
+  padding: var(--space-lg) 0;
   animation: fadeDown 0.8s var(--ease-out) both;
 }
 
@@ -23,20 +23,10 @@
   margin-top: var(--space-xs);
 }
 
-.illustration {
-  width: 100%;
-  max-width: 340px;
-  height: auto;
-  margin: 0 auto var(--space-2xl);
-  display: block;
-  opacity: 0.85;
-}
-
-/* Top-level content rhythm */
 .content {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2xl);
+  gap: var(--space-3xl);
   padding-bottom: var(--space-2xl);
   animation: fadeUp 0.8s var(--ease-out) 0.2s both;
 }
@@ -49,123 +39,366 @@
 
 .sectionTitle {
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 300;
   color: var(--text-bright);
+  margin-bottom: 2px;
 }
 
 .sectionLead {
-  font-size: 0.85rem;
-  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 0.92rem;
   font-style: italic;
-  margin-top: -8px;
+  color: var(--text-muted);
+  line-height: 1.6;
   margin-bottom: var(--space-sm);
 }
 
-/* First Concepts cards */
-.conceptCard {
-  /* uses GlassCard */
+/* ─── 1. Pillar (chart) cards ─────────────────────────────────── */
+
+.pillarCard {
+  /* uses GlassCard padding */
 }
 
-.conceptHeader {
+.pillarHead {
   display: flex;
-  align-items: baseline;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  margin-bottom: var(--space-md);
+}
+
+.pillarKicker {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.pillarChinese {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 24px currentColor;
+  margin-top: 2px;
+}
+
+.pillarLabel {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.pillarStem {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-top: var(--space-sm);
+}
+
+.pillarBranch {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--glass-border);
+}
+
+.pillarSummary {
+  /* a closing summary card */
+}
+
+.pillarSummaryText {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--text-bright);
+  line-height: 1.75;
+  text-align: center;
+}
+
+/* ─── 2. Alignment now ────────────────────────────────────────── */
+
+.alignmentRows {
+  display: flex;
+  flex-direction: column;
+}
+
+.alignRow {
+  display: grid;
+  grid-template-columns: 70px 38px 1fr auto;
+  align-items: center;
   gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+  border-top: 1px solid var(--glass-border);
+}
+
+.alignRow:first-child {
+  border-top: none;
+}
+
+.alignLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.alignLabel {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.alignSub {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.alignChinese {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 300;
+  text-align: center;
+  text-shadow: 0 0 12px currentColor;
+}
+
+.alignName {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  font-weight: 300;
+}
+
+.alignRel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.alignArrow {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.alignRelName {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.alignmentNote {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--glass-border);
+}
+
+/* ─── 3. Practice for you now ─────────────────────────────────── */
+
+.practiceLabel {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  display: block;
   margin-bottom: var(--space-sm);
 }
 
-.conceptChinese {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 300;
-  color: var(--text-secondary);
-  letter-spacing: 0.05em;
+.practiceMove {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.75;
+  margin-bottom: var(--space-sm);
 }
 
-.conceptName {
+.practiceNourish {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.75;
+}
+
+.practiceHeading {
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 300;
   color: var(--text-bright);
+  margin-bottom: var(--space-xs);
 }
 
-.conceptBody {
+.practiceBody {
   font-size: 0.88rem;
   color: var(--text-primary);
   line-height: 1.75;
 }
 
-/* The five system layer cards */
-.layerCard {
+/* ─── 4. Active vessels ───────────────────────────────────────── */
+
+.vesselCard {
   cursor: pointer;
-  transition: transform var(--transition);
+  transition: opacity var(--transition);
 }
 
-.layerCard:active {
-  transform: scale(0.985);
+.vesselCard:hover {
+  opacity: 0.92;
 }
 
-.layerHeader {
+.vesselHead {
   display: flex;
   align-items: center;
   gap: var(--space-md);
   margin-bottom: var(--space-sm);
 }
 
-.layerChinese {
+.vesselChinese {
   font-family: var(--font-display);
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 300;
   color: var(--text-secondary);
   letter-spacing: 0.04em;
   flex-shrink: 0;
-  min-width: 56px;
 }
 
-.layerText {
-  flex: 1;
+.vesselName {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  line-height: 1.2;
+}
+
+.vesselEnglish {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.vesselEssence {
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  line-height: 1.75;
+  margin-bottom: var(--space-sm);
+}
+
+.vesselReason {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--glass-border);
+}
+
+/* ─── 5. Life timeline (nine seasons) ─────────────────────────── */
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.tlEntry {
+  background: rgba(17, 29, 43, 0.45);
+  border: 1px solid var(--glass-border);
+  border-left: 2px solid var(--tl-accent, var(--text-muted));
+  border-radius: 12px;
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: var(--space-sm);
+  text-align: left;
+  transition: opacity var(--transition);
+  min-height: 44px;
+  width: 100%;
+}
+
+.tlEntry:hover {
+  opacity: 0.92;
+}
+
+.tlPast {
+  opacity: 0.5;
+}
+
+.tlFuture {
+  opacity: 0.65;
+}
+
+.tlCurrent {
+  background: rgba(255, 255, 255, 0.04);
+  opacity: 1;
+}
+
+.tlNum {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 300;
+  text-align: center;
+  text-shadow: 0 0 14px currentColor;
+}
+
+.tlText {
   display: flex;
   flex-direction: column;
   gap: 2px;
   min-width: 0;
 }
 
-.layerTitle {
+.tlTitle {
   font-family: var(--font-display);
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 300;
   color: var(--text-bright);
   line-height: 1.2;
 }
 
-.layerSubtitle {
-  font-size: 0.75rem;
+.tlMeta {
+  font-size: 0.72rem;
   color: var(--text-muted);
-  font-style: italic;
+  letter-spacing: 0.02em;
 }
 
-.layerArrow {
-  font-size: 1rem;
-  color: var(--text-muted);
-  flex-shrink: 0;
-  opacity: 0.45;
-  transition: opacity var(--transition), transform var(--transition);
-}
-
-.layerCard:hover .layerArrow {
-  opacity: 0.9;
-  transform: translateX(2px);
-}
-
-.layerTagline {
+.tlSeason {
   font-family: var(--font-display);
-  font-size: 0.92rem;
+  font-size: 0.78rem;
   font-style: italic;
-  color: var(--text-secondary);
-  line-height: 1.7;
+  margin-top: 2px;
 }
 
-/* Your trail — chronological reflection list */
+.tlBadge {
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border: 1px solid;
+  border-radius: 999px;
+  line-height: 1;
+}
+
+/* ─── 6. Trail ────────────────────────────────────────────────── */
+
 .trailEmpty {
   font-family: var(--font-display);
   font-size: 0.95rem;
@@ -178,7 +411,8 @@
 .trailWeek {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
 }
 
 .trailWeekLabel {
@@ -187,7 +421,7 @@
   font-style: italic;
   color: var(--text-muted);
   letter-spacing: 0.04em;
-  margin-bottom: var(--space-xs);
+  margin-bottom: 2px;
 }
 
 .trailEntry {
