@@ -10,15 +10,6 @@
   animation: fadeDown 0.8s var(--ease-out) both;
 }
 
-.illustration {
-  width: 100%;
-  max-width: 340px;
-  height: auto;
-  margin: 0 auto var(--space-lg);
-  display: block;
-  opacity: 0.85;
-}
-
 .header h1 {
   font-family: var(--font-display);
   font-size: 2rem;
@@ -26,86 +17,228 @@
 }
 
 .subtitle {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
   font-style: italic;
   margin-top: var(--space-xs);
 }
 
-.layers {
+.illustration {
+  width: 100%;
+  max-width: 340px;
+  height: auto;
+  margin: 0 auto var(--space-2xl);
+  display: block;
+  opacity: 0.85;
+}
+
+/* Top-level content rhythm */
+.content {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-2xl);
+  padding-bottom: var(--space-2xl);
   animation: fadeUp 0.8s var(--ease-out) 0.2s both;
 }
 
-.midIllustration {
-  width: 200px;
-  height: 200px;
-  margin: var(--space-lg) auto;
-  display: block;
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
 }
 
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--text-bright);
+}
+
+.sectionLead {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: -8px;
+  margin-bottom: var(--space-sm);
+}
+
+/* First Concepts cards */
+.conceptCard {
+  /* uses GlassCard */
+}
+
+.conceptHeader {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.conceptChinese {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+}
+
+.conceptName {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--text-bright);
+}
+
+.conceptBody {
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  line-height: 1.75;
+}
+
+/* The five system layer cards */
 .layerCard {
-  cursor: default;
+  cursor: pointer;
+  transition: transform var(--transition);
 }
 
-.clickable {
-  cursor: pointer;
+.layerCard:active {
+  transform: scale(0.985);
 }
 
 .layerHeader {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
 }
 
-.arrow {
-  font-size: 1.2rem;
-  color: var(--text-muted);
-  transition: transform var(--transition), color var(--transition);
-  margin-top: var(--space-sm);
-}
-
-.clickable:hover .arrow {
-  transform: translateX(4px);
-  color: var(--text-secondary);
-}
-
-.comingSoon {
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  padding: 3px 10px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full);
-  margin-top: var(--space-sm);
-  white-space: nowrap;
-}
-
-.layerNumber {
+.layerChinese {
   font-family: var(--font-display);
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  letter-spacing: 0.08em;
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+  min-width: 56px;
+}
+
+.layerText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
 }
 
 .layerTitle {
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 300;
-  margin: var(--space-xs) 0 2px;
+  color: var(--text-bright);
+  line-height: 1.2;
 }
 
 .layerSubtitle {
-  font-size: 0.78rem;
-  color: var(--text-secondary);
+  font-size: 0.75rem;
+  color: var(--text-muted);
   font-style: italic;
-  margin-bottom: var(--space-sm);
 }
 
-.layerDesc {
+.layerArrow {
+  font-size: 1rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  opacity: 0.45;
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.layerCard:hover .layerArrow {
+  opacity: 0.9;
+  transform: translateX(2px);
+}
+
+.layerTagline {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* Your trail — chronological reflection list */
+.trailEmpty {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  text-align: center;
+}
+
+.trailWeek {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.trailWeekLabel {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  margin-bottom: var(--space-xs);
+}
+
+.trailEntry {
+  background: rgba(17, 29, 43, 0.45);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+  transition: opacity var(--transition);
+  width: 100%;
+  min-height: 44px;
+}
+
+.trailEntry:hover {
+  opacity: 0.85;
+}
+
+.trailEntryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-sm);
+}
+
+.trailEntrySource {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.trailEntryDate {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.trailEntryQuestion {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.trailEntryText {
   font-size: 0.85rem;
   color: var(--text-primary);
   line-height: 1.7;

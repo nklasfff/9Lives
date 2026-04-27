@@ -164,6 +164,22 @@
   border-bottom: none;
 }
 
+/* Element practice block (used inside the per-element card on ElementDetailPage) */
+.elementPractice {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--glass-border);
+}
+
+.elementPracticeRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 /* Phase detail */
 .phaseHeader {
   display: flex;

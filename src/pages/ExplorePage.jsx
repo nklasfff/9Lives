@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GlassCard from '../components/common/GlassCard';
+import { getTimelineGroupedByWeek } from '../utils/reflectionStore';
 import styles from './ExplorePage.module.css';
 
 const LAYERS = [
-  { number: '01', title: 'Your Element', subtitle: 'Identity & Constitution', description: 'Your elemental nature shapes everything — from how you see the world to what foods nourish you.', route: '/explore/element' },
-  { number: '02', title: 'Life Phase', subtitle: 'The Nine Seasons', description: 'Nine phases unfold across your lifetime, each with its own element, wisdom, and calling.', route: '/explore/phases' },
-  { number: '03', title: 'Daily Spirits', subtitle: 'The Five Shen', description: 'Five spirits govern your inner landscape — consciousness, vision, instinct, thought, and will.', route: '/explore/spirits' },
-  { number: '04', title: 'The Twelve Organs', subtitle: 'Body as Function & Teacher', description: 'Twelve organs in five elemental pairs — each carrying a function, an emotion, and a particular kind of intelligence.', route: '/explore/organs' },
-  { number: '05', title: 'Relations', subtitle: 'Elemental Dynamics', description: 'Every relationship carries an elemental signature — nourishing, tempering, or transforming.', route: '/relations' },
-  { number: '06', title: 'Time Travel', subtitle: 'Past & Future', description: 'Map the elemental landscape of any day — past or future — and see how it shapes your journey.', route: '/time' },
-  { number: '07', title: 'The Depths', subtitle: 'Extraordinary Vessels', description: 'Eight hidden rivers of energy that carry your deepest patterns, traumas, and gifts.', route: '/explore/depths' },
+  { key: 'elements', chinese: '五行', title: 'The Five Elements', subtitle: 'Wood · Fire · Earth · Metal · Water', tagline: 'The five qualities through which life expresses itself.', route: '/explore/element' },
+  { key: 'phases',   chinese: '九段', title: 'The Nine Seasons',  subtitle: 'A lifetime in nine chapters',                tagline: 'Seven-year cycles for women, eight for men — each its own element, season, and calling.', route: '/explore/phases' },
+  { key: 'spirits',  chinese: '五神', title: 'The Five Spirits',  subtitle: 'Wu Shen — consciousness in five forms',     tagline: 'Five aspects of the soul, residing in the five yin organs.', route: '/explore/spirits' },
+  { key: 'organs',   chinese: '十二臟', title: 'The Twelve Organs', subtitle: 'Twelve systems, twelve teachers',         tagline: 'Each organ a function, an emotion, a time of day, and a particular kind of intelligence.', route: '/explore/organs' },
+  { key: 'depths',   chinese: '八脈', title: 'The Eight Depths',   subtitle: 'Qi Jing Ba Mai — extraordinary vessels',   tagline: 'Eight hidden rivers carrying inheritance, shadow, and unfinished work.', route: '/explore/depths' },
+];
+
+const FIRST_CONCEPTS = [
+  {
+    chinese: '陰陽',
+    name: 'Yin & Yang',
+    body: 'Two qualities that cannot exist without each other. Yin is the quiet, the inward, the dark, the receptive. Yang is the active, the outward, the light, the expanding. Night and day. Winter and summer. Rest and movement. Yin is not absence of force — it is the kind of force that works while you rest.',
+  },
+  {
+    chinese: '精氣神',
+    name: 'Jing · Qi · Shen',
+    body: 'Three forms of life-force living in everyone. Jing is the deep essence inherited at conception, stored in the Kidneys — your battery for a whole life. Qi is the daily energy that moves through breath, food, and movement. Shen is consciousness and inner light, dwelling in the Heart and visible in the eyes. These three are the threads woven through every chapter that follows.',
+  },
 ];
 
 function ExploreIllustration() {
@@ -31,23 +43,17 @@ function ExploreIllustration() {
         }
       `}</style>
 
-      {/* Seven concentric arcs — each in an element color, breathing in waves */}
       {[96, 82, 68, 54, 42, 30, 20].map((r, i) => (
-        <path
-          key={i}
+        <path key={i}
           d={`M ${100 - r} 100 A ${r} ${r} 0 0 1 ${100 + r} 100`}
           fill="none"
           stroke={layerColors[i]}
           strokeWidth={0.9}
           strokeDasharray={i % 2 === 0 ? 'none' : '4 3'}
           opacity="0.35"
-          style={{
-            animation: `arcWave ${8 + i * 0.5}s ease-in-out ${i * 1.2}s infinite`,
-          }}
+          style={{ animation: `arcWave ${8 + i * 0.5}s ease-in-out ${i * 1.2}s infinite` }}
         />
       ))}
-
-      {/* Dots at the endpoints of each arc */}
       {[92, 60, 32].map((r, i) => (
         <g key={`d-${i}`}>
           <circle cx={100 - r} cy="100" r="1.5" fill={layerColors[i * 2]} opacity="0.3"
@@ -56,137 +62,127 @@ function ExploreIllustration() {
             style={{ animation: `corePulse ${6 + i}s ease-in-out ${i * 2 + 1}s infinite` }} />
         </g>
       ))}
-
-      {/* Vertical axis */}
       <line x1="100" y1="100" x2="100" y2="5" style={{ stroke: 'var(--line-subtle)' }} strokeWidth="0.5" strokeDasharray="2 4" />
-
-      {/* Top circle */}
       <circle cx="100" cy="5" r="4" fill="none" strokeWidth="0.6"
         style={{ stroke: 'var(--text-illustration-dim)', animation: 'corePulse 7s ease-in-out infinite' }} />
-
-      {/* Center dot */}
       <circle cx="100" cy="100" r="3.5" style={{ fill: 'var(--line-subtle)', animation: 'corePulse 5s ease-in-out infinite' }} />
       <circle cx="100" cy="100" r="1.5" style={{ fill: 'var(--line-strong)' }} />
     </svg>
   );
 }
 
-function WuXingFlowIllustration() {
-  // 5 elements placed evenly on a circle (72° apart), starting from top
-  const cx = 100, cy = 100, orbit = 68;
-  const elements = [
-    { char: '水', color: '#3a6fa0' },  // Water — top
-    { char: '木', color: '#4a9e6e' },  // Wood — upper right
-    { char: '火', color: '#c75a3a' },  // Fire — lower right
-    { char: '土', color: '#c9a84c' },  // Earth — lower left
-    { char: '金', color: '#a8b8c8' },  // Metal — upper left
-  ].map((el, i) => {
-    const angle = (i * 72 - 90) * (Math.PI / 180);
-    return { ...el, x: cx + orbit * Math.cos(angle), y: cy + orbit * Math.sin(angle) };
-  });
+function formatWeek(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
 
-  const cycleDur = 10; // seconds for full cycle
-  const slotDur = cycleDur / 5; // 2s per element
+function entryRoute(entry) {
+  if (entry.type === 'organ') return `/explore/organs/${entry.organKey}`;
+  if (entry.type === 'reflection' || entry.type === 'journal') return `/explore/phases/${entry.phaseId}`;
+  return null;
+}
 
-  return (
-    <svg viewBox="0 0 200 200" className={styles.midIllustration}>
-
-      {/* Outer ring */}
-      <circle cx={cx} cy={cy} r={orbit} fill="none"
-        style={{ stroke: 'var(--line-faint)' }} strokeWidth="0.6" />
-
-      {/* Pentagon sheng-cycle lines */}
-      {elements.map((el, i) => {
-        const next = elements[(i + 1) % 5];
-        return (
-          <line key={`line-${i}`}
-            x1={el.x} y1={el.y} x2={next.x} y2={next.y}
-            stroke={el.color} strokeWidth="0.5" opacity="0.15" />
-        );
-      })}
-
-      {/* Element circles — sequential glow using SMIL */}
-      {elements.map((el, i) => (
-        <g key={i}>
-          {/* Breathing glow ring */}
-          <circle cx={el.x} cy={el.y} r="14" fill={el.color} opacity="0">
-            <animate attributeName="r" values="14;26;14"
-              dur={`${cycleDur}s`} begin={`${i * slotDur}s`}
-              repeatCount="indefinite" calcMode="spline"
-              keyTimes="0;0.2;1"
-              keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
-            <animate attributeName="opacity" values="0.25;0;0.25"
-              dur={`${cycleDur}s`} begin={`${i * slotDur}s`}
-              repeatCount="indefinite" calcMode="spline"
-              keyTimes="0;0.2;1"
-              keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
-          </circle>
-
-          {/* Main circle — brightens when active */}
-          <circle cx={el.x} cy={el.y} r="16" fill={`${el.color}12`} stroke={el.color} strokeWidth="0.7" opacity="0.3">
-            <animate attributeName="opacity" values="0.85;0.3;0.3"
-              dur={`${cycleDur}s`} begin={`${i * slotDur}s`}
-              repeatCount="indefinite" calcMode="spline"
-              keyTimes="0;0.25;1"
-              keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
-          </circle>
-
-          {/* Chinese character */}
-          <text x={el.x} y={el.y + 1}
-            textAnchor="middle" dominantBaseline="central"
-            fill={el.color} fontSize="11" fontWeight="300" opacity="0.5">
-            <animate attributeName="opacity" values="0.9;0.5;0.5"
-              dur={`${cycleDur}s`} begin={`${i * slotDur}s`}
-              repeatCount="indefinite" calcMode="spline"
-              keyTimes="0;0.25;1"
-              keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
-            {el.char}
-          </text>
-        </g>
-      ))}
-
-      {/* Center dot */}
-      <circle cx={cx} cy={cy} r="2.5" style={{ fill: 'var(--dot-illustration)' }}>
-        <animate attributeName="opacity" values="0.3;0.7;0.3" dur="5s" repeatCount="indefinite"
-          calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" />
-      </circle>
-    </svg>
-  );
+function entrySource(entry) {
+  if (entry.type === 'organ') return entry.organKey ? entry.organKey.replace(/([A-Z])/g, ' $1').replace(/^./, c => c.toUpperCase()) : 'Organ';
+  if (entry.type === 'reflection' || entry.type === 'journal') return `Phase ${entry.phaseId}`;
+  return '';
 }
 
 export default function ExplorePage() {
   const navigate = useNavigate();
+  const trailWeeks = useMemo(() => getTimelineGroupedByWeek(), []);
 
   return (
     <div className={styles.page}>
       <header className={styles.header}>
         <h1>Explore</h1>
-        <p className={styles.subtitle}>Seven layers of understanding</p>
+        <p className={styles.subtitle}>The wisdom system, and the trail you leave inside it</p>
       </header>
 
       <ExploreIllustration />
 
-      <div className={styles.layers}>
-        {LAYERS.map((layer, idx) => (
-          <React.Fragment key={layer.number}>
-            {idx === 3 && <WuXingFlowIllustration />}
+      <div className={styles.content}>
+        {/* First concepts — the foundation the book opens with */}
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>First concepts</h2>
+          <p className={styles.sectionLead}>The two ideas that ground everything that follows.</p>
+          {FIRST_CONCEPTS.map((c) => (
+            <GlassCard key={c.chinese} className={styles.conceptCard}>
+              <div className={styles.conceptHeader}>
+                <span className={styles.conceptChinese}>{c.chinese}</span>
+                <h3 className={styles.conceptName}>{c.name}</h3>
+              </div>
+              <p className={styles.conceptBody}>{c.body}</p>
+            </GlassCard>
+          ))}
+        </section>
+
+        {/* The system — five lenses */}
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>The system</h2>
+          <p className={styles.sectionLead}>Five lenses through which the body, the life, and the field are read.</p>
+          {LAYERS.map((layer) => (
             <GlassCard
-              className={`${styles.layerCard} ${layer.route ? styles.clickable : ''}`}
-              onClick={layer.route ? () => navigate(layer.route) : undefined}
+              key={layer.key}
+              className={styles.layerCard}
+              onClick={() => navigate(layer.route)}
             >
               <div className={styles.layerHeader}>
-                <div>
-                  <span className={styles.layerNumber}>{layer.number}</span>
+                <span className={styles.layerChinese}>{layer.chinese}</span>
+                <div className={styles.layerText}>
                   <h3 className={styles.layerTitle}>{layer.title}</h3>
-                  <p className={styles.layerSubtitle}>{layer.subtitle}</p>
+                  <span className={styles.layerSubtitle}>{layer.subtitle}</span>
                 </div>
-                {layer.route && <span className={styles.arrow}>→</span>}
-                {!layer.route && <span className={styles.comingSoon}>Soon</span>}
+                <span className={styles.layerArrow}>→</span>
               </div>
-              <p className={styles.layerDesc}>{layer.description}</p>
+              <p className={styles.layerTagline}>{layer.tagline}</p>
             </GlassCard>
-          </React.Fragment>
-        ))}
+          ))}
+        </section>
+
+        {/* Your trail — what you have written, gathered */}
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Your trail</h2>
+          {trailWeeks.length === 0 ? (
+            <GlassCard>
+              <p className={styles.trailEmpty}>
+                As you reflect on the questions inside each layer, your trail begins here. A line at a time. A week at a time. A life, slowly making itself visible.
+              </p>
+            </GlassCard>
+          ) : (
+            <p className={styles.sectionLead}>
+              {trailWeeks.reduce((sum, w) => sum + w.entries.length, 0)} reflections, gathered week by week.
+            </p>
+          )}
+
+          {trailWeeks.slice().reverse().map((week) => (
+            <div key={week.weekOf} className={styles.trailWeek}>
+              <h3 className={styles.trailWeekLabel}>Week of {formatWeek(week.weekOf)}</h3>
+              {week.entries.slice().reverse().map((entry) => {
+                const route = entryRoute(entry);
+                const source = entrySource(entry);
+                const question = entry.question || entry.prompt || (entry.choiceText ? 'Reflection' : '');
+                const text = entry.text || entry.choiceText || '';
+                return (
+                  <button
+                    key={entry.id}
+                    className={styles.trailEntry}
+                    onClick={() => route && navigate(route)}
+                  >
+                    <div className={styles.trailEntryHeader}>
+                      <span className={styles.trailEntrySource}>{source}</span>
+                      <span className={styles.trailEntryDate}>
+                        {new Date(entry.date).toLocaleDateString('en-US', { weekday: 'short', day: 'numeric' })}
+                      </span>
+                    </div>
+                    {question && <p className={styles.trailEntryQuestion}>{question}</p>}
+                    {text && <p className={styles.trailEntryText}>{text}</p>}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+        </section>
       </div>
     </div>
   );

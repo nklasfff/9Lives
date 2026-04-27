@@ -1,10 +1,12 @@
 import { useUser } from '../context/UserContext';
-import { getElementInfo, SHENG_CYCLE, SHENG_DESCRIPTIONS, KE_DESCRIPTIONS } from '../engine/elements';
+import { ELEMENT_INFO, SHENG_CYCLE } from '../engine/elements';
 import { getSpiritByElement } from '../engine/wuShen';
 import { getElementPractice } from '../engine/practices';
 import { useNavigate } from 'react-router-dom';
 import GlassCard from '../components/common/GlassCard';
 import styles from './DetailPage.module.css';
+
+const ELEMENT_ORDER = ['wood', 'fire', 'earth', 'metal', 'water'];
 
 export default function ElementDetailPage() {
   const navigate = useNavigate();
@@ -12,130 +14,96 @@ export default function ElementDetailPage() {
   const data = getDerivedData();
   if (!data) return null;
 
-  const el = getElementInfo(data.element);
-  const spirit = getSpiritByElement(data.element);
-  const practice = getElementPractice(data.element);
-
-  const shengParentIdx = (SHENG_CYCLE.indexOf(data.element) - 1 + 5) % 5;
-  const shengChildIdx = (SHENG_CYCLE.indexOf(data.element) + 1) % 5;
-  const shengParent = getElementInfo(SHENG_CYCLE[shengParentIdx]);
-  const shengChild = getElementInfo(SHENG_CYCLE[shengChildIdx]);
-  const shengReceiveKey = `${SHENG_CYCLE[shengParentIdx]}_${data.element}`;
-  const shengGiveKey = `${data.element}_${SHENG_CYCLE[shengChildIdx]}`;
-
   return (
     <div className={styles.page}>
       <button className={styles.backBtn} onClick={() => navigate('/explore')}>Back</button>
+
       <header className={styles.header}>
-        <span className={styles.label}>01 — Your Element</span>
-        <div className={styles.bigSymbol} style={{ color: el.hex }}>{el.chinese}</div>
-        <h1 style={{ color: el.hex }}>{el.name}</h1>
-        <p className={styles.subtitle}>{el.quality}</p>
+        <span className={styles.label}>The Five Elements</span>
+        <h1>五行 Wu Xing</h1>
+        <p className={styles.subtitle}>The five qualities through which life expresses itself</p>
       </header>
 
+      <GlassCard>
+        <p className={styles.bodyText}>
+          Wood, Fire, Earth, Metal, Water. Not literal substances — qualities. Each describes a way energy moves: rising, expanding, stabilising, refining, sinking. The body, the year, and a human life all move through these five. They feed each other in the Sheng cycle and temper each other in the Ke cycle. Together they form the basic vocabulary of everything that follows.
+        </p>
+      </GlassCard>
+
       <div className={styles.cards}>
-        <GlassCard>
-          <p className={styles.bodyText}>{el.description}</p>
-        </GlassCard>
+        {ELEMENT_ORDER.map((elKey) => {
+          const el = ELEMENT_INFO[elKey];
+          const spirit = getSpiritByElement(elKey);
+          const practice = getElementPractice(elKey);
+          const isUser = elKey === data.element;
 
-        <GlassCard>
-          <h3 className={styles.cardTitle}>Correspondences</h3>
-          <div className={styles.grid}>
-            <Row label="Season" value={el.season} />
-            <Row label="Direction" value={el.direction} />
-            <Row label="Color" value={el.elementColor} />
-            <Row label="Yin Organ" value={el.organs.yin} />
-            <Row label="Yang Organ" value={el.organs.yang} />
-            <Row label="Taste" value={el.taste} />
-            <Row label="Sense" value={`${el.sense} (${el.senseOrgan})`} />
-            <Row label="Tissue" value={el.tissue} />
-            <Row label="Organ Clock" value={el.organClockTime} />
-          </div>
-        </GlassCard>
+          // Compute sheng parent / child
+          const idx = SHENG_CYCLE.indexOf(elKey);
+          const parentEl = ELEMENT_INFO[SHENG_CYCLE[(idx - 1 + 5) % 5]];
+          const childEl = ELEMENT_INFO[SHENG_CYCLE[(idx + 1) % 5]];
 
-        <GlassCard>
-          <h3 className={styles.cardTitle}>Balance & Imbalance</h3>
-          <div className={styles.balanceRow}>
-            <div>
-              <span className={styles.balanceLabel} style={{ color: el.hex }}>In Balance</span>
-              <p className={styles.bodyText}>{el.emotion.balanced} — {el.description.split('. When')[0].split('. ').pop()}</p>
-            </div>
-          </div>
-          <div className={styles.balanceRow}>
-            <div>
-              <span className={styles.balanceLabel} style={{ color: 'var(--text-muted)' }}>Out of Balance</span>
-              <p className={styles.bodyText}>{el.imbalancedDescription}</p>
-            </div>
-          </div>
-        </GlassCard>
+          return (
+            <GlassCard
+              key={elKey}
+              className={isUser ? styles.activeCard : ''}
+              glowColor={`${el.hex}${isUser ? '20' : '10'}`}
+            >
+              <div className={styles.spiritHeader}>
+                <span className={styles.spiritSymbol} style={{ color: el.hex }}>{el.chinese}</span>
+                <div>
+                  <h3 className={styles.cardTitle} style={{ color: el.hex }}>{el.name}</h3>
+                  <span className={styles.phaseMeta}>{el.season} · {el.quality}</span>
+                </div>
+                {isUser && (
+                  <span className={styles.currentBadge} style={{ background: `${el.hex}25`, color: el.hex }}>
+                    You are here
+                  </span>
+                )}
+              </div>
 
-        <GlassCard>
-          <h3 className={styles.cardTitle}>The Nourishing Cycle</h3>
-          <div className={styles.cycleItem}>
-            <span className={styles.cycleLabel} style={{ color: shengParent.hex }}>{shengParent.chinese} {shengParent.name}</span>
-            <span className={styles.cycleArrow}>→</span>
-            <span className={styles.cycleLabel} style={{ color: el.hex }}>{el.chinese} {el.name}</span>
-          </div>
-          <p className={styles.cycleDesc}>{SHENG_DESCRIPTIONS[shengReceiveKey] || ''}</p>
-          <div className={styles.cycleItem}>
-            <span className={styles.cycleLabel} style={{ color: el.hex }}>{el.chinese} {el.name}</span>
-            <span className={styles.cycleArrow}>→</span>
-            <span className={styles.cycleLabel} style={{ color: shengChild.hex }}>{shengChild.chinese} {shengChild.name}</span>
-          </div>
-          <p className={styles.cycleDesc}>{SHENG_DESCRIPTIONS[shengGiveKey] || ''}</p>
-        </GlassCard>
+              <p className={styles.bodyText}>{el.description}</p>
 
-        {spirit && (
-          <GlassCard glowColor={`${el.hex}15`}>
-            <h3 className={styles.cardTitle}>Your Spirit — {spirit.chinese} {spirit.name}</h3>
-            <p className={styles.spiritTitle}>{spirit.title}</p>
-            <p className={styles.bodyText}>{spirit.description}</p>
-          </GlassCard>
-        )}
+              <div className={styles.twoCol}>
+                <div>
+                  <span className={styles.balanceLabel} style={{ color: el.hex }}>In Balance</span>
+                  <p className={styles.bodyText}>{el.emotion.balanced} — {el.organs.yin} &amp; {el.organs.yang}</p>
+                </div>
+                <div>
+                  <span className={styles.balanceLabel}>Out of Balance</span>
+                  <p className={styles.bodyText}>{el.emotion.imbalanced} — {el.imbalancedDescription}</p>
+                </div>
+              </div>
 
-        {practice && (
-          <GlassCard glowColor={`${el.hex}10`}>
-            <h3 className={styles.cardTitle}>食 Nourishment</h3>
-            <span className={styles.balanceLabel} style={{ color: el.hex }}>{practice.dietTitle}</span>
-            <p className={styles.bodyText}>{practice.dietBody}</p>
-            <div className={styles.practiceList}>
-              {practice.dietFoods.map((food, i) => (
-                <span key={i} className={styles.practiceTag}>{food}</span>
-              ))}
-            </div>
-            <div className={styles.balanceRow}>
-              <span className={styles.rowLabel}>Moderate</span>
-              <p className={styles.bodyText}>{practice.dietAvoid}</p>
-            </div>
-          </GlassCard>
-        )}
+              {spirit && (
+                <p className={styles.cycleDesc}>
+                  <span style={{ color: el.hex }}>{spirit.chinese} {spirit.name}</span> — {spirit.title}
+                </p>
+              )}
 
-        {practice && (
-          <GlassCard glowColor={`${el.hex}10`}>
-            <h3 className={styles.cardTitle}>移 Movement</h3>
-            <span className={styles.balanceLabel} style={{ color: el.hex }}>{practice.exerciseTitle}</span>
-            <p className={styles.bodyText}>{practice.exerciseBody}</p>
-            <div className={styles.practiceList}>
-              {practice.exercises.map((ex, i) => (
-                <span key={i} className={styles.practiceTag}>{ex}</span>
-              ))}
-            </div>
-            <div className={styles.balanceRow}>
-              <span className={styles.rowLabel}>Best time</span>
-              <p className={styles.bodyText}>{practice.timing}</p>
-            </div>
-          </GlassCard>
-        )}
+              <div className={styles.cycleItem}>
+                <span className={styles.cycleLabel} style={{ color: parentEl.hex }}>{parentEl.chinese} {parentEl.name}</span>
+                <span className={styles.cycleArrow}>→</span>
+                <span className={styles.cycleLabel} style={{ color: el.hex }}>{el.chinese} {el.name}</span>
+                <span className={styles.cycleArrow}>→</span>
+                <span className={styles.cycleLabel} style={{ color: childEl.hex }}>{childEl.chinese} {childEl.name}</span>
+              </div>
+
+              {practice && (
+                <div className={styles.elementPractice}>
+                  <div className={styles.elementPracticeRow}>
+                    <span className={styles.balanceLabel} style={{ color: el.hex }}>食 Nourishment</span>
+                    <p className={styles.bodyText}>{practice.dietBody}</p>
+                  </div>
+                  <div className={styles.elementPracticeRow}>
+                    <span className={styles.balanceLabel} style={{ color: el.hex }}>移 Movement</span>
+                    <p className={styles.bodyText}>{practice.exerciseBody}</p>
+                  </div>
+                </div>
+              )}
+            </GlassCard>
+          );
+        })}
       </div>
-    </div>
-  );
-}
-
-function Row({ label, value }) {
-  return (
-    <div className={styles.row}>
-      <span className={styles.rowLabel}>{label}</span>
-      <span className={styles.rowValue}>{value}</span>
     </div>
   );
 }
