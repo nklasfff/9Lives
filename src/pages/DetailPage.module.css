@@ -61,8 +61,53 @@
 .cards {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-2xl);
   animation: fadeUp 0.8s var(--ease-out) 0.2s both;
+}
+
+/* ─── Progressive disclosure for deeper sections inside a card ─── */
+.disclose {
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--glass-border);
+}
+
+.discloseSummary {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--text-muted);
+  cursor: pointer;
+  list-style: none;
+  letter-spacing: 0.04em;
+  padding: 4px 0;
+  transition: color var(--transition);
+  user-select: none;
+}
+
+.discloseSummary::-webkit-details-marker {
+  display: none;
+}
+
+.discloseSummary::after {
+  content: ' →';
+  display: inline-block;
+  margin-left: 4px;
+  transition: transform var(--transition);
+}
+
+.disclose[open] .discloseSummary::after {
+  transform: rotate(90deg);
+}
+
+.disclose[open] .discloseSummary {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.discloseSummary:hover {
+  color: var(--text-secondary);
 }
 
 .cardTitle {

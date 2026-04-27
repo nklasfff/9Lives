@@ -80,26 +80,29 @@ export default function ElementDetailPage() {
                 </p>
               )}
 
-              <div className={styles.cycleItem}>
-                <span className={styles.cycleLabel} style={{ color: parentEl.hex }}>{parentEl.chinese} {parentEl.name}</span>
-                <span className={styles.cycleArrow}>→</span>
-                <span className={styles.cycleLabel} style={{ color: el.hex }}>{el.chinese} {el.name}</span>
-                <span className={styles.cycleArrow}>→</span>
-                <span className={styles.cycleLabel} style={{ color: childEl.hex }}>{childEl.chinese} {childEl.name}</span>
-              </div>
-
-              {practice && (
-                <div className={styles.elementPractice}>
-                  <div className={styles.elementPracticeRow}>
-                    <span className={styles.balanceLabel} style={{ color: el.hex }}>食 Nourishment</span>
-                    <p className={styles.bodyText}>{practice.dietBody}</p>
-                  </div>
-                  <div className={styles.elementPracticeRow}>
-                    <span className={styles.balanceLabel} style={{ color: el.hex }}>移 Movement</span>
-                    <p className={styles.bodyText}>{practice.exerciseBody}</p>
-                  </div>
+              <details className={styles.disclose}>
+                <summary className={styles.discloseSummary}>Cycle &amp; practice</summary>
+                <div className={styles.cycleItem}>
+                  <span className={styles.cycleLabel} style={{ color: parentEl.hex }}>{parentEl.chinese} {parentEl.name}</span>
+                  <span className={styles.cycleArrow}>→</span>
+                  <span className={styles.cycleLabel} style={{ color: el.hex }}>{el.chinese} {el.name}</span>
+                  <span className={styles.cycleArrow}>→</span>
+                  <span className={styles.cycleLabel} style={{ color: childEl.hex }}>{childEl.chinese} {childEl.name}</span>
                 </div>
-              )}
+
+                {practice && (
+                  <div className={styles.elementPractice}>
+                    <div className={styles.elementPracticeRow}>
+                      <span className={styles.balanceLabel} style={{ color: el.hex }}>食 Nourishment</span>
+                      <p className={styles.bodyText}>{practice.dietBody}</p>
+                    </div>
+                    <div className={styles.elementPracticeRow}>
+                      <span className={styles.balanceLabel} style={{ color: el.hex }}>移 Movement</span>
+                      <p className={styles.bodyText}>{practice.exerciseBody}</p>
+                    </div>
+                  </div>
+                )}
+              </details>
             </GlassCard>
           );
         })}

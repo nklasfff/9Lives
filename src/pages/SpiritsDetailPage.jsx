@@ -48,27 +48,31 @@ export default function SpiritsDetailPage() {
               <p className={styles.phaseMeta}>{el.chinese} {el.name} · {spirit.organ}</p>
               <p className={styles.bodyText}>{spirit.description}</p>
 
-              <div className={styles.twoCol}>
-                <div>
-                  <span className={styles.balanceLabel} style={{ color: el.hex }}>In Balance</span>
-                  <ul className={styles.list}>
-                    {spirit.balancedQualities.map((q, i) => <li key={i}>{q}</li>)}
-                  </ul>
-                </div>
-                <div>
-                  <span className={styles.balanceLabel}>Out of Balance</span>
-                  <ul className={styles.list}>
-                    {spirit.imbalancedSigns.map((s, i) => <li key={i}>{s}</li>)}
-                  </ul>
-                </div>
-              </div>
+              <details className={styles.disclose}>
+                <summary className={styles.discloseSummary}>Qualities &amp; reflections</summary>
 
-              <div className={styles.reflections}>
-                <span className={styles.reflectionsTitle}>Reflections</span>
-                {spirit.reflections.slice(0, 5).map((r, i) => (
-                  <p key={i} className={styles.reflection}>{r}</p>
-                ))}
-              </div>
+                <div className={styles.twoCol}>
+                  <div>
+                    <span className={styles.balanceLabel} style={{ color: el.hex }}>In Balance</span>
+                    <ul className={styles.list}>
+                      {spirit.balancedQualities.map((q, i) => <li key={i}>{q}</li>)}
+                    </ul>
+                  </div>
+                  <div>
+                    <span className={styles.balanceLabel}>Out of Balance</span>
+                    <ul className={styles.list}>
+                      {spirit.imbalancedSigns.map((s, i) => <li key={i}>{s}</li>)}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className={styles.reflections}>
+                  <span className={styles.reflectionsTitle}>Reflections</span>
+                  {spirit.reflections.slice(0, 5).map((r, i) => (
+                    <p key={i} className={styles.reflection}>{r}</p>
+                  ))}
+                </div>
+              </details>
             </GlassCard>
           );
         })}

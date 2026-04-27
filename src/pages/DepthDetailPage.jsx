@@ -27,22 +27,27 @@ export default function DepthDetailPage() {
             </div>
 
             <p className={styles.meridianEssence}>{m.essence}</p>
-            <p className={styles.bodyText}>{m.description}</p>
 
-            <div className={styles.meridianStates}>
-              <div>
-                <span className={styles.balanceLabel} style={{ color: 'var(--element-water)' }}>In Flow</span>
-                <p className={styles.bodyText}>{m.balanced}</p>
-              </div>
-              <div>
-                <span className={styles.balanceLabel}>Blocked</span>
-                <p className={styles.bodyText}>{m.blocked}</p>
-              </div>
-            </div>
+            <details className={styles.disclose}>
+              <summary className={styles.discloseSummary}>Read deeper</summary>
 
-            <div className={styles.lifeQuestion}>
-              <p className={styles.questionText}>{m.lifeQuestion}</p>
-            </div>
+              <p className={styles.bodyText}>{m.description}</p>
+
+              <div className={styles.meridianStates}>
+                <div>
+                  <span className={styles.balanceLabel} style={{ color: 'var(--element-water)' }}>In Flow</span>
+                  <p className={styles.bodyText}>{m.balanced}</p>
+                </div>
+                <div>
+                  <span className={styles.balanceLabel}>Blocked</span>
+                  <p className={styles.bodyText}>{m.blocked}</p>
+                </div>
+              </div>
+
+              <div className={styles.lifeQuestion}>
+                <p className={styles.questionText}>{m.lifeQuestion}</p>
+              </div>
+            </details>
           </GlassCard>
         ))}
       </div>

@@ -53,7 +53,7 @@
 }
 
 .group {
-  margin-top: var(--space-lg);
+  margin-top: var(--space-2xl);
   animation: fadeUp 0.8s var(--ease-out) both;
 }
 
@@ -92,7 +92,7 @@
 .cards {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-2xl);
 }
 
 .organCard {
