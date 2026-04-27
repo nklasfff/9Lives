@@ -287,6 +287,8 @@ export default function GroupDynamicsPage() {
             {allFriends.map(f => {
               const fEl = getElementInfo(f.element);
               const isSelected = selectedIds.includes(f.id);
+              const role = f.relationship || (f.isPartner ? 'partner' : 'friend');
+              const showRole = role && role !== 'friend';
               return (
                 <button
                   key={f.id}
@@ -295,7 +297,10 @@ export default function GroupDynamicsPage() {
                   style={isSelected ? { borderColor: `${fEl.hex}60` } : {}}
                 >
                   <span className={styles.selectorSymbol} style={{ color: isSelected ? fEl.hex : 'var(--text-muted)' }}>{fEl.chinese}</span>
-                  <span className={styles.selectorName}>{f.name}</span>
+                  <span className={styles.selectorName}>
+                    {f.name}
+                    {showRole && <em className={styles.selectorRole}> · {role}</em>}
+                  </span>
                 </button>
               );
             })}
