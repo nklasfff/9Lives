@@ -6,8 +6,10 @@ import { getZodiacAnimal } from '../engine/zodiac';
 import { getSpiritByElement } from '../engine/wuShen';
 import { getRelationship } from '../engine/cycles';
 import { getLifePhase } from '../engine/lifePhase';
+import { getDayPillar, getYearPillar } from '../engine/calendar';
 import { calculateAge } from '../utils/dateUtils';
 import { loadConstellations, saveConstellations, loadFriends } from '../utils/localStorage';
+import { getTimelineGroupedByWeek } from '../utils/reflectionStore';
 import GlassCard from '../components/common/GlassCard';
 import styles from './ProfilePage.module.css';
 
@@ -36,6 +38,18 @@ export default function ProfilePage() {
   const spirit = getSpiritByElement(data.element);
   const yinOrganChar = YIN_ORGAN_CHARS[data.element];
 
+  // Birth pillars — the year and day you were born, in the Gan Zhi system
+  const birthDate = new Date(data.birthDate.year, data.birthDate.month - 1, data.birthDate.day);
+  const yearPillar = getYearPillar(data.birthDate.year);
+  const dayPillar = getDayPillar(birthDate);
+  const yearStemEl = getElementInfo(yearPillar.stem.element);
+  const yearBranchEl = getElementInfo(yearPillar.branch.element);
+  const dayPillarEl = getElementInfo(dayPillar.element);
+
+  // Trail — your reflections journal, grouped by week
+  const trailWeeks = getTimelineGroupedByWeek();
+  const totalReflections = trailWeeks.reduce((s, w) => s + w.entries.length, 0);
+
   return (
     <div className={styles.page}>
       {/* Header — hero identity */}
@@ -59,6 +73,51 @@ export default function ProfilePage() {
       </GlassCard>
 
       <ElementWheelIllustration userElement={data.element} />
+
+      {/* Birth pillars — year and day you were born, in Gan Zhi */}
+      <GlassCard
+        className={`${styles.pillarsCard} ${styles.tappable}`}
+        glowColor={`${dayPillarEl.hex}10`}
+        onClick={() => navigate('/explore/calendar')}
+      >
+        <span className={styles.deepLabel}>Your Birth in Gan Zhi</span>
+        <h2 className={styles.deepTitle}>Year & Day Pillars</h2>
+
+        <div className={styles.pillarsGrid}>
+          <div className={styles.pillarBlock}>
+            <span className={styles.pillarKicker}>Year · {data.birthDate.year}</span>
+            <span className={styles.pillarChars} style={{ color: yearStemEl.hex }}>
+              {yearPillar.stem.chinese}{yearPillar.branch.chinese}
+            </span>
+            <span className={styles.pillarName}>
+              {yearPillar.stem.name}-{yearPillar.branch.name}
+            </span>
+            <span className={styles.pillarMeta}>
+              <span style={{ color: yearStemEl.hex }}>
+                {yearPillar.stem.yinYang === 'yang' ? 'Yang' : 'Yin'} {yearStemEl.name}
+              </span>
+              {' · '}
+              <span style={{ color: yearBranchEl.hex }}>the {yearPillar.branch.animal}</span>
+            </span>
+          </div>
+
+          <div className={styles.pillarBlock}>
+            <span className={styles.pillarKicker}>
+              Day · {data.birthDate.month}/{data.birthDate.day}
+            </span>
+            <span className={styles.pillarChars} style={{ color: dayPillarEl.hex }}>
+              {dayPillar.chineseLabel}
+            </span>
+            <span className={styles.pillarName}>{dayPillar.label}</span>
+            <span className={styles.pillarMeta} style={{ color: dayPillarEl.hex }}>
+              {dayPillar.yinYang === 'yang' ? 'Yang' : 'Yin'} {dayPillarEl.name}
+            </span>
+          </div>
+        </div>
+
+        <p className={styles.pillarsLine}>{dayPillar.stemImage}</p>
+        <span className={styles.tapHint}>Read the calendar →</span>
+      </GlassCard>
 
       {/* Your Constellation — the relational field around you */}
       <GlassCard
@@ -203,6 +262,54 @@ export default function ProfilePage() {
         </GlassCard>
       )}
 
+      {/* Your trail — reflections gathered across the layers */}
+      <GlassCard className={styles.trailCard} glowColor={`${el.hex}08`}>
+        <span className={styles.deepLabel}>Your Reflections</span>
+        <h2 className={styles.deepTitle}>Your Trail</h2>
+
+        {totalReflections === 0 ? (
+          <p className={styles.trailEmpty}>
+            As you reflect on the questions inside each layer, your trail begins here.
+          </p>
+        ) : (
+          <>
+            <p className={styles.trailSummary}>
+              {totalReflections} {totalReflections === 1 ? 'reflection' : 'reflections'}, week by week.
+            </p>
+            {trailWeeks.slice().reverse().map((week) => (
+              <div key={week.weekOf} className={styles.trailWeek}>
+                <h3 className={styles.trailWeekLabel}>
+                  Week of {new Date(week.weekOf).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                </h3>
+                {week.entries.slice().reverse().map((entry) => {
+                  const route = trailRoute(entry);
+                  const source = trailSource(entry);
+                  const question = entry.question || entry.prompt || '';
+                  const text = entry.text || entry.choiceText || '';
+                  const d = new Date(entry.date);
+                  return (
+                    <button
+                      key={entry.id}
+                      className={styles.trailEntry}
+                      onClick={() => route && navigate(route)}
+                    >
+                      <div className={styles.trailEntryHeader}>
+                        <span className={styles.trailEntrySource}>{source}</span>
+                        <span className={styles.trailEntryDate}>
+                          {d.toLocaleDateString('en-US', { weekday: 'short' })} {ordinalDay(d.getDate())}
+                        </span>
+                      </div>
+                      {question && <p className={styles.trailEntryQuestion}>{question}</p>}
+                      {text && <p className={styles.trailEntryText}>{text}</p>}
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
+          </>
+        )}
+      </GlassCard>
+
       <div className={styles.settingsRow}>
         <button className={styles.themeToggle} onClick={toggleTheme}>
           <span className={styles.themeIcon}>{theme === 'dark' ? '月' : '日'}</span>
@@ -214,6 +321,30 @@ export default function ProfilePage() {
       </div>
     </div>
   );
+}
+
+function trailRoute(entry) {
+  if (entry.type === 'organ') return `/explore/organs/${entry.organKey}`;
+  if (entry.type === 'reflection' || entry.type === 'journal') return `/explore/phases/${entry.phaseId}`;
+  return null;
+}
+
+function trailSource(entry) {
+  if (entry.type === 'organ') {
+    return (entry.organKey || 'Organ').replace(/([A-Z])/g, ' $1').replace(/^./, (c) => c.toUpperCase());
+  }
+  if (entry.type === 'reflection' || entry.type === 'journal') return `Phase ${entry.phaseId}`;
+  return '';
+}
+
+function ordinalDay(n) {
+  if (n >= 11 && n <= 13) return `${n}th`;
+  switch (n % 10) {
+    case 1: return `${n}st`;
+    case 2: return `${n}nd`;
+    case 3: return `${n}rd`;
+    default: return `${n}th`;
+  }
 }
 
 function ChartRow({ label, value, symbol, color }) {

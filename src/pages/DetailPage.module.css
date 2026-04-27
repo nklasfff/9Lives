@@ -380,6 +380,86 @@
   opacity: 0.8;
 }
 
+/* Calendar / Gan Zhi page */
+.heroIllustration {
+  width: 220px;
+  height: auto;
+  margin: 0 auto var(--space-md);
+  display: block;
+  opacity: 0.92;
+}
+
+.sectionHeading {
+  text-align: center;
+  margin: var(--space-xl) 0 var(--space-sm);
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  margin-top: var(--space-xs);
+}
+
+.birthGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.birthRow {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "label date"
+    "chars name";
+  column-gap: var(--space-md);
+  row-gap: 4px;
+  padding: var(--space-sm) 0;
+  border-top: 1px solid var(--glass-border);
+}
+
+.birthRow:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.birthLabel {
+  grid-area: label;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.birthDate {
+  grid-area: date;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: right;
+}
+
+.birthChars {
+  grid-area: chars;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 16px currentColor;
+  line-height: 1.1;
+}
+
+.birthName {
+  grid-area: name;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  align-self: center;
+  text-align: right;
+}
+
 /* Practice food/exercise tag pills */
 .practiceList {
   display: flex;
